@@ -18,32 +18,45 @@ module.exports = function (grunt) {
 
     copy: {
       dist: {
-        files: [{
-          src: 'index.css',
-          dest: 'build/index.css'
-        }, {
-          src: 'main.js',
-          dest: 'build/main.js'
-        }, {
-          src: 'src/config.js',
-          dest: 'build/src/config.js'
-        }, {
-          src: 'manifest.json',
-          dest: 'build/manifest.json'
-        }, {
-          src: 'package.json',
-          dest: 'build/package.json'
-        }, {
-          src: 'assets/**/*',
-          dest: 'build/',
-          expand: true
-        }]
+        files: [
+          {
+            src: 'index.css',
+            dest: 'build/index.css'
+          }, {
+            src: 'main.js',
+            dest: 'build/main.js'
+          }, {
+            src: 'src/config.js',
+            dest: 'build/src/config.js'
+          }, {
+            src: 'manifest.json',
+            dest: 'build/manifest.json'
+          }, {
+            src: 'package.json',
+            dest: 'build/package.json'
+          }, {
+            src: 'assets/**/*',
+            dest: 'build/',
+            expand: true
+          }
+        ]
+      },
+      css: {
+        files: [
+          {
+            src: 'index.css',
+            dest: 'build/index.css'
+          }
+        ]
       }
     },
 
     clean: {
       app: ['build/src/app.js'],
-      dist: ['build/', 'bin/'],
+      dist: [
+        'bin/', 'build/assets/', 'build/src/',
+        'build/**/*.html', 'build/**/*.css', 'build/**/*.js', 'build/**/*.json'
+      ],
     },
 
     processhtml: {
@@ -170,6 +183,13 @@ module.exports = function (grunt) {
           spawn: false,
         },
       },
+      css: {
+        files: ['index.css'],
+        tasks: ['copy:css'],
+        options: {
+          spawn: false,
+        },
+      }
     },
 
   });
@@ -188,15 +208,19 @@ module.exports = function (grunt) {
   // Custom Tasks
   grunt.loadTasks('tasks');
 
-  grunt.registerTask('default', [
-    'clean:dist',
+  var defaultTasks = [
     'assets',
     'concat',
     'replace',
     'uglify',
     'copy',
     'processhtml',
-  ]);
+  ];
+
+  grunt.registerTask('default', [
+    'clean:dist'
+  ].concat(defaultTasks));
+
   grunt.registerTask('dist', ['default', 'download-electron', 'asar']);
   grunt.registerTask('serve', ['default', 'connect', 'watch']);
 }

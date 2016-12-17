@@ -1,5 +1,6 @@
 bin
 build
+dist
 .DS_Store
 node_modules/
 bower_components/

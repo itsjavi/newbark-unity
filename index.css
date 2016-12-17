@@ -1,5 +1,5 @@
 body {
-    background-color: #000;
+    background: #111;
     color: #fff;
 
     /* Allow mouse dragging. */
@@ -25,10 +25,14 @@ html.xy-centered, html.xy-centered body {
     height: 100%;
 }
 
-.x-centered-block {
-    position: relative;
+body > footer {
+    position: fixed;
+    bottom:0;
+    left:0;
+    right:0;
     text-align: center;
-    margin: 0 auto;
+    padding:20px;
+    background: #eee;
 }
 
 a, a:hover {

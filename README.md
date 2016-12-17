@@ -12,7 +12,7 @@ Features :
 
 To build, be sure you have [node](http://nodejs.org) installed. Clone the project:
 
-    git clone https://github.com/melonjs/boilerplate.git
+    git clone https://github.com/metaunicorn/poketiled.git
 
 Then in the cloned directory, simply run:
 

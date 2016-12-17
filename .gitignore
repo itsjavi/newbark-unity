@@ -1,0 +1,11 @@
+bin
+build
+.DS_Store
+node_modules/
+bower_components/
+.idea
+.vscode
+.env
+*.lock
+*.log
+*.sqlite

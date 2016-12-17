@@ -149,16 +149,23 @@ module.exports = function (grunt) {
     },
 
     watch: {
-      resources: {
+      assets: {
         files: ['assets/**/*'],
         tasks: ['assets'],
         options: {
           spawn: false,
         },
       },
-      code: {
+      js: {
         files: ['lib/**/*.js', 'src/**/*.js'],
         tasks: ['concat'],
+        options: {
+          spawn: false,
+        },
+      },
+      html: {
+        files: ['index.html'],
+        tasks: ['processhtml'],
         options: {
           spawn: false,
         },
@@ -182,6 +189,7 @@ module.exports = function (grunt) {
   grunt.loadTasks('tasks');
 
   grunt.registerTask('default', [
+    'clean:dist',
     'assets',
     'concat',
     'replace',
@@ -190,5 +198,5 @@ module.exports = function (grunt) {
     'processhtml',
   ]);
   grunt.registerTask('dist', ['default', 'download-electron', 'asar']);
-  grunt.registerTask('serve', ['assets', 'concat', 'replace', 'connect', 'watch']);
+  grunt.registerTask('serve', ['default', 'connect', 'watch']);
 }

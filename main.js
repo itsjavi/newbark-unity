@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow;  // Module to create native browse
 
 const path = require('path');
 const url = require('url');
-let config = require('./js/config');
+let config = require('./src/config');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.

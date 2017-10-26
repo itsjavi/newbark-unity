@@ -1,12 +1,12 @@
-bin
-build
-dist
+/bin
+/build
+/dist
 .DS_Store
 node_modules/
 bower_components/
 .idea
 .vscode
 .env
-*.lock
 *.log
 *.sqlite
+package-lock.json

@@ -1,12 +1,13 @@
-var __is_electron = (typeof window === 'undefined' || (window && window.process && window.process.type));
+let is_electron = (typeof window === 'undefined' || (window && window.process && window.process.type));
 
-var __game_config = {
+export default {
   fps: 32,
   tileSize: 32,
   debug: true,
+  isElectron: is_electron,
   screen: {
     wrapper: "screen", // HTML element ID
-    scale: (__is_electron ? "auto" : "best"), // "auto" or "best"
+    scale: (is_electron ? "auto" : "best"), // "auto" or "best"
     size: "GBC",
 
     // Doubled sizes of handheld consoles.
@@ -53,14 +54,3 @@ var __game_config = {
     "initial": "S01_NewBarkTown"
   }
 };
-
-// Export for main.js, which runs in Node
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = __game_config;
-}
-
-// Add it to the global game object
-if (typeof game !== 'undefined') {
-  game.config = __game_config;
-  game.ENV.isElectron = __is_electron;
-}

@@ -1,15 +1,35 @@
-/* Game namespace */
+import me from 'melonjs';
+import config from 'config';
+import audio from 'system/audio';
+import buttons from 'system/buttons';
+import utils from 'system/utils';
+import HUD from 'system/HUD';
+import assets from 'build/assets';
+import * as entities from 'build/entities';
+import * as scenes from 'build/scenes';
+
+me.DefaultLoadingScreen = scenes.LoadingScreen;
+
+/**
+ * @global
+ */
 var game = {
   ENV: {
-    isElectron: false
+    isElectron: config.isElectron
   },
+  me: me,
   data: { // an object where to store game information
     // score
     score: 0
   },
-  config: {},
-  entities: {},
-  scenes: {},
+  HUD: HUD,
+  config: config,
+  assets: assets,
+  audio: audio,
+  buttons: buttons,
+  utils: utils,
+  entities: entities,
+  scenes: scenes,
 
   // Run on page load.
   "load": function () {
@@ -48,7 +68,7 @@ var game = {
   // Run on game resources loaded.
   "onLoad": function () {
     // add our entities in the entity pool
-    for (var entityName in this.config.entities) {
+    for (let entityName in this.config.entities) {
       if (!game.entities[this.config.entities[entityName]]) {
         throw new Error("Entity is undefined: " + entityName);
       }
@@ -89,3 +109,14 @@ var game = {
     // WIP
   },
 };
+
+if (window) {
+  window.game = game;
+  window.onReady(
+    function onReady() {
+      game.load();
+    }
+  );
+}
+
+export default game;

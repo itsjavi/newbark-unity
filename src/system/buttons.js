@@ -1,62 +1,78 @@
-game.buttons = {
+import me from 'melonjs';
+
+let sysButtons = {
   UP: "up",
   RIGHT: "right",
   DOWN: "down",
   LEFT: "left",
-  A: "a",
-  B: "b",
+  L1: "l1",
+  R1: "r1",
   X: "x",
   Y: "y",
+  A: "a",
+  B: "b",
   SELECT: "select",
   START: "start",
-  "bind": function () {
+
+  bind: function () {
     // enable the keyboard
     me.input.bindKey(me.input.KEY.LEFT, this.LEFT, false, true);
     me.input.bindKey(me.input.KEY.RIGHT, this.RIGHT, false, true);
     me.input.bindKey(me.input.KEY.UP, this.UP, false, true);
     me.input.bindKey(me.input.KEY.DOWN, this.DOWN, false, true);
 
-    me.input.bindKey(me.input.KEY.SPACE, this.A);
-    me.input.bindKey(me.input.KEY.B, this.B);
-    me.input.bindKey(me.input.KEY.X, this.X);
-    me.input.bindKey(me.input.KEY.Z, this.Y);
+    me.input.bindKey(me.input.KEY.Q, this.L1);
+    me.input.bindKey(me.input.KEY.W, this.R1);
+
     me.input.bindKey(me.input.KEY.A, this.SELECT);
     me.input.bindKey(me.input.KEY.S, this.START);
+
+    me.input.bindKey(me.input.KEY.X, this.X);
+    me.input.bindKey(me.input.KEY.Z, this.Y);
+
+    me.input.bindKey(me.input.KEY.SPACE, this.A);
+    me.input.bindKey(me.input.KEY.B, this.B);
   },
-  "isPressed": function (buttonName) {
+  isPressed: function (buttonName) {
     return me.input.isKeyPressed(buttonName);
   },
-  "isUpPressed": function () {
+  isUpPressed: function () {
     return this.isPressed(this.UP);
   },
-  "isDownPressed": function () {
+  isDownPressed: function () {
     return this.isPressed(this.DOWN);
   },
-  "isLeftPressed": function () {
+  isLeftPressed: function () {
     return this.isPressed(this.LEFT);
   },
-  "isRightPressed": function () {
+  isRightPressed: function () {
     return this.isPressed(this.RIGHT);
   },
-  "isAPressed": function () {
+  isAPressed: function () {
     return this.isPressed(this.A);
   },
-  "isBPressed": function () {
+  isBPressed: function () {
     return this.isPressed(this.B);
   },
-  "isXPressed": function () {
+  isXPressed: function () {
     return this.isPressed(this.X);
   },
-  "isYPressed": function () {
+  isYPressed: function () {
     return this.isPressed(this.Y);
   },
-  "isSelectPressed": function () {
+  isSelectPressed: function () {
     return this.isPressed(this.SELECT);
   },
-  "isStartPressed": function () {
+  isStartPressed: function () {
     return this.isPressed(this.START);
   },
-  "getPressed": function () {
+  isL1Pressed: function () {
+    return this.isPressed(this.L1);
+  },
+  isR1Pressed: function () {
+    return this.isPressed(this.R1);
+  },
+  getPressed: function () {
     if (this.isLeftPressed()) {
       return this.LEFT;
     }
@@ -97,31 +113,41 @@ game.buttons = {
       return this.START;
     }
 
+    if (this.isL1Pressed()) {
+      return this.L1;
+    }
+
+    if (this.isR1Pressed()) {
+      return this.R1;
+    }
+
     return false;
   },
-  "isDirectionButtonPressed": function () {
-    var button = this.getPressed();
-    return !!(button == this.LEFT
-    || button == this.RIGHT
-    || button == this.UP
-    || button == this.DOWN);
+  isDirectionButtonPressed: function () {
+    let button = this.getPressed();
+    return (button === this.LEFT
+      || button === this.RIGHT
+      || button === this.UP
+      || button === this.DOWN);
 
   },
-  "getPressedAxis": function (button) {
-    button ? button : this.getPressed();
+  getPressedAxis: function (button) {
+    button = button ? button : this.getPressed();
 
-    if (button == this.LEFT || button == this.RIGHT) {
+    if (button === this.LEFT || button === this.RIGHT) {
       return "x";
-    } else if (button == this.UP || button == this.DOWN) {
+    } else if (button === this.UP || button === this.DOWN) {
       return "y";
     } else {
       return false;
     }
   },
-  "getSecondAxis": function (pressedAxis) {
+  getSecondAxis: function (pressedAxis) {
     if (pressedAxis === false) {
       return false;
     }
-    return pressedAxis == "x" ? "y" : "x";
+    return pressedAxis === "x" ? "y" : "x";
   }
 };
+
+export default sysButtons;

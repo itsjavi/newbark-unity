@@ -1,4 +1,4 @@
-game.scenes.S01_NewBarkTown = me.ScreenObject.extend({
+export default me.ScreenObject.extend({
   /**
    *  action to perform on state change
    */

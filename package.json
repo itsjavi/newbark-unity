@@ -1,18 +1,28 @@
 {
-  "name": "poketiled",
-  "version": "0.1.0",
-  "main": "main.js",
+  "name": "newbark",
+  "version": "0.2.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "repository": "https://github.com/pokettomonstaa/NewBark",
+  "dependencies": {
+    "gamepad.js": "^0.1.0",
+    "melonjs": "~4.1.1"
+  },
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-asar": "bwin/grunt-asar#update-asar",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-connect": "^1.0.2",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-uglify": "^2.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-download-electron": "^2.1.4",
-    "grunt-processhtml": "^0.4.1",
-    "grunt-replace": "^1.0.1"
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-util": "^3.0.8",
+    "http-server": "^0.10.0",
+    "shim-loader": "^1.0.1",
+    "through2": "^2.0.3",
+    "webpack": "^3.8.1",
+    "webpack-stream": "^4.0.0"
+  },
+  "scripts": {
+    "start": "node_modules/.bin/http-server ./dist"
   }
 }

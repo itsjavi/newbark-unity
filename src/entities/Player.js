@@ -1,7 +1,7 @@
 /**
  * Player Entity
  */
-game.entities.Player = me.Entity.extend({
+export default me.Entity.extend({
   /**
    * constructor
    */

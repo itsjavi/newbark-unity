@@ -1,4 +1,4 @@
-game.scenes.TitleScreen = me.ScreenObject.extend({
+export default me.ScreenObject.extend({
   /**
    *  action to perform on state change
    */

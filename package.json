@@ -1,7 +1,7 @@
 {
   "name": "newbark",
   "version": "0.2.0",
-  "main": "src/index.js",
+  "main": "src/game.js",
   "license": "MIT",
   "repository": "https://github.com/pokettomonstaa/NewBark",
   "dependencies": {

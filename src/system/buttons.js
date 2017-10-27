@@ -32,6 +32,40 @@ let sysButtons = {
 
     me.input.bindKey(me.input.KEY.SPACE, this.A);
     me.input.bindKey(me.input.KEY.B, this.B);
+
+    // enable the gamepad
+    if (navigator && ('getGamepads' in navigator)) {
+      // TODO: detect pad connect/disconnect
+      let axes = me.input.GAMEPAD.AXES;
+      let buttons = me.input.GAMEPAD.BUTTONS;
+
+      me.input.bindGamepad(0, {type: "axes", code: axes.LX, threshold: -0.5}, me.input.KEY.LEFT);
+      me.input.bindGamepad(0, {type: "axes", code: axes.LX, threshold: 0.5}, me.input.KEY.RIGHT);
+      me.input.bindGamepad(0, {type: "axes", code: axes.LY, threshold: -0.5}, me.input.KEY.UP);
+      me.input.bindGamepad(0, {type: "axes", code: axes.LY, threshold: 0.5}, me.input.KEY.DOWN);
+
+      me.input.bindGamepad(0, {type: "axes", code: axes.RX, threshold: -0.5}, me.input.KEY.LEFT);
+      me.input.bindGamepad(0, {type: "axes", code: axes.RX, threshold: 0.5}, me.input.KEY.RIGHT);
+      me.input.bindGamepad(0, {type: "axes", code: axes.RY, threshold: -0.5}, me.input.KEY.UP);
+      me.input.bindGamepad(0, {type: "axes", code: axes.RY, threshold: 0.5}, me.input.KEY.DOWN);
+
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.LEFT}, me.input.KEY.LEFT);
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.RIGHT}, me.input.KEY.RIGHT);
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.UP}, me.input.KEY.UP);
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.DOWN}, me.input.KEY.DOWN);
+
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.L1}, me.input.KEY.Q);
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.R1}, me.input.KEY.W);
+
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.SELECT}, me.input.KEY.A);
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.START}, me.input.KEY.S);
+
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.FACE_3}, me.input.KEY.X);
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.FACE_4}, me.input.KEY.Z);
+
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.FACE_1}, me.input.KEY.SPACE);
+      me.input.bindGamepad(0, {type: "buttons", code: buttons.FACE_2}, me.input.KEY.B);
+    }
   },
   isPressed: function (buttonName) {
     return me.input.isKeyPressed(buttonName);

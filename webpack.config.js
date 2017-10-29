@@ -20,13 +20,11 @@ module.exports = {
   },
   resolve: {
     modules: [
-      path.resolve('./'),
       path.resolve('./src'),
       path.resolve('./node_modules')
     ],
     alias: {
-      'melonjs': path.join(__dirname, 'node_modules/melonjs/build/melonjs.js'),
-      'melonjs-debug': path.join(__dirname, 'node_modules/melonjs/plugins/debug/debugPanel.js'),
+      'melonjs': path.join(__dirname, 'node_modules/melonjs/build/melonjs.js')
     },
   },
   module: {
@@ -34,12 +32,17 @@ module.exports = {
       {
         test: /\.js/,
         loader: 'shim-loader',
-        query: webpackShimConfig
+        query: webpackShimConfig,
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        query: {
+          presets: [
+            require.resolve('babel-preset-env')
+          ]
+        }
       }
     ]
   },

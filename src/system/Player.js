@@ -1,13 +1,20 @@
+"use strict";
+import Melon from 'melonjs';
+import Config from 'config';
+import Sound from 'system/Sound';
+import Controls from 'system/Controls';
+import assets from 'assets';
+
 /**
  * Player Entity
  */
-export default me.Entity.extend({
+export default Melon.Entity.extend({
   /**
    * constructor
    */
   init: function (x, y, settings) {
     // call the constructor
-    this._super(me.Entity, 'init', [x, y, settings]);
+    this._super(Melon.Entity, 'init', [x, y, settings]);
 
     // set the default horizontal & vertical speed (accel vector)
     this.body.setVelocity(1, 1);
@@ -22,13 +29,13 @@ export default me.Entity.extend({
     this.body.falling = false;
 
     // set the display to follow our position on both axis
-    me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+    Melon.game.viewport.follow(this.pos, Melon.game.viewport.AXIS.BOTH);
 
     // ensure the player is updated even when outside of the viewport
     this.alwaysUpdate = true;
 
-    var createAnimation = function (framesIds) {
-      var animation = [];
+    let createAnimation = function (framesIds) {
+      let animation = [];
       framesIds.forEach(function (id) {
         animation.push({
           name: id,
@@ -60,7 +67,7 @@ export default me.Entity.extend({
   },
 
   incrementWalkBuffer_old: function () {
-    if (this.walkBuffer.frames < me.sys.fps) { // Let's have a -1 frame error margin
+    if (this.walkBuffer.frames < Melon.sys.fps) { // Let's have a -1 frame error margin
       this.walkBuffer.shouldMove = false;
       this.walkBuffer.frames++;
     } else {
@@ -72,26 +79,26 @@ export default me.Entity.extend({
 
   stopWalking: function () {
     if (this.lastPressedButton !== null) {
-      this.renderable.setCurrentAnimation("stand_" + this.lastPressedButton);
+      this.renderable.setCurrentAnimation("stand_" + this.lastPressedButton.toLowerCase());
       this.lastPressedButton = null;
     }
   },
 
   walk: function (direction) {
-    var axis, secondAxis, diffVel = (game.config.tileSize / me.sys.fps);
+    let axis, secondAxis, diffVel = (Config.video.tile_size / Melon.sys.fps);
 
-    axis = game.buttons.getPressedAxis(direction);
+    axis = Controls.getPressedAxis(direction);
 
     if (!axis) {
       return false;
     }
 
-    secondAxis = game.buttons.getSecondAxis(axis);
+    secondAxis = Controls.getPressedOppositeAxis(axis);
     this.walkBuffer.frames++;
 
     if (
-      this.walkBuffer.frames == game.config.tileSize
-      && this.walkBuffer.direction == direction
+      this.walkBuffer.frames === Config.video.tile_size
+      && this.walkBuffer.direction === direction
     ) {
       // Finished
       this.stopWalking();
@@ -99,19 +106,19 @@ export default me.Entity.extend({
       return false;
     }
 
-    if (this.walkBuffer.direction != direction) {
+    if (this.walkBuffer.direction !== direction) {
       // New direction
       this.walkBuffer.frames = 0;
     }
     this.walkBuffer.axis = axis;
     this.walkBuffer.direction = direction;
 
-    if (!game.config.player.moveDiagonal) {
+    if (!Config.player.move_diagonal) {
       this.body.vel[secondAxis] = 0;
     }
 
     // update the entity velocity
-    if (direction == game.buttons.LEFT || direction == game.buttons.UP) {
+    if (direction === Controls.LEFT || direction === Controls.UP) {
       this.body.vel[axis] -= diffVel;
     } else {
       this.body.vel[axis] += diffVel;
@@ -120,8 +127,8 @@ export default me.Entity.extend({
     //console.log(this.walkBuffer.frames);
 
     // change to the walking animation
-    if (!this.renderable.isCurrentAnimation("walk_" + direction)) {
-      this.renderable.setCurrentAnimation("walk_" + direction);
+    if (!this.renderable.isCurrentAnimation("walk_" + direction.toLowerCase())) {
+      this.renderable.setCurrentAnimation("walk_" + direction.toLowerCase());
     }
     this.lastPressedButton = direction;
   },
@@ -130,17 +137,17 @@ export default me.Entity.extend({
    * update the entity
    */
   update: function (dt) {
-    var pressedButton = game.buttons.getPressed();
+    let pressedButton = Controls.getPressed();
 
     if (
       pressedButton
-      && game.buttons.isDirectionButtonPressed()
-      && this.walkBuffer.frames == 0
+      && Controls.isDirectionButtonPressed()
+      && this.walkBuffer.frames === 0
     ) {
       this.walk(pressedButton);
     } else if (
       this.walkBuffer.frames > 0
-      && this.walkBuffer.frames < me.sys.fps
+      && this.walkBuffer.frames < Melon.sys.fps
     ) {
       // Finish animation
       this.walk(this.walkBuffer.direction);
@@ -155,18 +162,18 @@ export default me.Entity.extend({
     this.body.update(dt);
 
     // handle collisions against other shapes
-    me.collision.check(this);
+    Melon.collision.check(this);
 
     // return true if we moved or if the renderable was updated
-    return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
+    return (this._super(Melon.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
   },
 
   /**
    *
    * Collision handler
    * (called when colliding with other objects)
-   * @param {me.collision.ResponseObject} collisionResponse
-   * @param {me.Entity|me.Renderable} collisionObject
+   * @param {Melon.collision.ResponseObject} collisionResponse
+   * @param {Melon.Entity|Melon.Renderable} collisionObject
    * @returns {boolean} Return false to avoid collision, return true or nothing to collide.
    */
   onCollision: function (collisionResponse, collisionObject) {
@@ -180,7 +187,7 @@ export default me.Entity.extend({
     collisionObject.body.friction.set(0, 0);
 
     //console.log("Collided:'" + collisionResponse.a.name + "' with '" + collisionResponse.b.name + "'");
-    game.audio.playSfx("collide");
+    Sound.playEffect(assets.audio.collide);
     //return true;
   },
 

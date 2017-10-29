@@ -28,7 +28,9 @@ function getAssetFileType(fileExt) {
  */
 module.exports = function (rootPath, destinationFile = 'assets.js') {
   rootPath = path.resolve(rootPath);
-  let assets = [];
+  let assets = {
+    _files: []
+  };
   let firstFile;
 
   return through.obj({},
@@ -41,11 +43,25 @@ module.exports = function (rootPath, destinationFile = 'assets.js') {
 
       if (fileType !== false) {
         let relativeFile = file.path.substr(rootPath.length + 1);
+        let assetName = path.basename(relativeFile, fileExt);
+        let assetSafeName = assetName.replace(/[^a-zA-Z0-9_]/g,'_').replace(/^[0-9]/g, '_$1');
+        let assetSrc = (fileType === "audio") ? (path.dirname(relativeFile) + "/") : relativeFile;
 
-        assets.push({
-          "name": path.basename(relativeFile, fileExt),
+        if (!assets[fileType]) {
+          assets[fileType] = {};
+        }
+
+        if (assets[fileType][assetSafeName]) {
+          $e = `Asset ${fileType}.${assetSafeName} already exists.`;
+          throw new Error($e);
+        }
+
+        assets[fileType][assetSafeName] = assetName;
+
+        assets._files.push({
+          "name": assetName,
           "type": fileType,
-          "src": (fileType === "audio") ? (path.dirname(relativeFile) + "/") : relativeFile
+          "src": assetSrc
         });
 
         // make sure the file goes through the next gulp plugin
@@ -63,7 +79,7 @@ module.exports = function (rootPath, destinationFile = 'assets.js') {
         cwd: firstFile.cwd,
         base: firstFile.base,
         path: path.join(firstFile.base, destinationFile),
-        contents: new Buffer(`let assets = ${assetsJson};\nexport default assets;\n`)
+        contents: new Buffer(`"use strict";\nexport default ${assetsJson};\n`)
       }));
 
       done();

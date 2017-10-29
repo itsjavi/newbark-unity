@@ -1,13 +1,17 @@
+"use strict";
+import Melon from 'melonjs';
+import Screen from 'system/Screen';
+
 /*
  * Game Loading Screen
  * Based on default one: https://raw.githubusercontent.com/melonjs/melonJS/master/src/loader/loadingscreen.js
  */
 
 // a basic progress bar object
-let ProgressBar = me.Renderable.extend({
+let ProgressBar = Melon.Renderable.extend({
 
   init: function (v, w, h) {
-    this._super(me.Renderable, "init", [v.x, v.y, w, h]);
+    this._super(Melon.Renderable, "init", [v.x, v.y, w, h]);
     // flag to know if we need to refresh the display
     this.invalidate = false;
 
@@ -39,11 +43,11 @@ let ProgressBar = me.Renderable.extend({
   // draw function
   draw: function (renderer) {
     // draw the progress bar
-    renderer.setColor("black");
+    renderer.setColor("#CBF8D8");
     renderer.fillRect(0, (this.height / 2) - (this.barHeight / 2), this.width, this.barHeight);
 
-    renderer.setColor("#0D6101");
-    renderer.fillRect(2, (this.height / 2) - (this.barHeight / 2), this.progress, this.barHeight);
+    renderer.setColor("#808080");
+    renderer.fillRect(0, (this.height / 2) - (this.barHeight / 2), this.progress, this.barHeight);
 
     renderer.setColor("white");
   }
@@ -55,41 +59,41 @@ let ProgressBar = me.Renderable.extend({
  * @ignore
  * @constructor
  */
-let DefaultLoadingScreen = me.ScreenObject.extend({
+export default Melon.ScreenObject.extend({
   ProgressBar: ProgressBar,
   // call when the loader is resetted
   onResetEvent: function () {
     // background color
-    me.game.world.addChild(new me.ColorLayer("background", "#202020", 0), 0);
+    Melon.game.world.addChild(new Melon.ColorLayer("background", "#CBF8D8", 0), 0);
 
     // progress bar
     let progressBar = new this.ProgressBar(
-      new me.Vector2d(),
-      me.video.renderer.getWidth(),
-      me.video.renderer.getHeight()
+      new Melon.Vector2d(),
+      Melon.video.renderer.getWidth(),
+      Melon.video.renderer.getHeight()
     );
 
-    this.loaderHdlr = me.event.subscribe(
-      me.event.LOADER_PROGRESS,
+    this.loaderHdlr = Melon.event.subscribe(
+      Melon.event.LOADER_PROGRESS,
       progressBar.onProgressUpdate.bind(progressBar)
     );
 
-    this.resizeHdlr = me.event.subscribe(
-      me.event.VIEWPORT_ONRESIZE,
+    this.resizeHdlr = Melon.event.subscribe(
+      Melon.event.VIEWPORT_ONRESIZE,
       progressBar.resize.bind(progressBar)
     );
 
-    me.game.world.addChild(progressBar, 1);
-    this.iconCanvas = me.video.createCanvas(me.game.viewport.width, me.game.viewport.height, false);
+    Melon.game.world.addChild(progressBar, 1);
+
+    // Remove Melon logo
+    this.iconCanvas = Melon.video.createCanvas(Screen.currentWidth, Screen.currentHeight, false);
   },
 
   // destroy object at end of loading
   onDestroyEvent: function () {
     // cancel the callback
-    me.event.unsubscribe(this.loaderHdlr);
-    me.event.unsubscribe(this.resizeHdlr);
+    Melon.event.unsubscribe(this.loaderHdlr);
+    Melon.event.unsubscribe(this.resizeHdlr);
     this.loaderHdlr = this.resizeHdlr = null;
   }
 });
-
-export default DefaultLoadingScreen;

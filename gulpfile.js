@@ -14,31 +14,19 @@ gulp.task('clean', function () {
   ]);
 });
 
-gulp.task('debug', ['clean'], function () {
-  return gulp.src('node_modules/melonjs/plugins/debug/debugPanel.js')
-    .pipe(concat('debug.js'))
-    .pipe(gulp.dest('build/'));
-});
-
-gulp.task('import-entities', ['clean'], function () {
-  return gulp.src('src/entities/*.js')
-    .pipe(module_merger(cwd, 'entities.js'))
-    .pipe(gulp.dest('build/'));
-});
-
 gulp.task('import-scenes', ['clean'], function () {
   return gulp.src('src/scenes/*.js')
-    .pipe(module_merger(cwd, 'scenes.js'))
-    .pipe(gulp.dest('build/'));
+    .pipe(module_merger(cwd + '/src'))
+    .pipe(gulp.dest('src/scenes/'));
 });
 
-gulp.task('imports', ['clean', 'import-entities', 'import-scenes']);
+gulp.task('imports', ['clean', 'import-scenes']);
 
 gulp.task('assets', ['clean'], function () {
   return gulp.src('assets/*/**/*.*')
     .pipe(gulp.dest('dist/assets/'))
-    .pipe(assets_indexer(cwd + '/dist'))
-    .pipe(gulp.dest('build/'));
+    .pipe(assets_indexer(cwd + '/dist', 'assets.js'))
+    .pipe(gulp.dest('src/'));
 });
 
 gulp.task('webpack', ['imports', 'assets'], function () {
@@ -58,6 +46,6 @@ gulp.task('html', ['clean'], function () {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('default', ['clean', 'debug', 'webpack', 'css', 'html'], function () {
+gulp.task('default', ['clean', 'imports', 'assets', 'webpack', 'css', 'html'], function () {
   console.info("DONE");
 });

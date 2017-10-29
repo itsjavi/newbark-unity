@@ -1,15 +1,18 @@
-export default me.ScreenObject.extend({
+"use strict";
+import Melon from 'melonjs';
+
+export default Melon.ScreenObject.extend({
   /**
    *  action to perform on state change
    */
-  onResetEvent: function () {
-    ; // TODO
+  onResetEvent() {
+    // TODO
   },
 
   /**
    *  action to perform when leaving this screen (state change)
    */
-  onDestroyEvent: function () {
-    ; // TODO
+  onDestroyEvent() {
+    // TODO
   }
 });

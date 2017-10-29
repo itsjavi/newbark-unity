@@ -1,7 +1,8 @@
-import me from 'melonjs';
-import config from 'config';
+"use strict";
+import Melon from 'melonjs';
+import Config from 'config';
 
-let sysAudio = {
+export default {
   channels: {
     BGM: false,
     SFX_1: false,
@@ -13,12 +14,13 @@ let sysAudio = {
    * @param {Number} [volume]
    * @return {(Number|boolean)} the sound instance ID or false if could not play it.
    */
-  playBgm: function (name, volume) {
-    if (!config.sound.enabled) {
+  playMusic(name, volume) {
+    if (!Config.sound.enabled) {
       return false;
     }
-    sysAudio.channels.BGM = name;
-    me.audio.playTrack(name, !isNaN(volume) ? volume : config.sound.volume.music / 100);
+    this.channels.BGM = name;
+
+    Melon.audio.playTrack(name, (!isNaN(volume) ? volume : Config.sound.volume.music / 100));
   },
 
   /**
@@ -27,21 +29,21 @@ let sysAudio = {
    * @param {String} [channel] Sound channel name.
    * @return {(Number|boolean)} the sound instance ID or false if could not play it.
    */
-  playSfx: function (name, volume, channel) {
-    if (!config.sound.enabled) {
+  playEffect(name, volume, channel) {
+    if (!Config.sound.enabled) {
       return false;
     }
     channel = channel || "SFX_1";
 
-    if (sysAudio.channels[channel] !== false) {
+    if (this.channels[channel] !== false) {
       // Only allow one SFX at a time per channel, to avoid overlapping
       return false;
     }
-    sysAudio.channels[channel] = name;
-    me.audio.play(name, false, function () {
-      sysAudio.channels[channel] = false;
-    }, (!isNaN(volume) ? volume : config.sound.volume.effects / 100));
+    this.channels[channel] = name;
+    Melon.audio.play(name, false,
+      () => {
+        this.channels[channel] = false;
+      }, (!isNaN(volume) ? volume : Config.sound.volume.effects / 100)
+    );
   }
 };
-
-export default sysAudio;

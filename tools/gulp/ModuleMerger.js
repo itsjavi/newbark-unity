@@ -14,15 +14,21 @@ module.exports = function (rootPath, destinationFile = 'index.js') {
 
   return through.obj({},
     function (file, encoding, cb) { // through._transform
+      let fileExt = path.extname(file.path);
+      let relativeFile = file.path.substr(rootPath.length + 1).replace(/\.js$/, '');
+      let fileName = path.basename(relativeFile, fileExt);
+
+      if (destinationFile === path.basename(relativeFile)) {
+        cb();
+        return;
+      }
+
       if (!firstFile) {
         firstFile = file;
       }
 
-      let fileExt = path.extname(file.path);
-      let relativeFile = file.path.substr(rootPath.length + 1);
-
       modules.push({
-        "name": path.basename(relativeFile, fileExt),
+        "name": fileName,
         "src": relativeFile
       });
 
@@ -33,17 +39,21 @@ module.exports = function (rootPath, destinationFile = 'index.js') {
       cb();
     },
     function (done) { // through._flush
-      let code = '/* This file is auto-generated */\n';
+      let code = '"use strict";\n/* This file is auto-generated */\n';
       let code_exports = [];
+      let code_exports_default = [];
 
       modules.forEach(function (module) {
-        if(module.name === destinationFile.replace(/\..*$/,'')) {
+        if (module.name === destinationFile.replace(/\..*$/, '')) {
           return;
         }
         code += `import ${module.name} from '${module.src}';\n`;
+
+        code_exports_default.push(`   ${module.name}: ` + module.name);
         code_exports.push('  ' + module.name);
       });
 
+      code += '\nexport default {\n' + code_exports_default.join(',\n') + '\n};\n  ';
       code += '\nexport {\n' + code_exports.join(',\n') + '\n};\n  ';
 
       // Push the new file

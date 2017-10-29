@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 import Melon from 'melonjs';
 import Screen from 'system/Screen';
 
@@ -10,7 +10,7 @@ import Screen from 'system/Screen';
 // a basic progress bar object
 let ProgressBar = Melon.Renderable.extend({
 
-  init: function (v, w, h) {
+  init(v, w, h) {
     this._super(Melon.Renderable, "init", [v.x, v.y, w, h]);
     // flag to know if we need to refresh the display
     this.invalidate = false;
@@ -23,13 +23,13 @@ let ProgressBar = Melon.Renderable.extend({
   },
 
   // make sure the screen is refreshed every frame
-  onProgressUpdate: function (progress) {
+  onProgressUpdate(progress) {
     this.progress = ~~(progress * this.width);
     this.invalidate = true;
   },
 
   // make sure the screen is refreshed every frame
-  update: function () {
+  update() {
     if (this.invalidate === true) {
       // clear the flag
       this.invalidate = false;
@@ -41,7 +41,7 @@ let ProgressBar = Melon.Renderable.extend({
   },
 
   // draw function
-  draw: function (renderer) {
+  draw(renderer) {
     // draw the progress bar
     renderer.setColor("#CBF8D8");
     renderer.fillRect(0, (this.height / 2) - (this.barHeight / 2), this.width, this.barHeight);
@@ -62,7 +62,7 @@ let ProgressBar = Melon.Renderable.extend({
 export default Melon.ScreenObject.extend({
   ProgressBar: ProgressBar,
   // call when the loader is resetted
-  onResetEvent: function () {
+  onResetEvent() {
     // background color
     Melon.game.world.addChild(new Melon.ColorLayer("background", "#CBF8D8", 0), 0);
 
@@ -90,7 +90,7 @@ export default Melon.ScreenObject.extend({
   },
 
   // destroy object at end of loading
-  onDestroyEvent: function () {
+  onDestroyEvent() {
     // cancel the callback
     Melon.event.unsubscribe(this.loaderHdlr);
     Melon.event.unsubscribe(this.resizeHdlr);

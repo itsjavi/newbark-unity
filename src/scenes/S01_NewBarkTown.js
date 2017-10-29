@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 import Melon from 'melonjs';
 import Sound from 'system/Sound';
 import assets from 'assets';

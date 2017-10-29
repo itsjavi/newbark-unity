@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 import Melon from 'melonjs';
 
 const Input = Melon.input,

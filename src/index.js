@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 import Melon from 'melonjs';
 import Game from 'system/Game';
 import Config from 'config';

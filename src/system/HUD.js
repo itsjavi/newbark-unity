@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 import Melon from 'melonjs';
 
 let ScoreItem = Melon.Renderable.extend({
   /**
    * constructor
    */
-  init: function (x, y) {
+  init(x, y) {
 
     // call the parent constructor
     // (size does not matter here)
@@ -18,7 +18,7 @@ let ScoreItem = Melon.Renderable.extend({
   /**
    * update function
    */
-  update: function () {
+  update() {
     // we don't do anything fancy here, so just
     // return true if the score variable has been updated
     if (this.score !== this._prevScore) {
@@ -31,7 +31,7 @@ let ScoreItem = Melon.Renderable.extend({
   /**
    * draw the score
    */
-  draw: function (context) {
+  draw(context) {
     // draw it baby !
   }
 });
@@ -41,7 +41,7 @@ let ScoreItem = Melon.Renderable.extend({
  */
 export default Melon.Container.extend({
   ScoreItem: ScoreItem,
-  init: function () {
+  init() {
     // call the constructor
     this._super(Melon.Container, 'init');
 

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 import Melon from 'melonjs';
 import Config from 'config';
 import Sound from 'system/Sound';
@@ -12,7 +12,7 @@ export default Melon.Entity.extend({
   /**
    * constructor
    */
-  init: function (x, y, settings) {
+  init(x, y, settings) {
     // call the constructor
     this._super(Melon.Entity, 'init', [x, y, settings]);
 
@@ -66,7 +66,7 @@ export default Melon.Entity.extend({
     this.lastPressedButton = null;
   },
 
-  incrementWalkBuffer_old: function () {
+  incrementWalkBuffer_old() {
     if (this.walkBuffer.frames < Melon.sys.fps) { // Let's have a -1 frame error margin
       this.walkBuffer.shouldMove = false;
       this.walkBuffer.frames++;
@@ -77,14 +77,14 @@ export default Melon.Entity.extend({
     }
   },
 
-  stopWalking: function () {
+  stopWalking() {
     if (this.lastPressedButton !== null) {
       this.renderable.setCurrentAnimation("stand_" + this.lastPressedButton.toLowerCase());
       this.lastPressedButton = null;
     }
   },
 
-  walk: function (direction) {
+  walk(direction) {
     let axis, secondAxis, diffVel = (Config.video.tile_size / Melon.sys.fps);
 
     axis = Controls.getPressedAxis(direction);
@@ -136,7 +136,7 @@ export default Melon.Entity.extend({
   /**
    * update the entity
    */
-  update: function (dt) {
+  update(dt) {
     let pressedButton = Controls.getPressed();
 
     if (
@@ -176,7 +176,7 @@ export default Melon.Entity.extend({
    * @param {Melon.Entity|Melon.Renderable} collisionObject
    * @returns {boolean} Return false to avoid collision, return true or nothing to collide.
    */
-  onCollision: function (collisionResponse, collisionObject) {
+  onCollision(collisionResponse, collisionObject) {
     if (collisionResponse.overlap < 1) {
       return false;
     }
@@ -191,11 +191,11 @@ export default Melon.Entity.extend({
     //return true;
   },
 
-  getCurrentTile: function () {
+  getCurrentTile() {
 
   },
 
-  getTileAt: function (x, y) {
+  getTileAt(x, y) {
 
   }
 });

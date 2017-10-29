@@ -1,3 +1,4 @@
+"use strict";
 export default {
   "debug": true,
   "wrapper": "game",

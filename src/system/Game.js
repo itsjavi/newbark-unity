@@ -10,9 +10,6 @@ import scenes from 'scenes';
 export default {
   // Run on page load.
   load() {
-    // Set global game FPS
-    Melon.sys.fps = Config.video.fps;
-
     // Initialize the video.
     if (!Melon.video.init
       (

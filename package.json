@@ -5,7 +5,6 @@
   "license": "MIT",
   "repository": "https://github.com/pokettomonstaa/NewBark",
   "dependencies": {
-    "gamepad.js": "^0.1.0",
     "melonjs": "~4.1.1"
   },
   "devDependencies": {

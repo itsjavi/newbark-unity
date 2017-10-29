@@ -187,7 +187,7 @@ export default Melon.Entity.extend({
     collisionObject.body.friction.set(0, 0);
 
     //console.log("Collided:'" + collisionResponse.a.name + "' with '" + collisionResponse.b.name + "'");
-    Sound.playEffect(assets.audio.collide);
+    Sound.playEffect(assets.audios.collide);
     //return true;
   },
 

@@ -42,21 +42,37 @@ module.exports = function (rootPath, destinationFile = 'assets.js') {
       let fileType = getAssetFileType(fileExt);
 
       if (fileType !== false) {
-        let relativeFile = file.path.substr(rootPath.length + 1);
-        let assetName = path.basename(relativeFile, fileExt);
-        let assetSafeName = assetName.replace(/[^a-zA-Z0-9_]/g,'_').replace(/^[0-9]/g, '_$1');
-        let assetSrc = (fileType === "audio") ? (path.dirname(relativeFile) + "/") : relativeFile;
+        let helperFileType;
 
-        if (!assets[fileType]) {
-          assets[fileType] = {};
+        switch (fileType) {
+          case 'tmx':
+            helperFileType = 'maps';
+            break;
+          case 'tsx':
+            helperFileType = 'tilesets';
+            break;
+          case 'json':
+            helperFileType = 'data';
+            break;
+          default:
+            helperFileType = fileType + 's';
         }
 
-        if (assets[fileType][assetSafeName]) {
-          $e = `Asset ${fileType}.${assetSafeName} already exists.`;
+        let relativeFile = file.path.substr(rootPath.length + 1);
+        let assetName = path.basename(relativeFile, fileExt);
+        let assetSafeName = assetName.replace(/[^a-zA-Z0-9_]/g, '_').replace(/^[0-9]/g, '_$1');
+        let assetSrc = (fileType === "audio") ? (path.dirname(relativeFile) + "/") : relativeFile;
+
+        if (!assets[helperFileType]) {
+          assets[helperFileType] = {};
+        }
+
+        if (assets[helperFileType][assetSafeName]) {
+          $e = `Asset ${helperFileType}.${assetSafeName} already exists.`;
           throw new Error($e);
         }
 
-        assets[fileType][assetSafeName] = assetName;
+        assets[helperFileType][assetSafeName] = assetName;
 
         assets._files.push({
           "name": assetName,
@@ -72,7 +88,7 @@ module.exports = function (rootPath, destinationFile = 'assets.js') {
       cb();
     },
     function (done) { // through._flush
-      let assetsJson = JSON.stringify(assets, null, 4);
+      let assetsJson = JSON.stringify(assets, null, 2);
 
       // Push the new file
       this.push(new File({

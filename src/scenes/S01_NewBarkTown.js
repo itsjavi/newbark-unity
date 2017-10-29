@@ -9,8 +9,8 @@ export default Melon.ScreenObject.extend({
    */
   onResetEvent() {
     // load a level
-    Melon.levelDirector.loadLevel(assets.tmx.S01_NewBarkTown);
-    Sound.playMusic(assets.audio.S01_NewBarkTown);
+    Melon.levelDirector.loadLevel(assets.maps.S01_NewBarkTown);
+    Sound.playMusic(assets.audios.S01_NewBarkTown);
   },
 
   /**

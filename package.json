@@ -5,6 +5,7 @@
   "license": "MIT",
   "repository": "https://github.com/pokettomonstaa/NewBark",
   "dependencies": {
+    "lodash": "^4.17.4",
     "melonjs": "~4.1.1"
   },
   "devDependencies": {

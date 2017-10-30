@@ -2,19 +2,26 @@
 import Melon from 'melonjs';
 import Config from 'config';
 import Screen from 'system/Screen';
-import Player from 'system/Player';
 import Controls from 'system/Controls';
+import entities from 'entities';
 import assets from 'assets';
 import scenes from 'scenes';
+import _ from 'lodash';
 
 export default {
+  /**
+   * @returns {Element}
+   */
+  get wrapper() {
+    return document.getElementById(Config.wrapper);
+  },
   // Run on page load.
   load() {
     // Initialize the video.
     if (!Melon.video.init
       (
-        Screen.width,
-        Screen.height,
+        Screen.defaultWidth,
+        Screen.defaultHeight,
         {
           wrapper: Config.wrapper, // ID of the HTML element
           scale: Screen.scale,
@@ -42,8 +49,11 @@ export default {
 
   // Run on game resources loaded.
   onLoad() {
-    // Add the player to the entity pool
-    Melon.pool.register('player', Player);
+    _.forOwn(entities, function (entity, entityName) {
+      // Add all the entities to the entity pool
+      // For every tile type, we should have a registered entity
+      Melon.pool.register(entityName.toLowerCase(), entity);
+    });
 
     // Bind game buttons
     Controls.bind();

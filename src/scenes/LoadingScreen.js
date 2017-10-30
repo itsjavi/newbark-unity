@@ -86,7 +86,7 @@ export default Melon.ScreenObject.extend({
     Melon.game.world.addChild(progressBar, 1);
 
     // Remove Melon logo
-    this.iconCanvas = Melon.video.createCanvas(Screen.currentWidth, Screen.currentHeight, false);
+    this.iconCanvas = Melon.video.createCanvas(Screen.width, Screen.height, false);
   },
 
   // destroy object at end of loading

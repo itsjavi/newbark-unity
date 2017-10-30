@@ -52,31 +52,6 @@ export default {
       "src": "assets/sfx/"
     },
     {
-      "name": "touch-icon-ipad-76x76",
-      "type": "image",
-      "src": "assets/app/icons/touch-icon-ipad-76x76.png"
-    },
-    {
-      "name": "touch-icon-ipad-retina-152x152",
-      "type": "image",
-      "src": "assets/app/icons/touch-icon-ipad-retina-152x152.png"
-    },
-    {
-      "name": "touch-icon-iphone-60x60",
-      "type": "image",
-      "src": "assets/app/icons/touch-icon-iphone-60x60.png"
-    },
-    {
-      "name": "touch-icon-iphone-retina-120x120",
-      "type": "image",
-      "src": "assets/app/icons/touch-icon-iphone-retina-120x120.png"
-    },
-    {
-      "name": "touch-icon-marketplace-128x128",
-      "type": "image",
-      "src": "assets/app/icons/touch-icon-marketplace-128x128.png"
-    },
-    {
       "name": "PressStart2P",
       "type": "image",
       "src": "assets/font/PressStart2P/PressStart2P.png"
@@ -90,6 +65,11 @@ export default {
       "name": "trainer_sprite",
       "type": "image",
       "src": "assets/img/sprite/trainer_sprite.png"
+    },
+    {
+      "name": "trainer_sprite_debug",
+      "type": "image",
+      "src": "assets/img/sprite/trainer_sprite_debug.png"
     },
     {
       "name": "trainer_sprite_ethan",
@@ -114,14 +94,10 @@ export default {
     "overworld": "overworld"
   },
   "images": {
-    "touch_icon_ipad_76x76": "touch-icon-ipad-76x76",
-    "touch_icon_ipad_retina_152x152": "touch-icon-ipad-retina-152x152",
-    "touch_icon_iphone_60x60": "touch-icon-iphone-60x60",
-    "touch_icon_iphone_retina_120x120": "touch-icon-iphone-retina-120x120",
-    "touch_icon_marketplace_128x128": "touch-icon-marketplace-128x128",
     "PressStart2P": "PressStart2P",
     "overworld_tiles": "overworld_tiles",
     "trainer_sprite": "trainer_sprite",
+    "trainer_sprite_debug": "trainer_sprite_debug",
     "trainer_sprite_ethan": "trainer_sprite_ethan"
   }
 };

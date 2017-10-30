@@ -15,13 +15,19 @@ gulp.task('clean', function () {
   ]);
 });
 
+gulp.task('import-entities', ['clean'], function () {
+  return gulp.src('src/entities/*.js')
+    .pipe(module_merger(cwd + '/src'))
+    .pipe(gulp.dest('src/entities/'));
+});
+
 gulp.task('import-scenes', ['clean'], function () {
   return gulp.src('src/scenes/*.js')
     .pipe(module_merger(cwd + '/src'))
     .pipe(gulp.dest('src/scenes/'));
 });
 
-gulp.task('imports', ['clean', 'import-scenes']);
+gulp.task('imports', ['clean', 'import-entities', 'import-scenes']);
 
 gulp.task('assets', ['clean'], function () {
   return gulp.src('assets/*/**/*.*')
@@ -47,6 +53,11 @@ gulp.task('html', ['clean'], function () {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('default', ['clean', 'imports', 'assets', 'webpack', 'css', 'html'], function () {
+gulp.task('plugins', ['clean'], function () {
+  return gulp.src('node_modules/melonjs/plugins/**/*.*')
+    .pipe(gulp.dest('dist/plugins/'));
+});
+
+gulp.task('default', ['clean', 'imports', 'assets', 'webpack', 'css', 'html', 'plugins'], function () {
   console.info("DONE");
 });

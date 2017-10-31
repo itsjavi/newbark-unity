@@ -58,9 +58,19 @@ export default {
       "src": "assets/img/gui/frame_gold.png"
     },
     {
+      "name": "frame_gold_sm",
+      "type": "image",
+      "src": "assets/img/gui/frame_gold_sm.png"
+    },
+    {
       "name": "frame_silver",
       "type": "image",
       "src": "assets/img/gui/frame_silver.png"
+    },
+    {
+      "name": "frame_silver_sm",
+      "type": "image",
+      "src": "assets/img/gui/frame_silver_sm.png"
     },
     {
       "name": "overworld_tiles",
@@ -96,7 +106,9 @@ export default {
   },
   "images": {
     "frame_gold": "frame_gold",
+    "frame_gold_sm": "frame_gold_sm",
     "frame_silver": "frame_silver",
+    "frame_silver_sm": "frame_silver_sm",
     "overworld_tiles": "overworld_tiles",
     "modern_trainer_sprite": "modern_trainer_sprite",
     "trainer_sprite": "trainer_sprite"

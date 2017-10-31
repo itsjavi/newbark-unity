@@ -7,7 +7,7 @@
 }
 
 html, body {
-  background: #5F382A;
+  background: #22384F;
   color: #fff;
 }
 
@@ -85,13 +85,14 @@ html.xy-centered .main {
 }
 
 .with-frame .main {
-  background: transparent url(../img/gui/frame_gold.png) no-repeat top left;
-  width: 512px;
-  height: 448px;
+  background: transparent url(../img/gui/frame_gold_sm.png) no-repeat top left;
+  width: 352px;
+  height: 320px;
 }
 
 .with-frame .main .game {
   position: absolute;
-  top: 80px;
-  left: 96px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

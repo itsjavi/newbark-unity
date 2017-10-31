@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'GB Regular';
+  src: url('../font/PokemonGB/GBRegular.woff2') format('woff2'),
+  url('../font/PokemonGB/GBRegular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   background: #111;
   color: #fff;
@@ -16,7 +24,7 @@ body {
   /* Allow canvas to hit the edges of the browser viewport. */
   margin: 0;
   overflow: hidden;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "GB Regular", monospace, serif;
 }
 
 html.xy-centered, html.xy-centered body {
@@ -39,12 +47,24 @@ a, a:hover {
   color: #C1F8CF;
 }
 
-.game canvas {
-  margin: auto;
+html.xy-centered .main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
+.debug {
+  font-size: 11px;
+}
+
+.main, .game canvas {
+  margin: auto;
   /* Hide the gap for font descenders. */
   display: block;
+}
 
+.no-scale-interpolation {
   /* disable scaling interpolation */
   image-rendering: optimizeSpeed;
   image-rendering: -moz-crisp-edges;
@@ -55,9 +75,14 @@ a, a:hover {
   -ms-interpolation-mode: nearest-neighbor;
 }
 
-html.xy-centered .game {
+.with-frame .main {
+  background: transparent url(../img/gui/frame_gold.png) no-repeat top left;
+  width: 512px;
+  height: 448px;
+}
+
+.with-frame .main .game {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 80px;
+  left: 96px;
 }

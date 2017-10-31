@@ -20,11 +20,13 @@ let ProgressBar = Melon.Renderable.extend({
 
     // current progress
     this.progress = 0;
+
+    this.padding = 5;
   },
 
   // make sure the screen is refreshed every frame
   onProgressUpdate(progress) {
-    this.progress = ~~(progress * this.width);
+    this.progress = ~~(progress * (this.width - (this.padding * 2)));
     this.invalidate = true;
   },
 
@@ -43,11 +45,11 @@ let ProgressBar = Melon.Renderable.extend({
   // draw function
   draw(renderer) {
     // draw the progress bar
-    renderer.setColor("#CBF8D8");
-    renderer.fillRect(0, (this.height / 2) - (this.barHeight / 2), this.width, this.barHeight);
+    //renderer.setColor("#555555");
+    //renderer.fillRect(0, (this.height / 2) - (this.barHeight / 2), this.width, this.barHeight);
 
-    renderer.setColor("#808080");
-    renderer.fillRect(0, (this.height / 2) - (this.barHeight / 2), this.progress, this.barHeight);
+    renderer.setColor("#64F865");
+    renderer.fillRect(this.padding, (this.height / 2) - (this.barHeight / 2), this.progress, this.barHeight);
 
     renderer.setColor("white");
   }
@@ -64,7 +66,7 @@ export default Melon.ScreenObject.extend({
   // call when the loader is resetted
   onResetEvent() {
     // background color
-    Melon.game.world.addChild(new Melon.ColorLayer("background", "#CBF8D8", 0), 0);
+    Melon.game.world.addChild(new Melon.ColorLayer("background", "#000000", 0), 0);
 
     // progress bar
     let progressBar = new this.ProgressBar(

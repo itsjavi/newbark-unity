@@ -30854,17 +30854,25 @@ exports.default = {
     "type": "audio",
     "src": "assets/sfx/"
   }, {
-    "name": "overworld_tiles",
-    "type": "image",
-    "src": "assets/img/map/overworld_tiles.png"
-  }, {
     "name": "frame_gold",
     "type": "image",
     "src": "assets/img/gui/frame_gold.png"
   }, {
+    "name": "frame_gold_sm",
+    "type": "image",
+    "src": "assets/img/gui/frame_gold_sm.png"
+  }, {
     "name": "frame_silver",
     "type": "image",
     "src": "assets/img/gui/frame_silver.png"
+  }, {
+    "name": "frame_silver_sm",
+    "type": "image",
+    "src": "assets/img/gui/frame_silver_sm.png"
+  }, {
+    "name": "overworld_tiles",
+    "type": "image",
+    "src": "assets/img/map/overworld_tiles.png"
   }, {
     "name": "modern_trainer_sprite",
     "type": "image",
@@ -30891,9 +30899,11 @@ exports.default = {
     "overworld": "overworld"
   },
   "images": {
-    "overworld_tiles": "overworld_tiles",
     "frame_gold": "frame_gold",
+    "frame_gold_sm": "frame_gold_sm",
     "frame_silver": "frame_silver",
+    "frame_silver_sm": "frame_silver_sm",
+    "overworld_tiles": "overworld_tiles",
     "modern_trainer_sprite": "modern_trainer_sprite",
     "trainer_sprite": "trainer_sprite"
   }
@@ -48936,6 +48946,10 @@ var _Controllable = __webpack_require__(15);
 
 var _Controllable2 = _interopRequireDefault(_Controllable);
 
+var _melonjs = __webpack_require__(0);
+
+var _melonjs2 = _interopRequireDefault(_melonjs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -48948,10 +48962,15 @@ exports.default = _Controllable2.default.extend({
   initProperties: function initProperties() {
     this._super(_Controllable2.default, 'initProperties');
 
-    this.defaultSettings.anchorPoint = {
-      // set the anchor point to X center and Y 8px (0.25 // 8px = 25% of 32)
-      x: 0.5, y: 8 / 32
-    };
+    this.defaultSettings.anchorPoint = new _melonjs2.default.Vector2d(
+    // set the anchor point to X center and Y 8px (0.25 // 8px = 25% of 32)
+    0.5, 8 / 32);
+
+    /**
+     * @see me.collision.types.PLAYER_OBJECT
+     * @type {string}
+     */
+    this.defaultSettings.collisionType = 'PLAYER_OBJECT';
 
     // Debug frame
     this.debugAnimation.frames = [0];
@@ -49042,10 +49061,7 @@ var createAnimation = function createAnimation(frames) {
 var Controllable = _melonjs2.default.Entity.extend({
   initProperties: function initProperties() {
     this.defaultSettings = {
-      // collisionType: 'PLAYER_OBJECT',
-      anchorPoint: {
-        x: 0, y: 0
-      }
+      anchorPoint: new _melonjs2.default.Vector2d(0, 0)
     };
     this.pixelBuffer = 0;
     this.remainingPixels = 0;
@@ -49078,6 +49094,7 @@ var Controllable = _melonjs2.default.Entity.extend({
     this._super(_melonjs2.default.Entity, 'init', [x, y, settings]);
 
     this.mainSprite = this.renderable;
+
     // Register main sprite animations
     _lodash2.default.forOwn(this.animations, function (animation, animationName) {
       if (animation.frames.length === 0) {
@@ -49093,8 +49110,7 @@ var Controllable = _melonjs2.default.Entity.extend({
         "framewidth": this.mainSprite.framewidth,
         "frameheight": this.mainSprite.frameheight,
         "spacing": this.mainSprite.spacing,
-        "margin": this.mainSprite.margin,
-        "anchorPoint": this.mainSprite.anchorPoint
+        "margin": this.mainSprite.margin
       });
       this.debugSprite.addAnimation('debug', createAnimation(this.debugAnimation.frames));
       this.debugSprite.setCurrentAnimation('debug');
@@ -49125,6 +49141,9 @@ var Controllable = _melonjs2.default.Entity.extend({
     this.body.gravity = 0;
     this.body.jumping = false;
     this.body.falling = false;
+
+    // Set the sprite anchor point
+    this.anchorPoint.set(settings.anchorPoint.x, settings.anchorPoint.y);
 
     // set the display to follow our position on both axis
     _melonjs2.default.game.viewport.follow(this.pos, _melonjs2.default.game.viewport.AXIS.BOTH);

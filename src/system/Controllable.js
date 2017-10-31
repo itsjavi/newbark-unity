@@ -278,6 +278,8 @@ let Controllable = Melon.Entity.extend({
     collisionObject.body.falling = false;
 
     Sound.playEffect(assets.audios.collide);
+
+    this.debugCollision(collisionResponse, collisionObject);
   },
 
   isMoving() {
@@ -316,9 +318,22 @@ let Controllable = Melon.Entity.extend({
           <tr><td><b>Pixels per frame:</b></td><td>${Movement.pixelsPerFrame}</td></tr>
           <tr><td><b>Remaining Pixels:</b></td><td>${this.remainingPixels}</td></tr>
           <tr><td><b>Pixel Buffer:</b></td><td>${this.pixelBuffer}</td></tr>
+          <tr><td><b>Last Collision:</b></td><td id="debug_collision">-</td></tr>
         </table>
       `;
   },
+
+  debugCollision(collisionResponse, collisionObject, element = 'debug_collision') {
+    if (!Config.debug) {
+      return;
+    }
+    let el = document.getElementById(element);
+    if (!el) {
+      return;
+    }
+    let name = collisionResponse.b.name || 'default';
+    el.innerHTML = `${name}`;
+  }
 });
 
 export default Controllable;

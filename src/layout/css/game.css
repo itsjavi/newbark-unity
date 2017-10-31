@@ -5,11 +5,11 @@
   font-weight: normal;
   font-style: normal;
 }
-
-body {
-  background: #111;
+html, body {
+  background: #000;
   color: #fff;
-
+}
+body {
   /* Allow mouse dragging. */
   -moz-user-select: none;
   -ms-user-select: none;
@@ -39,12 +39,24 @@ body > footer {
   left: 0;
   right: 0;
   text-align: center;
-  padding: 20px;
-  background: #eee;
+}
+
+body > footer, .debug {
+  padding: 16px;
+  background: #000;
+  font-size: 8px;
 }
 
 a, a:hover {
-  color: #C1F8CF;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 html.xy-centered .main {
@@ -52,10 +64,6 @@ html.xy-centered .main {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-.debug {
-  font-size: 11px;
 }
 
 .main, .game canvas {

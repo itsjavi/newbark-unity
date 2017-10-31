@@ -1,9 +1,9 @@
 'use strict';
 export default {
-  "debug": true,
+  "debug": true, // default debug status, changeable via the URL hash #debug (needs reload)
   "wrapper": "game",
   "video": {
-    "fps": 60,
+    "fps": 32,
     "tile_size": 32,
     "renderer": "CANVAS", // CANVAS or WEBGL
     "scale": 2, // "auto" or number
@@ -44,11 +44,8 @@ export default {
     }
   },
   "player": {
-    "tiles_per_second": 1,
-    "velocity": 5,
-    "move_diagonally": false,
-    "tile_snapping": true,
-    "tile_move_time": 1000
+    "velocity_factor": 1, // this affects the number of tiles to move
+    "allow_diagonal": false
   },
   "initial_scene": "S01_NewBarkTown"
 };

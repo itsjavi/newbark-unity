@@ -52,9 +52,14 @@ export default {
       "src": "assets/sfx/"
     },
     {
-      "name": "PressStart2P",
+      "name": "frame_gold",
       "type": "image",
-      "src": "assets/font/PressStart2P/PressStart2P.png"
+      "src": "assets/img/gui/frame_gold.png"
+    },
+    {
+      "name": "frame_silver",
+      "type": "image",
+      "src": "assets/img/gui/frame_silver.png"
     },
     {
       "name": "overworld_tiles",
@@ -62,19 +67,14 @@ export default {
       "src": "assets/img/map/overworld_tiles.png"
     },
     {
+      "name": "modern_trainer_sprite",
+      "type": "image",
+      "src": "assets/img/sprite/modern_trainer_sprite.png"
+    },
+    {
       "name": "trainer_sprite",
       "type": "image",
       "src": "assets/img/sprite/trainer_sprite.png"
-    },
-    {
-      "name": "trainer_sprite_debug",
-      "type": "image",
-      "src": "assets/img/sprite/trainer_sprite_debug.png"
-    },
-    {
-      "name": "trainer_sprite_ethan",
-      "type": "image",
-      "src": "assets/img/sprite/trainer_sprite_ethan.png"
     }
   ],
   "audios": {
@@ -94,10 +94,10 @@ export default {
     "overworld": "overworld"
   },
   "images": {
-    "PressStart2P": "PressStart2P",
+    "frame_gold": "frame_gold",
+    "frame_silver": "frame_silver",
     "overworld_tiles": "overworld_tiles",
-    "trainer_sprite": "trainer_sprite",
-    "trainer_sprite_debug": "trainer_sprite_debug",
-    "trainer_sprite_ethan": "trainer_sprite_ethan"
+    "modern_trainer_sprite": "modern_trainer_sprite",
+    "trainer_sprite": "trainer_sprite"
   }
 };

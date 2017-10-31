@@ -10,3 +10,4 @@ bower_components/
 *.log
 *.sqlite
 package-lock.json
+gh-pages

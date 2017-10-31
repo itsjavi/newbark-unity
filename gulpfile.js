@@ -4,14 +4,14 @@ const gulp = require('gulp');
 const del = require('del');
 const concat = require('gulp-concat');
 const webpack = require('webpack-stream');
+const ghpages = require('gh-pages');
 const assets_indexer = require('./tools/gulp/AssetsIndexer');
 const module_merger = require('./tools/gulp/ModuleMerger');
 const cwd = path.resolve(__dirname);
 
 gulp.task('clean', function () {
   return del([
-    'dist/**/*',
-    'build/**/*'
+    'dist/**/*'
   ]);
 });
 
@@ -54,7 +54,20 @@ gulp.task('html', ['clean'], function () {
 });
 
 gulp.task('default', ['clean', 'imports', 'assets', 'webpack', 'css', 'html'], function () {
-  console.info("DONE");
+  console.info("The dist folder is now shiny and fresh ✨.");
+});
+
+gulp.task('publish', ['default'], function () {
+  // WARNING! You won't be able to publish unless you have write permissions on the repo.
+  // Check the gh-pages npm package documentation.
+  ghpages.publish('dist',
+    {
+      message: 'Updated gh-pages according to master changes'
+    },
+    function () {
+      console.info("The gh-pages branch is updated and pushed 📦.");
+    }
+  );
 });
 
 gulp.task('watch', function () {

@@ -34,10 +34,7 @@ let createAnimation = function (frames) {
 let Controllable = Melon.Entity.extend({
   initProperties() {
     this.defaultSettings = {
-      // collisionType: 'PLAYER_OBJECT',
-      anchorPoint: {
-        x: 0, y: 0
-      }
+      anchorPoint: new Melon.Vector2d(0, 0)
     };
     this.pixelBuffer = 0;
     this.remainingPixels = 0;
@@ -67,6 +64,7 @@ let Controllable = Melon.Entity.extend({
     this._super(Melon.Entity, 'init', [x, y, settings]);
 
     this.mainSprite = this.renderable;
+
     // Register main sprite animations
     _.forOwn(this.animations, (animation, animationName) => {
       if (animation.frames.length === 0) {
@@ -82,8 +80,7 @@ let Controllable = Melon.Entity.extend({
           "framewidth": this.mainSprite.framewidth,
           "frameheight": this.mainSprite.frameheight,
           "spacing": this.mainSprite.spacing,
-          "margin": this.mainSprite.margin,
-          "anchorPoint": this.mainSprite.anchorPoint
+          "margin": this.mainSprite.margin
         }
       );
       this.debugSprite.addAnimation('debug', createAnimation(this.debugAnimation.frames));
@@ -115,6 +112,9 @@ let Controllable = Melon.Entity.extend({
     this.body.gravity = 0;
     this.body.jumping = false;
     this.body.falling = false;
+
+    // Set the sprite anchor point
+    this.anchorPoint.set(settings.anchorPoint.x, settings.anchorPoint.y);
 
     // set the display to follow our position on both axis
     Melon.game.viewport.follow(this.pos, Melon.game.viewport.AXIS.BOTH);

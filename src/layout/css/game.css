@@ -5,10 +5,12 @@
   font-weight: normal;
   font-style: normal;
 }
+
 html, body {
-  background: #000;
+  background: #5F382A;
   color: #fff;
 }
+
 body {
   /* Allow mouse dragging. */
   -moz-user-select: none;
@@ -43,7 +45,6 @@ body > footer {
 
 body > footer, .debug {
   padding: 16px;
-  background: #000;
   font-size: 8px;
 }
 

@@ -1,5 +1,6 @@
 'use strict';
 import Controllable from 'system/Controllable';
+import Melon from 'melonjs';
 
 /**
  * Main player entity
@@ -11,10 +12,16 @@ export default Controllable.extend({
   initProperties() {
     this._super(Controllable, 'initProperties');
 
-    this.defaultSettings.anchorPoint = {
+    this.defaultSettings.anchorPoint = new Melon.Vector2d(
       // set the anchor point to X center and Y 8px (0.25 // 8px = 25% of 32)
-      x: 0.5, y: (8 / 32)
-    };
+      0.5, (8 / 32)
+    );
+
+    /**
+     * @see me.collision.types.PLAYER_OBJECT
+     * @type {string}
+     */
+    this.defaultSettings.collisionType = 'PLAYER_OBJECT';
 
     // Debug frame
     this.debugAnimation.frames = [0];

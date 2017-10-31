@@ -1,6 +1,8 @@
 # NewBark
 🌳 Retro Pokémon RPG game engine built on top of MelonJS and compatible with Tiled maps editor.
 
+![screenshot](screenshot.png)
+
 This is currently an early stage prototype and it is not intended to be a final game.
 The main goal of this project is to build an RPG game engine for the web, inspired and based on the Pokemon games.
 

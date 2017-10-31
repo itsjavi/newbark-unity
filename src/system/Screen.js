@@ -7,10 +7,10 @@ export default {
     return Config.video.presets[Config.video.preset];
   },
   get defaultWidth() {
-    return this.preset.width * this.preset.ratio;
+    return this.preset.width;
   },
   get defaultHeight() {
-    return this.preset.height * this.preset.ratio;
+    return this.preset.height;
   },
   get width() {
     return Melon.game.viewport.width;

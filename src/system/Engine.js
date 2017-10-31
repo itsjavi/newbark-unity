@@ -40,8 +40,14 @@ let engine = {
       Melon.game.config = Config;
     }
 
-    if (Config.video.preset === 'GBC' && Config.video.scale === 2) {
+    // Add a frame on the supported resolution
+    if (Config.video.preset === 'GBC_2x' && Config.video.scale === 1) {
       document.body.classList.add('with-frame');
+    }
+
+    // The game canvas will need a zoom if the devicePixelRatio is different than 1
+    if (!isNaN(Config.video.scale) && window.devicePixelRatio !== undefined) {
+      document.getElementById('game').style.zoom = window.devicePixelRatio;
     }
 
     // For this engine we don't need to apply physics when colliding

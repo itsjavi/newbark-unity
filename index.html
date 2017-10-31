@@ -1,39 +1,26 @@
 <!DOCTYPE HTML>
 <html class="xy-centered">
 <head>
-    <title>poketiled</title>
-    <meta id="viewport" name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-    <link rel="apple-touch-icon" href="assets/app/icons/touch-icon-iphone-60x60.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/app/icons/touch-icon-ipad-76x76.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/app/icons/touch-icon-iphone-retina-120x120.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/app/icons/touch-icon-ipad-retina-152x152.png">
-    <link rel="manifest" href="manifest.json">
-
-    <link href="//fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" media="screen" href="index.css">
+  <title>NewBark</title>
+  <meta id="viewport" name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/game.css">
 </head>
 <body>
-<!-- Canvas placeholder -->
-<div id="screen"></div>
-<footer>
-    <a class="btn btn-sm btn-link" href="https://github.com/metaunicorn" target="_blank">Created by @metaunicorn</a>
-    <a class="btn btn-sm btn-primary" href="https://github.com/metaunicorn/poketiled" target="_blank">Source Code</a>
-</footer>
-<!-- Game Scripts -->
-<script src="src/app.min.js"></script>
 
-<!-- Bootstrap -->
-<script type="text/javascript">
-    window.onReady(function onReady() {
-        game.load();
-    });
-</script>
+<div id="main" class="main no-scale-interpolation">
+  <div id="game" class="game no-scale-interpolation"></div>
+</div>
+<div id="debug" class="debug no-scale-interpolation"></div>
+<footer>
+  <a class="btn btn-sm btn-link" href="https://github.com/itsjavi" target="_blank">Created by @itsjavi</a>
+  -
+  <a class="btn btn-sm btn-primary" href="https://github.com/pokettomonstaa/NewBark" target="_blank">Source Code</a>
+</footer>
+
+<script type="text/javascript" src="game.js"></script>
 </body>
 </html>

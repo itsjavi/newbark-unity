@@ -85,6 +85,8 @@ let Controllable = Melon.Entity.extend({
       );
       this.debugSprite.addAnimation('debug', createAnimation(this.debugAnimation.frames));
       this.debugSprite.setCurrentAnimation('debug');
+      this.debugSprite.alwaysUpdate = true;
+      this.mainSprite.alwaysUpdate = true;
       this.debugSprite.inViewport = true;
       this.mainSprite.inViewport = true;
 

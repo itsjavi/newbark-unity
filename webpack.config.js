@@ -7,6 +7,15 @@ let webpackShimConfig = {
   shim: {
     'melonjs': {
       exports: 'me'
+    },
+    'zepto': {
+      exports: 'Zepto'
+    },
+    'zepto-touch': {
+      deps: [
+        'zepto:Zepto',
+        'zepto:$',
+      ]
     }
   }
 };
@@ -25,7 +34,9 @@ module.exports = {
       path.resolve('./node_modules')
     ],
     alias: {
-      'melonjs': path.join(__dirname, 'node_modules/melonjs/build/melonjs.js')
+      'melonjs': path.join(__dirname, 'node_modules/melonjs/build/melonjs.js'),
+      'zepto': path.join(__dirname, 'node_modules/zepto/dist/zepto.js'),
+      'zepto-touch': path.join(__dirname, 'node_modules/zepto/src/touch.js')
     },
   },
   module: {

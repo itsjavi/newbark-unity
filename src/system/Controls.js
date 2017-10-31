@@ -1,5 +1,8 @@
 'use strict';
 import Melon from 'melonjs';
+import Zepto from 'zepto';
+import Touch from 'zepto-touch'; // Do not delete
+import Config from "config";
 
 const Input = Melon.input,
   KEYS = Input.KEY,
@@ -59,7 +62,32 @@ export default {
     Input.bindGamepad(0, {type: "buttons", code: PAD_BUTTONS.FACE_1}, KEYS.SPACE);
     Input.bindGamepad(0, {type: "buttons", code: PAD_BUTTONS.FACE_2}, KEYS.B);
 
+    let wrapper = Zepto('#' + Config.wrapper); // game element
+
+    this.bindTouchEvent(wrapper, 'swipeUp', KEYS.UP);
+    this.bindTouchEvent(wrapper, 'swipeRight', KEYS.RIGHT);
+    this.bindTouchEvent(wrapper, 'swipeDown', KEYS.DOWN);
+    this.bindTouchEvent(wrapper, 'swipeLeft', KEYS.LEFT);
+    this.bindTouchEvent(wrapper, 'swipeLeft', KEYS.LEFT);
+
+    this.bindTouchEvent(wrapper, 'tap', KEYS.SPACE); // A
+    this.bindTouchEvent(wrapper, 'longTap', KEYS.S); // START
   },
+
+  bindTouchEvent(el, eventName, key, timeoutTime = 500) {
+    let eventTimeout = null;
+
+    el.on(eventName, () => {
+      Input.triggerKeyEvent(key, true); // keydown
+      if (eventTimeout) {
+        clearTimeout(eventTimeout); // cancel prev timeout
+      }
+      eventTimeout = setTimeout(() => {
+        Input.triggerKeyEvent(key, false); // keyup after 500ms
+      }, timeoutTime);
+    });
+  },
+
   isPressed(buttonName) {
     return Input.isKeyPressed(buttonName);
   },

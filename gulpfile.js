@@ -62,7 +62,7 @@ gulp.task('publish', ['default'], function () {
   // Check the gh-pages npm package documentation.
   ghpages.publish('dist',
     {
-      message: 'Updated gh-pages according to master changes'
+      message: 'Update build with latest master changes'
     },
     function () {
       console.info("The gh-pages branch is updated and pushed 📦.");

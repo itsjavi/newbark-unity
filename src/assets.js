@@ -1,3 +1,4 @@
+/* This is an auto-generated file. Please use gulp to update it. */
 "use strict";
 export default {
   "_files": [

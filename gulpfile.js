@@ -43,21 +43,26 @@ gulp.task('webpack', ['imports', 'assets'], function () {
 });
 
 gulp.task('css', ['clean'], function () {
-  return gulp.src('assets/css/**/*.css')
+  return gulp.src('src/layout/css/**/*.css')
     .pipe(gulp.dest('dist/assets/css/'));
 });
 
 gulp.task('html', ['clean'], function () {
-  return gulp.src('src/html/game.html')
+  return gulp.src('src/layout/game.html')
     .pipe(concat('index.html'))
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('plugins', ['clean'], function () {
-  return gulp.src('node_modules/melonjs/plugins/**/*.*')
-    .pipe(gulp.dest('dist/plugins/'));
+gulp.task('default', ['clean', 'imports', 'assets', 'webpack', 'css', 'html'], function () {
+  console.info("DONE");
 });
 
-gulp.task('default', ['clean', 'imports', 'assets', 'webpack', 'css', 'html', 'plugins'], function () {
-  console.info("DONE");
+gulp.task('watch', function () {
+  gulp.watch('assets/**/*.{tmx,tsx,json}', ['assets', 'webpack']);
+  gulp.watch('src/layout/**/*.html', ['html']);
+  gulp.watch('src/layout/**/*.css', ['css']);
+  gulp.watch('src/entities/**/*.js', ['import-entities', 'webpack']);
+  gulp.watch('src/scenes/**/*.js', ['import-scenes', 'webpack']);
+  gulp.watch('src/system/**/*.js', ['webpack']);
+  gulp.watch('src/{config,index}.js', ['webpack']);
 });

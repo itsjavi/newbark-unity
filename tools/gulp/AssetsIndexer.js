@@ -89,13 +89,14 @@ module.exports = function (rootPath, destinationFile = 'assets.js') {
     },
     function (done) { // through._flush
       let assetsJson = JSON.stringify(assets, null, 2);
+      let fileHeader = '/* This is an auto-generated file. Please use gulp to update it. */\n';
 
       // Push the new file
       this.push(new File({
         cwd: firstFile.cwd,
         base: firstFile.base,
         path: path.join(firstFile.base, destinationFile),
-        contents: new Buffer(`"use strict";\nexport default ${assetsJson};\n`)
+        contents: new Buffer(fileHeader + `"use strict";\nexport default ${assetsJson};\n`)
       }));
 
       done();

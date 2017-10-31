@@ -30854,6 +30854,10 @@ exports.default = {
     "type": "audio",
     "src": "assets/sfx/"
   }, {
+    "name": "overworld_tiles",
+    "type": "image",
+    "src": "assets/img/map/overworld_tiles.png"
+  }, {
     "name": "frame_gold",
     "type": "image",
     "src": "assets/img/gui/frame_gold.png"
@@ -30861,10 +30865,6 @@ exports.default = {
     "name": "frame_silver",
     "type": "image",
     "src": "assets/img/gui/frame_silver.png"
-  }, {
-    "name": "overworld_tiles",
-    "type": "image",
-    "src": "assets/img/map/overworld_tiles.png"
   }, {
     "name": "modern_trainer_sprite",
     "type": "image",
@@ -30891,9 +30891,9 @@ exports.default = {
     "overworld": "overworld"
   },
   "images": {
+    "overworld_tiles": "overworld_tiles",
     "frame_gold": "frame_gold",
     "frame_silver": "frame_silver",
-    "overworld_tiles": "overworld_tiles",
     "modern_trainer_sprite": "modern_trainer_sprite",
     "trainer_sprite": "trainer_sprite"
   }
@@ -49286,6 +49286,8 @@ var Controllable = _melonjs2.default.Entity.extend({
     collisionObject.body.falling = false;
 
     _Sound2.default.playEffect(_assets2.default.audios.collide);
+
+    this.debugCollision(collisionResponse, collisionObject);
   },
   isMoving: function isMoving() {
     return this.remainingPixels > 0 || this.pixelBuffer > 0;
@@ -49314,7 +49316,20 @@ var Controllable = _melonjs2.default.Entity.extend({
     if (!el) {
       return;
     }
-    el.innerHTML = '\n        <table>\n          <tr><td><b>FPS:</b></td><td>' + _Movement2.default.fps + '</td></tr>\n          <tr><td><b>Delta Time:</b></td><td>' + deltaTime + '</td></tr>\n          <tr><td><b>Direction:</b></td><td>' + direction + '</td></tr>\n          <tr><td><b>Pixels per move:</b></td><td>' + _Movement2.default.pixelsPerMove + '</td></tr>\n          <tr><td><b>Pixels per frame:</b></td><td>' + _Movement2.default.pixelsPerFrame + '</td></tr>\n          <tr><td><b>Remaining Pixels:</b></td><td>' + this.remainingPixels + '</td></tr>\n          <tr><td><b>Pixel Buffer:</b></td><td>' + this.pixelBuffer + '</td></tr>\n        </table>\n      ';
+    el.innerHTML = '\n        <table>\n          <tr><td><b>FPS:</b></td><td>' + _Movement2.default.fps + '</td></tr>\n          <tr><td><b>Delta Time:</b></td><td>' + deltaTime + '</td></tr>\n          <tr><td><b>Direction:</b></td><td>' + direction + '</td></tr>\n          <tr><td><b>Pixels per move:</b></td><td>' + _Movement2.default.pixelsPerMove + '</td></tr>\n          <tr><td><b>Pixels per frame:</b></td><td>' + _Movement2.default.pixelsPerFrame + '</td></tr>\n          <tr><td><b>Remaining Pixels:</b></td><td>' + this.remainingPixels + '</td></tr>\n          <tr><td><b>Pixel Buffer:</b></td><td>' + this.pixelBuffer + '</td></tr>\n          <tr><td><b>Last Collision:</b></td><td id="debug_collision">-</td></tr>\n        </table>\n      ';
+  },
+  debugCollision: function debugCollision(collisionResponse, collisionObject) {
+    var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'debug_collision';
+
+    if (!_config2.default.debug) {
+      return;
+    }
+    var el = document.getElementById(element);
+    if (!el) {
+      return;
+    }
+    var name = collisionResponse.b.name || 'default';
+    el.innerHTML = '' + name;
   }
 });
 

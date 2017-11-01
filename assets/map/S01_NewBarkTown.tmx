@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="24" height="18" tilewidth="32" tileheight="32" nextobjectid="94">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="24" height="18" tilewidth="32" tileheight="32" nextobjectid="95">
  <tileset firstgid="1" source="overworld.tsx"/>
  <layer name="ground" width="24" height="18">
   <data encoding="base64">
@@ -28,7 +28,7 @@
   </data>
  </layer>
  <objectgroup color="#0000ff" name="characters">
-  <object id="45" name="player" x="576" y="224" width="32" height="32">
+  <object id="45" name="player" x="480" y="192" width="32" height="32">
    <properties>
     <property name="frameheight" type="int" value="32"/>
     <property name="framewidth" type="int" value="32"/>

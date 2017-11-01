@@ -1,9 +1,9 @@
 'use strict';
 import {Melon} from 'externals';
-import Screen from 'system/Screen';
+import Resolution from 'system/Resolution';
 
 /*
- * Game Loading Screen
+ * Game loading screen
  * Based on default one: https://raw.githubusercontent.com/melonjs/melonJS/master/src/loader/loadingscreen.js
  */
 
@@ -88,7 +88,7 @@ export default Melon.ScreenObject.extend({
     Melon.game.world.addChild(progressBar, 1);
 
     // Remove Melon logo
-    this.iconCanvas = Melon.video.createCanvas(Screen.width, Screen.height, false);
+    this.iconCanvas = Melon.video.createCanvas(Resolution.width, Resolution.height, false);
   },
 
   // destroy object at end of loading

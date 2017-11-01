@@ -3,7 +3,7 @@ import {Melon, assets, _} from 'externals';
 import Controls from 'system/Controls';
 import Sound from 'system/Sound';
 import Movement from 'system/Movement';
-import Config from 'config';
+import Debug from 'system/Debug';
 
 let createAnimation = function (frames) {
   if (frames.length === 1) {
@@ -73,7 +73,7 @@ let Controllable = Melon.Entity.extend({
       this.mainSprite.addAnimation(animationName, createAnimation(animation.frames));
     });
 
-    if (Config.debug) {
+    if (Debug.enabled) {
       this.debugSprite = new Melon.Sprite(0, 0, {
           "image": this.mainSprite.image,
           "framewidth": this.mainSprite.framewidth,
@@ -128,6 +128,10 @@ let Controllable = Melon.Entity.extend({
    * update the entity
    */
   update(deltaTime) {
+    this.renderable.inViewport = true;
+    this.debugSprite.inViewport = true;
+    this.mainSprite.inViewport = true;
+
     if (!this.isMoving()) {
       this.body.vel.x = 0;
       this.body.vel.y = 0;
@@ -158,13 +162,13 @@ let Controllable = Melon.Entity.extend({
       this.move(direction);
     }
 
-    if (Config.debug) {
-      this.debugUpdate(direction, deltaTime);
+    if (Debug.enabled) {
+      Debug.debugUpdate(direction, deltaTime, this.remainingPixels, this.pixelBuffer);
     }
 
     // Always show
     if (this.debugSprite !== undefined) {
-      this.debugSprite.inViewport = Config.debug === true;
+      this.debugSprite.inViewport = Debug.enabled === true;
     }
     this.mainSprite.inViewport = true;
 
@@ -280,7 +284,7 @@ let Controllable = Melon.Entity.extend({
 
     Sound.playEffect(assets.audios.collide);
 
-    this.debugCollision(collisionResponse, collisionObject);
+    Debug.debugCollision(collisionResponse);
   },
 
   isMoving() {
@@ -301,40 +305,6 @@ let Controllable = Melon.Entity.extend({
 
     return false;
   },
-
-  debugUpdate(direction, deltaTime, element = 'debug') {
-    if (!Config.debug) {
-      return;
-    }
-    let el = document.getElementById(element);
-    if (!el) {
-      return;
-    }
-    el.innerHTML = `
-        <table>
-          <tr><td><b>FPS:</b></td><td>${Movement.fps}</td></tr>
-          <tr><td><b>Delta Time:</b></td><td>${deltaTime}</td></tr>
-          <tr><td><b>Direction:</b></td><td>${direction}</td></tr>
-          <tr><td><b>Pixels per move:</b></td><td>${Movement.pixelsPerMove}</td></tr>
-          <tr><td><b>Pixels per frame:</b></td><td>${Movement.pixelsPerFrame}</td></tr>
-          <tr><td><b>Remaining Pixels:</b></td><td>${this.remainingPixels}</td></tr>
-          <tr><td><b>Pixel Buffer:</b></td><td>${this.pixelBuffer}</td></tr>
-          <tr><td><b>Last Collision:</b></td><td id="debug_collision">-</td></tr>
-        </table>
-      `;
-  },
-
-  debugCollision(collisionResponse, collisionObject, element = 'debug_collision') {
-    if (!Config.debug) {
-      return;
-    }
-    let el = document.getElementById(element);
-    if (!el) {
-      return;
-    }
-    let name = collisionResponse.b.name || 'default';
-    el.innerHTML = `${name}`;
-  }
 });
 
 export default Controllable;

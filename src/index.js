@@ -1,8 +1,6 @@
 'use strict';
-import Engine from 'system/Engine';
 import Game from 'system/Game';
-import LoadingScreen from 'scenes/LoadingScreen';
+import GameLoader from 'system/GameLoader';
 
-Engine
-  .load(LoadingScreen)
-  .play(Game);
+let gameLoader = new GameLoader(Game);
+gameLoader.loadOnReady();

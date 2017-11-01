@@ -1,76 +1,38 @@
 'use strict';
-import {Melon, assets, _} from 'externals';
-import Config from 'config';
-import Screen from 'system/Screen';
-import Controls from 'system/Controls';
+import {Melon, _, $} from 'externals';
 import entities from 'entities/_all';
 import scenes from 'scenes/_all';
 
-export default {
-  /**
-   * @returns {Element}
-   */
-  get wrapper() {
-    return document.getElementById(Config.wrapper);
-  },
-  // Run on page load.
-  load() {
-    // Initialize the video.
-    if (!Melon.video.init
-      (
-        Screen.defaultWidth,
-        Screen.defaultHeight,
-        {
-          wrapper: Config.wrapper, // ID of the HTML element
-          scale: Screen.scale,
-          renderer: Melon.video[Config.video.renderer],
-          antiAlias: false
-        }
-      )
-    ) {
-      alert("Your browser does not support the HTML5 " + Config.video.renderer + " renderer.");
-      return;
-    }
+class Game {
 
-    if (Config.debug && Melon.debug) {
-      Melon.debug.renderHitBox = true;
-    }
+  constructor(config) {
+    this.config = config;
 
-    // Initialize the audio.
-    Melon.audio.init("mp3,ogg");
+    // Keep a copy of the original config
+    this.config.initial = _.cloneDeep(config);
 
-    // Set and load all resources.
-    // This will also automatically switch to the loading screen (Melon.state.LOADING)
-    // It will call 'onLoad' once all resources are loaded.
-    Melon.loader.preload(assets._files, this.onLoad.bind(this));
-  },
+    /**
+     * @type {(Zepto|HTMLElement)}
+     */
+    this.element = $(this.config.wrapper);
+  }
 
   // Run on game resources loaded.
-  onLoad() {
+  start() {
+    // Register all entities
     _.forOwn(entities, function (entity, entityName) {
       // Add all the entities to the entity pool
       // For every tile type, we should have a registered entity
       Melon.pool.register(entityName.toLowerCase(), entity);
     });
 
-    // Bind game buttons
-    Controls.bind();
-
-    // Start the game
-    this.start();
-  },
-
-  // Loads to the initial scene(s)
-  start() {
     // Sets the scenes for the different states
     Melon.state.set(Melon.state.READY, new scenes.TitleScreen());
-    Melon.state.set(Melon.state.PLAY, new scenes[Config.initial_scene]());
+    Melon.state.set(Melon.state.PLAY, new scenes[this.config.initial_scene]());
 
     // Start the gaMelon.
     Melon.state.change(Melon.state.PLAY);
-  },
-
-  reset() {
-    this.start();
   }
-};
+}
+
+export default Game;

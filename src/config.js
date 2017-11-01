@@ -3,7 +3,7 @@ export default {
   "debug": true, // default debug status, changeable via the URL hash #debug (needs reload)
   "wrapper": "game",
   "video": {
-    "fps": 32,
+    "fps": 32, // Trivia: The original GB frame rate was 59.7
     "tile_size": 32,
     "renderer": "CANVAS", // CANVAS or WEBGL
     "scale": 1, // "auto" or number

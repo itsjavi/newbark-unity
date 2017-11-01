@@ -84,13 +84,13 @@ html.xy-centered .main {
   -ms-interpolation-mode: nearest-neighbor;
 }
 
-.with-frame .main {
+.default-resolution .main {
   background: transparent url(../img/gui/frame_gold_sm.png) no-repeat top left;
   width: 352px;
   height: 320px;
 }
 
-.with-frame .main .game {
+.default-resolution .main .game {
   position: absolute;
   top: 50%;
   left: 50%;

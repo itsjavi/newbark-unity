@@ -1,7 +1,6 @@
 'use strict';
-import Melon from 'melonjs';
+import {Melon, assets} from 'externals';
 import Sound from 'system/Sound';
-import assets from 'assets';
 
 export default Melon.ScreenObject.extend({
   /**

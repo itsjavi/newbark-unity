@@ -22,22 +22,29 @@ function getAssetFileType(fileExt) {
 }
 
 /**
- * @param {string} rootPath
+ * @param {string} includePath
  * @param {string} destinationFile
+ * @param {string} [varDeclaration] Variable declaration used in the assets file
  * @returns {Stream}
  */
-module.exports = function (rootPath, destinationFile = 'assets.js') {
-  rootPath = path.resolve(rootPath);
+module.exports = function (includePath, destinationFile, varDeclaration = 'window.me.game.assets =') {
+  if (!includePath) {
+    throw new Error('AssetsIndexer: Missing includePath argument');
+  }
+  if (!destinationFile) {
+    throw new Error('AssetsIndexer: Missing destinationFile argument');
+  }
   let assets = {
     _files: []
   };
   let firstFile;
 
-  return through.obj({},
+  return through.obj(
     function (file, encoding, cb) { // through._transform
       if (!firstFile) {
         firstFile = file;
       }
+      let fileName = path.basename(file.path);
       let fileExt = path.extname(file.path);
       let fileType = getAssetFileType(fileExt);
 
@@ -58,8 +65,14 @@ module.exports = function (rootPath, destinationFile = 'assets.js') {
             helperFileType = fileType + 's';
         }
 
-        let relativeFile = file.path.substr(rootPath.length + 1);
-        let assetName = path.basename(relativeFile, fileExt);
+        if (fileName === path.basename(destinationFile)) {
+          // Do not index dest. file itself
+          cb();
+          return;
+        }
+
+        let relativeFile = file.path.substr(includePath.length + 1);
+        let assetName = path.basename(fileName, fileExt);
         let assetSafeName = assetName.replace(/[^a-zA-Z0-9_]/g, '_').replace(/^[0-9]/g, '_$1');
         let assetSrc = (fileType === "audio") ? (path.dirname(relativeFile) + "/") : relativeFile;
 
@@ -68,7 +81,7 @@ module.exports = function (rootPath, destinationFile = 'assets.js') {
         }
 
         if (assets[helperFileType][assetSafeName]) {
-          $e = `Asset ${helperFileType}.${assetSafeName} already exists.`;
+          let $e = `Asset ${helperFileType}.${assetSafeName} already exists.`;
           throw new Error($e);
         }
 
@@ -88,15 +101,22 @@ module.exports = function (rootPath, destinationFile = 'assets.js') {
       cb();
     },
     function (done) { // through._flush
+      if (!firstFile) {
+        done();
+        return;
+      }
+
       let assetsJson = JSON.stringify(assets, null, 2);
-      let fileHeader = '/* This is an auto-generated file. Please use gulp to update it. */\n';
+      let fileHeader = '/* This is an auto-generated file. Please use gulp to update it. */\n\'use strict\';\n';
 
       // Push the new file
       this.push(new File({
         cwd: firstFile.cwd,
         base: firstFile.base,
         path: path.join(firstFile.base, destinationFile),
-        contents: new Buffer(fileHeader + `"use strict";\nexport default ${assetsJson};\n`)
+        contents: new Buffer(
+          fileHeader + `${varDeclaration} ${assetsJson};\n`
+        )
       }));
 
       done();

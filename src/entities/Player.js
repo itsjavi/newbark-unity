@@ -1,6 +1,6 @@
 'use strict';
 import Controllable from 'system/Controllable';
-import Melon from 'melonjs';
+import {Melon} from 'externals';
 
 /**
  * Main player entity

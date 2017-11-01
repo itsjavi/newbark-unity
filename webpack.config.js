@@ -2,28 +2,10 @@
 const path = require('path');
 const webpack = require('webpack');
 
-let webpackShimConfig = {
-  // shim config for incompatible libraries
-  shim: {
-    'melonjs': {
-      exports: 'me'
-    },
-    'zepto': {
-      exports: 'Zepto'
-    },
-    'zepto-touch': {
-      deps: [
-        'zepto:Zepto',
-        'zepto:$',
-      ]
-    }
-  }
-};
-
 module.exports = {
   entry: {
-    "game": './src/index.js',
-    "game.min": './src/index.js',
+    'game': './src/index.js',
+    'game.min': './src/index.js',
   },
   output: {
     filename: '[name].js'
@@ -33,19 +15,9 @@ module.exports = {
       path.resolve('./src'),
       path.resolve('./node_modules')
     ],
-    alias: {
-      'melonjs': path.join(__dirname, 'node_modules/melonjs/build/melonjs.js'),
-      'zepto': path.join(__dirname, 'node_modules/zepto/dist/zepto.js'),
-      'zepto-touch': path.join(__dirname, 'node_modules/zepto/src/touch.js')
-    },
   },
   module: {
     loaders: [
-      {
-        test: /\.js/,
-        loader: 'shim-loader',
-        query: webpackShimConfig,
-      },
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -57,6 +29,11 @@ module.exports = {
         }
       }
     ]
+  },
+  externals: {
+    'zepto-ext': 'window.Zepto',
+    'melonjs-ext': 'window.me',
+    'lodash-ext': 'window._'
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({

@@ -1,4 +1,5 @@
-import Melon from 'melonjs';
+'use strict';
+import {Melon} from 'externals';
 import Config from 'config';
 
 // TODO: convert class members into non-static and have pixel calculation functions and buffers inside.

@@ -1,12 +1,10 @@
 'use strict';
-import Melon from 'melonjs';
+import {Melon, assets, _} from 'externals';
 import Config from 'config';
 import Screen from 'system/Screen';
 import Controls from 'system/Controls';
-import entities from 'entities';
-import assets from 'assets';
-import scenes from 'scenes';
-import _ from 'lodash';
+import entities from 'entities/_all';
+import scenes from 'scenes/_all';
 
 export default {
   /**

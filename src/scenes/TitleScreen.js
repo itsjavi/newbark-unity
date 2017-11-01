@@ -1,5 +1,5 @@
 'use strict';
-import Melon from 'melonjs';
+import {Melon} from 'externals';
 
 export default Melon.ScreenObject.extend({
   /**

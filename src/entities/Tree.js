@@ -1,5 +1,5 @@
 'use strict';
-import Melon from 'melonjs';
+import {Melon} from 'externals';
 
 /**
  * Represents a tree where the trainer can find Pokemon using "headbutt".

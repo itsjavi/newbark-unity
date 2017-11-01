@@ -1,5 +1,5 @@
 'use strict';
-import Melon from 'melonjs';
+import {Melon} from 'externals';
 
 /**
  * Warps are a way to travel between maps

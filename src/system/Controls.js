@@ -1,7 +1,5 @@
 'use strict';
-import Melon from 'melonjs';
-import Zepto from 'zepto';
-import Touch from 'zepto-touch'; // Do not delete
+import {Melon, $} from 'externals';
 import Config from "config";
 
 const Input = Melon.input,
@@ -62,7 +60,7 @@ export default {
     Input.bindGamepad(0, {type: "buttons", code: PAD_BUTTONS.FACE_1}, KEYS.SPACE);
     Input.bindGamepad(0, {type: "buttons", code: PAD_BUTTONS.FACE_2}, KEYS.B);
 
-    let wrapper = Zepto('#' + Config.wrapper); // game element
+    let wrapper = $('#' + Config.wrapper); // game element
 
     this.bindTouchEvent(wrapper, 'swipeUp', KEYS.UP);
     this.bindTouchEvent(wrapper, 'swipeRight', KEYS.RIGHT);

@@ -1,4 +1,5 @@
-import Melon from 'melonjs';
+'use strict';
+import {Melon} from 'externals';
 import Config from 'config';
 
 /* melonjs engine wrapper */
@@ -17,7 +18,7 @@ let engine = {
   },
   /**
    *
-   * @param {Melon.ScreenObject} loadingScreen
+   * @param {ext.ScreenObject} loadingScreen
    * @returns {engine}
    */
   load(loadingScreen = null) {

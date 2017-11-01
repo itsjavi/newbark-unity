@@ -1,5 +1,5 @@
 'use strict';
-import Melon from 'melonjs';
+import {Melon} from 'externals';
 import Screen from 'system/Screen';
 
 /*
@@ -75,13 +75,13 @@ export default Melon.ScreenObject.extend({
       Melon.video.renderer.getHeight()
     );
 
-    this.loaderHdlr = Melon.event.subscribe(
-      Melon.event.LOADER_PROGRESS,
+    this.loaderHdlr = Melon.Events.subscribe(
+      Melon.Events.LOADER_PROGRESS,
       progressBar.onProgressUpdate.bind(progressBar)
     );
 
-    this.resizeHdlr = Melon.event.subscribe(
-      Melon.event.VIEWPORT_ONRESIZE,
+    this.resizeHdlr = Melon.Events.subscribe(
+      Melon.Events.VIEWPORT_ONRESIZE,
       progressBar.resize.bind(progressBar)
     );
 
@@ -94,8 +94,8 @@ export default Melon.ScreenObject.extend({
   // destroy object at end of loading
   onDestroyEvent() {
     // cancel the callback
-    Melon.event.unsubscribe(this.loaderHdlr);
-    Melon.event.unsubscribe(this.resizeHdlr);
+    Melon.Events.unsubscribe(this.loaderHdlr);
+    Melon.Events.unsubscribe(this.resizeHdlr);
     this.loaderHdlr = this.resizeHdlr = null;
   }
 });

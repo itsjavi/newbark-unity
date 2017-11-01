@@ -3,22 +3,32 @@ const through = require('through2');
 const File = require('gulp-util').File;
 
 /**
- * @param {string} rootPath
+ * @param {string} includePath
  * @param {string} destinationFile
  * @returns {Stream}
  */
-module.exports = function (rootPath, destinationFile = 'index.js') {
-  rootPath = path.resolve(rootPath);
+module.exports = function (includePath, destinationFile) {
+  if (!includePath) {
+    throw new Error('ModuleMerger: Missing includePath argument');
+  }
+  if (!destinationFile) {
+    throw new Error('ModuleMerger: Missing destinationFile argument');
+  }
+
   let modules = [];
   let firstFile;
 
-  return through.obj({},
+  return through.obj(
     function (file, encoding, cb) { // through._transform
+      let fileName = path.basename(file.path);
       let fileExt = path.extname(file.path);
-      let relativeFile = file.path.substr(rootPath.length + 1).replace(/\.js$/, '');
-      let fileName = path.basename(relativeFile, fileExt);
+      let moduleName = path.basename(file.path, fileExt);
+      let moduleSafeName = moduleName.replace(/[^a-zA-Z0-9_]/g, '_').replace(/^[0-9]/g, '_$1');
 
-      if (destinationFile === path.basename(relativeFile)) {
+      if (
+        (path.basename(destinationFile) === fileName)
+        || (file.contents.toString().match(/@@nobundle/ig))
+      ) {
         cb();
         return;
       }
@@ -28,8 +38,8 @@ module.exports = function (rootPath, destinationFile = 'index.js') {
       }
 
       modules.push({
-        "name": fileName,
-        "src": relativeFile
+        "name": moduleSafeName,
+        "src": file.path.substr(includePath.length + 1).replace(fileExt, '')
       });
 
       // make sure the file goes through the next gulp plugin
@@ -39,7 +49,12 @@ module.exports = function (rootPath, destinationFile = 'index.js') {
       cb();
     },
     function (done) { // through._flush
-      let code = '"use strict";\n/* This file is auto-generated */\n';
+      if (!firstFile) {
+        done();
+        return;
+      }
+
+      let code = '/* This is an auto-generated file. Please use gulp to update it. */\n\'use strict\';\n';
       let code_exports = [];
       let code_exports_default = [];
 
@@ -49,12 +64,12 @@ module.exports = function (rootPath, destinationFile = 'index.js') {
         }
         code += `import ${module.name} from '${module.src}';\n`;
 
-        code_exports_default.push(`   ${module.name}: ` + module.name);
+        code_exports_default.push(`  ${module.name}: ` + module.name);
         code_exports.push('  ' + module.name);
       });
 
-      code += '\nexport default {\n' + code_exports_default.join(',\n') + '\n};\n  ';
-      code += '\nexport {\n' + code_exports.join(',\n') + '\n};\n  ';
+      code += '\nexport default {\n' + code_exports_default.join(',\n') + '\n};\n';
+      code += '\nexport {\n' + code_exports.join(',\n') + '\n};';
 
       // Push the new file
       this.push(new File({

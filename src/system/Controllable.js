@@ -1,10 +1,9 @@
-import Melon from 'melonjs';
+'use strict';
+import {Melon, assets, _} from 'externals';
 import Controls from 'system/Controls';
 import Sound from 'system/Sound';
 import Movement from 'system/Movement';
 import Config from 'config';
-import assets from 'assets';
-import _ from 'lodash';
 
 let createAnimation = function (frames) {
   if (frames.length === 1) {

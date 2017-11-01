@@ -55,10 +55,10 @@ gulp.task('modules', ['modules:clean'], function () {
     'src/entities/'
   ]
     .forEach((dir) => {
-    streams.push(gulp.src(dir + '*.js')
-      .pipe(module_merger(cwd + '/src', '_all.js'))
-      .pipe(gulp.dest(dir)))
-  });
+      streams.push(gulp.src(dir + '*.js')
+        .pipe(module_merger(cwd + '/src', '_all.js'))
+        .pipe(gulp.dest(dir)))
+    });
 
   return es.concat.apply(null, streams);
 });
@@ -93,6 +93,15 @@ gulp.task('html', ['html:clean'], function () {
 });
 
 
+gulp.task('config:clean', function () {
+  return del(['dist/config.js']);
+});
+gulp.task('config', ['config:clean'], function () {
+  return gulp.src('config.js')
+    .pipe(gulp.dest('dist/'));
+});
+
+
 gulp.task('publish', ['default'], function () {
   // WARNING! You won't be able to publish unless you have write permissions on the repo.
   // Check the gh-pages npm package documentation.
@@ -108,12 +117,13 @@ gulp.task('publish', ['default'], function () {
 
 gulp.task('watch', function () {
   gulp.watch('assets/**/!(*.css)*.*', ['assets']);
+  gulp.watch('config.js', ['config']);
   gulp.watch('src/*.html', ['html']);
   gulp.watch('src/css/**/*.css', ['css']);
   gulp.watch('src/**/!(_all.js)*.js', ['webpack']);
 });
 
 
-gulp.task('default', ['vendor', 'assets', 'webpack', 'css', 'html'], function () {
+gulp.task('default', ['vendor', 'assets', 'config', 'webpack', 'css', 'html'], function () {
   console.info("The dist folder is now shiny and fresh ✨.");
 });

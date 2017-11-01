@@ -34,9 +34,16 @@ let ext = {
   get assets() {
     return window.me.game.assets;
   },
+
+  /**
+   * @return {(window.me.$config)}
+   */
+  get config() {
+    return window.me.$config;
+  },
 };
 
-let Melon = ext.me, $ = Zepto, assets = ext.assets;
+let Melon = ext.me, $ = Zepto, assets = ext.assets, config = ext.config;
 Melon.Events = Melon.event;
 
 export default ext;
@@ -45,5 +52,6 @@ export {
   $,
   _,
   Melon,
-  assets
+  assets,
+  config
 }

@@ -1,22 +1,21 @@
 'use strict';
-import {Melon} from 'externals';
-import Config from 'config';
+import {Melon, config} from 'externals';
 
 export default {
   init() {
     // Add a frame on the supported resolution
-    if (this.preset === 'GBC_2x' && this.scale === 1) {
+    if (config.video.resolution === 'GBC_2x' && this.scale === 1) {
       document.body.classList.add('default-resolution');
     }
 
     // The game canvas will need a zoom if the devicePixelRatio is different than 1
     if (!isNaN(this.scale) && this.pixelRatio > 1) {
-      document.getElementById(Config.wrapper).style.zoom = this.pixelRatio;
+      document.getElementById(config.wrapper).style.zoom = this.pixelRatio;
     }
   },
 
   get preset() {
-    return Config.video.presets[Config.video.preset];
+    return config.video.resolutions[config.video.resolution];
   },
   get defaultWidth() {
     return this.preset.width;
@@ -31,7 +30,7 @@ export default {
     return Melon.game.viewport.height;
   },
   get scale() {
-    return Config.video.scale;
+    return config.video.scale;
   },
   get pixelRatio() {
     return window.devicePixelRatio ? window.devicePixelRatio : 1;

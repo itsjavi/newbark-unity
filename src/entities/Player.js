@@ -38,5 +38,6 @@ export default Controllable.extend({
     this.animations.stand_down.frames = [5];
     this.animations.stand_left.frames = [3];
 
+    Melon.$game.player = this;
   },
 });

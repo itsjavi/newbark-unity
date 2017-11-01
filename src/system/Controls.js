@@ -1,6 +1,5 @@
 'use strict';
-import {Melon, $} from 'externals';
-import Config from "config";
+import {Melon} from 'externals';
 
 const Input = Melon.input,
   KEYS = Input.KEY,
@@ -60,16 +59,14 @@ export default {
     Input.bindGamepad(0, {type: "buttons", code: PAD_BUTTONS.FACE_1}, KEYS.SPACE);
     Input.bindGamepad(0, {type: "buttons", code: PAD_BUTTONS.FACE_2}, KEYS.B);
 
-    let wrapper = $('#' + Config.wrapper); // game element
+    this.bindTouchEvent(Melon.$game.element, 'swipeUp', KEYS.UP);
+    this.bindTouchEvent(Melon.$game.element, 'swipeRight', KEYS.RIGHT);
+    this.bindTouchEvent(Melon.$game.element, 'swipeDown', KEYS.DOWN);
+    this.bindTouchEvent(Melon.$game.element, 'swipeLeft', KEYS.LEFT);
+    this.bindTouchEvent(Melon.$game.element, 'swipeLeft', KEYS.LEFT);
 
-    this.bindTouchEvent(wrapper, 'swipeUp', KEYS.UP);
-    this.bindTouchEvent(wrapper, 'swipeRight', KEYS.RIGHT);
-    this.bindTouchEvent(wrapper, 'swipeDown', KEYS.DOWN);
-    this.bindTouchEvent(wrapper, 'swipeLeft', KEYS.LEFT);
-    this.bindTouchEvent(wrapper, 'swipeLeft', KEYS.LEFT);
-
-    this.bindTouchEvent(wrapper, 'tap', KEYS.SPACE); // A
-    this.bindTouchEvent(wrapper, 'longTap', KEYS.S); // START
+    this.bindTouchEvent(Melon.$game.element, 'tap', KEYS.SPACE); // A
+    this.bindTouchEvent(Melon.$game.element, 'longTap', KEYS.S); // START
   },
 
   bindTouchEvent(el, eventName, key, timeoutTime = 500) {

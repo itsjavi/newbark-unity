@@ -1,6 +1,5 @@
 'use strict';
-import {Melon} from 'externals';
-import Config from 'config';
+import {Melon, config} from 'externals';
 
 export default {
   channels: {
@@ -15,12 +14,12 @@ export default {
    * @return {(Number|boolean)} the sound instance ID or false if could not play it.
    */
   playMusic(name, volume) {
-    if (!Config.sound.enabled) {
+    if (!config.sound.enabled) {
       return false;
     }
     this.channels.BGM = name;
 
-    Melon.audio.playTrack(name, (!isNaN(volume) ? volume : Config.sound.volume.music / 100));
+    Melon.audio.playTrack(name, (!isNaN(volume) ? volume : config.sound.volume.music / 100));
   },
 
   /**
@@ -30,7 +29,7 @@ export default {
    * @return {(Number|boolean)} the sound instance ID or false if could not play it.
    */
   playEffect(name, volume, channel) {
-    if (!Config.sound.enabled) {
+    if (!config.sound.enabled) {
       return false;
     }
     channel = channel || "SFX_1";
@@ -43,7 +42,7 @@ export default {
     Melon.audio.play(name, false,
       () => {
         this.channels[channel] = false;
-      }, (!isNaN(volume) ? volume : Config.sound.volume.effects / 100)
+      }, (!isNaN(volume) ? volume : config.sound.volume.effects / 100)
     );
   }
 };

@@ -1,6 +1,5 @@
 'use strict';
-import {Melon, assets} from 'externals';
-import Config from 'config';
+import {Melon, assets, config} from 'externals';
 import Resolution from 'system/Resolution';
 import Controls from 'system/Controls';
 import Debug from 'system/Debug';
@@ -24,10 +23,10 @@ class GameLoader {
     /**
      * @type {system/Game.prototype}
      */
-    this.game = Melon.$game = new gameClass(Config);
+    this.game = Melon.$game = new gameClass(config);
 
     // Set FPS
-    Melon.sys.fps = Config.video.fps;
+    Melon.sys.fps = config.video.fps;
 
     // Disable gravity
     Melon.sys.gravity = 0;
@@ -37,29 +36,29 @@ class GameLoader {
 
     // Set the default loading screen
     Melon.DefaultLoadingScreen = LoadingScreen;
-
-    Resolution.init();
-    Debug.init();
   }
 
   /**
    * Initializes video and audio and calls the onLoad function when the assets are pre-loaded.
    */
   load() {
+    Resolution.init();
+    Debug.init();
+
     // Initialize the video.
     if (!Melon.video.init
       (
         Resolution.defaultWidth,
         Resolution.defaultHeight,
         {
-          wrapper: Config.wrapper, // ID of the HTML element
+          wrapper: config.wrapper, // ID of the HTML element
           scale: Resolution.scale,
-          renderer: Melon.video[Config.video.renderer],
+          renderer: Melon.video[config.video.renderer],
           antiAlias: false
         }
       )
     ) {
-      alert("Your browser does not support the HTML5 " + Config.video.renderer + " renderer.");
+      alert("Your browser does not support the HTML5 " + config.video.renderer + " renderer.");
       return;
     }
 

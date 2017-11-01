@@ -1,14 +1,15 @@
 'use strict';
-export default {
+
+window.me.$config = {
   "debug": true, // default debug status, changeable via the URL hash #debug (needs reload)
   "wrapper": "game",
   "video": {
-    "fps": 32, // Trivia: The original GB frame rate was 59.7
+    "fps": 64, // Trivia: The original GB frame rate was 59.7
     "tile_size": 32,
     "renderer": "CANVAS", // CANVAS or WEBGL
     "scale": 1, // "auto" or number
-    "preset": "GBC_2x", // tile size is 32, double as original GBC (16) so the viewport should be doubled
-    "presets": { // TODO: refactor this to "resolutions"
+    "resolution": "GBC_2x", // tile size is 32, double as original GBC (16) so the resolution should be doubled
+    "resolutions": {
       "GBC": {
         "width": 160,
         "height": 144
@@ -55,7 +56,7 @@ export default {
     }
   },
   "player": {
-    "velocity_factor": 1, // this affects the number of tiles to move
+    "speed": 4, // this affects the number of tiles to move
     "allow_diagonal": false
   },
   "initial_scene": "S01_NewBarkTown"

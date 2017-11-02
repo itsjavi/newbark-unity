@@ -41,6 +41,10 @@ body > footer {
   left: 0;
   right: 0;
   text-align: center;
+  text-shadow: -1px -1px 0 #22384F,
+  1px -1px 0 #22384F,
+  -1px 1px 0 #22384F,
+  1px 1px 0 #22384F;
 }
 
 body > footer, .debug {

@@ -30,17 +30,17 @@ let createAnimation = function (frames) {
   return animation;
 };
 
-let Character = Melon.Entity.extend({
+let PlayerController = Melon.Entity.extend({
   initProperties() {
     this.defaultSettings = {
       anchorPoint: new Melon.Vector2d(0, 0)
     };
-    this.pixelBuffer = 0;
     this.remainingPixels = 0;
     this.lastPressedButton = null;
 
     // Define an animation per desired button e.g. animationType_buttonName
     this.animations = {
+      debug: {frames: [0]},
       walk_up: {frames: []},
       walk_right: {frames: []},
       walk_down: {frames: []},
@@ -48,11 +48,10 @@ let Character = Melon.Entity.extend({
       stand_up: {frames: []},
       stand_right: {frames: []},
       stand_down: {frames: []},
-      stand_left: {frames: []},
+      stand_left: {frames: []}
     };
 
     this.initialAnimation = 'stand_down';
-    this.debugAnimation = {frames: [0]};
   },
 
   init(x, y, settings = {}) {
@@ -62,45 +61,17 @@ let Character = Melon.Entity.extend({
 
     this._super(Melon.Entity, 'init', [x, y, settings]);
 
-    this.mainSprite = this.renderable;
-
-    // Register main sprite animations
+    // Register sprite animations
     _.forOwn(this.animations, (animation, animationName) => {
       if (animation.frames.length === 0) {
         return;
       }
 
-      this.mainSprite.addAnimation(animationName, createAnimation(animation.frames));
+      this.renderable.addAnimation(animationName, createAnimation(animation.frames));
     });
 
-    if (Debug.enabled) {
-      this.debugSprite = new Melon.Sprite(0, 0, {
-          "image": this.mainSprite.image,
-          "framewidth": this.mainSprite.framewidth,
-          "frameheight": this.mainSprite.frameheight,
-          "spacing": this.mainSprite.spacing,
-          "margin": this.mainSprite.margin
-        }
-      );
-      this.debugSprite.addAnimation('debug', createAnimation(this.debugAnimation.frames));
-      this.debugSprite.setCurrentAnimation('debug');
-      this.debugSprite.alwaysUpdate = true;
-      this.mainSprite.alwaysUpdate = true;
-      this.debugSprite.inViewport = true;
-      this.mainSprite.inViewport = true;
-
-      // Wrap sprites in a container
-      let container = new Melon.Container();
-      container.ancestor = this;
-      container.updateBoundsPos(0, 0);
-      container.addChild(this.debugSprite);
-      container.addChild(this.mainSprite);
-      container.updateChildBounds();
-      this.renderable = container;
-    }
-
     // set a standing animation as default
-    this.mainSprite.setCurrentAnimation(this.initialAnimation);
+    this.renderable.setCurrentAnimation(this.initialAnimation);
 
     // set the default horizontal & vertical speed (accel vector)
     this.body.vel.set(0, 0);
@@ -127,16 +98,23 @@ let Character = Melon.Entity.extend({
    * update the entity
    */
   update(deltaTime) {
-    let isUpdated = false;
-
     if (!this.isMoving()) {
       this.body.vel.x = 0;
       this.body.vel.y = 0;
+
       if (this.lastPressedButton) {
-        this.mainSprite.setCurrentAnimation("stand_" + this.lastPressedButton.toLowerCase());
+        this.renderable.setCurrentAnimation(`stand_${this.lastPressedButton.toLowerCase()}`);
+        if (Debug.enabled) {
+          if (this.debugTimeout) {
+            clearTimeout(this.debugTimeout);
+          }
+          this.debugTimeout = setTimeout(() => {
+            this.renderable.setCurrentAnimation('debug');
+          }, 1000);
+        }
       }
+
       this.lastPressedButton = null;
-      isUpdated = true;
     }
 
     let direction = this.getMoveDirection();
@@ -144,7 +122,7 @@ let Character = Melon.Entity.extend({
     if (!direction && !this.isMoving()) {
       // No action and no pending animation
       Debug.debugUpdate('-', deltaTime, 0, 0);
-      return false;
+      return this._super(Melon.Entity, 'update', [deltaTime]);
     }
 
     if (direction && !this.lastPressedButton) {
@@ -159,11 +137,9 @@ let Character = Melon.Entity.extend({
 
     let velocity = 0;
 
-    if (direction && ((velocity = this.getVelocity()) !== 0) ) {
+    if (direction && ((velocity = this.getVelocity()) !== 0)) {
       // velocity = velocity * deltaTime;
-      if (this.move(direction, velocity)) {
-        isUpdated = true;
-      }
+      this.move(direction, velocity);
     }
 
     Debug.debugUpdate(direction, deltaTime, this.remainingPixels, velocity);
@@ -176,12 +152,7 @@ let Character = Melon.Entity.extend({
     Melon.collision.check(this);
 
     // return true if we moved or if the renderable was updated
-    isUpdated = false;
-    return (
-      isUpdated
-      || this._super(Melon.Entity, 'update', [deltaTime])
-      || this.hasVelocity()
-    );
+    return (this._super(Melon.Entity, 'update', [deltaTime]) || this.hasVelocity());
   },
 
   move(pressedButton, velocity) {
@@ -197,9 +168,8 @@ let Character = Melon.Entity.extend({
 
     let oppositeAxis = Controls.getPressedOppositeAxis(axis);
 
-    if (!Movement.allowDiagonal) {
-      this.body.vel[oppositeAxis] = 0;
-    }
+    // Disable diagonal movement
+    this.body.vel[oppositeAxis] = 0;
 
     if (pressedButton === Controls.LEFT || pressedButton === Controls.UP) {
       this.body.vel[axis] -= velocity;
@@ -208,8 +178,8 @@ let Character = Melon.Entity.extend({
     }
 
     // change to the walking animation
-    if (!this.mainSprite.isCurrentAnimation("walk_" + pressedButton.toLowerCase())) {
-      this.mainSprite.setCurrentAnimation("walk_" + pressedButton.toLowerCase());
+    if (!this.renderable.isCurrentAnimation(`walk_${pressedButton.toLowerCase()}`)) {
+      this.renderable.setCurrentAnimation(`walk_${pressedButton.toLowerCase()}`);
     }
 
     return this.hasVelocity();
@@ -219,52 +189,19 @@ let Character = Melon.Entity.extend({
    * @returns {(Integer|boolean)}
    */
   getVelocity() {
-    // TODO: calculate velocity for exact or half pixels
     if (this.remainingPixels >= Movement.velocity) {
-      // Do not move
+      // Move with constant velocity
       this.remainingPixels -= Movement.velocity;
       return Movement.velocity;
-    } else if (this.remainingPixels > 0) {
-      // Remaining pixels
+    } else if (this.remainingPixels !== 0 && this.remainingPixels < Movement.velocity) {
+      // Move with remaining pixels
       let vel = this.remainingPixels;
       this.remainingPixels = 0;
       return vel;
     }
 
+    // Do not move
     return 0;
-  },
-
-  /**
-   *
-   * Collision handler
-   * (called when colliding with other objects)
-   * @param {Melon.collision.ResponseObject} collisionResponse
-   * @param {Melon.Entity|Melon.Renderable} collisionObject
-   * @returns {boolean} Return false to avoid collision, return true or nothing to collide.
-   */
-  onCollision(collisionResponse, collisionObject) {
-    if (collisionResponse.overlap < 1) {
-      return false;
-    }
-
-    collisionResponse.a.body.gravity = 0;
-    collisionResponse.a.body.friction.set(0, 0);
-    collisionResponse.a.body.jumping = false;
-    collisionResponse.a.body.falling = false;
-
-    collisionResponse.b.body.gravity = 0;
-    collisionResponse.b.body.friction.set(0, 0);
-    collisionResponse.b.body.jumping = false;
-    collisionResponse.b.body.falling = false;
-
-    collisionObject.body.gravity = 0;
-    collisionObject.body.friction.set(0, 0);
-    collisionObject.body.jumping = false;
-    collisionObject.body.falling = false;
-
-    Sound.playEffect(assets.audios.collide);
-
-    Debug.debugCollision(collisionResponse);
   },
 
   isMoving() {
@@ -289,6 +226,42 @@ let Character = Melon.Entity.extend({
 
     return false;
   },
+
+  /**
+   *
+   * Collision handler
+   * (called when colliding with other objects)
+   * @param {me.collision.ResponseObject.prototype} collisionResponse
+   * @param {me.Entity|me.Renderable} collisionObject
+   * @returns {boolean} Return false to avoid collision, return true or nothing to collide.
+   */
+  onCollision(collisionResponse, collisionObject) {
+    if (collisionResponse.overlap === 0) {
+      return false;
+    }
+
+    collisionResponse.a.body.gravity = 0;
+    collisionResponse.b.body.accel.set(0, 0);
+    collisionResponse.a.body.friction.set(0, 0);
+    collisionResponse.a.body.jumping = false;
+    collisionResponse.a.body.falling = false;
+
+    collisionResponse.b.body.gravity = 0;
+    collisionResponse.b.body.accel.set(0, 0);
+    collisionResponse.b.body.friction.set(0, 0);
+    collisionResponse.b.body.jumping = false;
+    collisionResponse.b.body.falling = false;
+
+    collisionObject.body.gravity = 0;
+    collisionObject.body.accel.set(0, 0);
+    collisionObject.body.friction.set(0, 0);
+    collisionObject.body.jumping = false;
+    collisionObject.body.falling = false;
+
+    Sound.playEffect(assets.audios.collide);
+
+    Debug.debugCollision(collisionResponse);
+  },
 });
 
-export default Character;
+export default PlayerController;

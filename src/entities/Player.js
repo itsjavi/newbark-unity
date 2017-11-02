@@ -1,5 +1,5 @@
 'use strict';
-import Character from 'system/Character';
+import PlayerController from 'system/PlayerController';
 import {Melon} from 'externals';
 
 /**
@@ -8,9 +8,9 @@ import {Melon} from 'externals';
  * Name: player
  * Layer: characters
  */
-export default Character.extend({
+export default PlayerController.extend({
   initProperties() {
-    this._super(Character, 'initProperties');
+    this._super(PlayerController, 'initProperties');
 
     this.defaultSettings.anchorPoint = new Melon.Vector2d(
       // set the anchor point to X center and Y 8px (0.25 // 8px = 25% of 32)
@@ -24,7 +24,7 @@ export default Character.extend({
     this.defaultSettings.collisionType = 'PLAYER_OBJECT';
 
     // Debug frame
-    this.debugAnimation.frames = [0];
+    this.animations.debug.frames = [[0, 1000], [11, 1000]];
 
     // Walking frames
     this.animations.walk_up.frames = [9, 8, 10, 8];

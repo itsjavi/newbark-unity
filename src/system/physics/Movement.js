@@ -32,19 +32,13 @@ class Movement {
    */
   static get velocity() {
     if (config.player.velocity === undefined) {
-      config.player.velocity = Calc.velocity(this.distancePerMove, this.fps) * config.player.speed;
+      let vel = Calc.velocity(config.video.tile_size, this.fps);
+
+      vel = ((vel <= 0.5) ? 1 : Math.round(vel)) * config.player.speed; // assure minimum of 1 and multiply by speed.
+
+      config.player.velocity = Math.ceil(vel / 2) * 2; // assure velocity is always multiple of 2
     }
     return config.player.velocity;
-  }
-
-  /**
-   * @return {Boolean}
-   */
-  static get allowDiagonal() {
-    if (config.player.allow_diagonal === undefined) {
-      config.player.allow_diagonal = false;
-    }
-    return config.player.allow_diagonal;
   }
 }
 

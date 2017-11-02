@@ -4,7 +4,7 @@ window.me.$config = {
   "debug": true, // default debug status, changeable via the URL hash #debug (needs reload)
   "wrapper": "game",
   "video": {
-    "fps": 64, // Trivia: The original GB frame rate was 59.7
+    "fps": 60, // Trivia: The original GB frame rate was 59.7
     "tile_size": 32,
     "renderer": "CANVAS", // CANVAS or WEBGL
     "scale": 1, // "auto" or number
@@ -56,8 +56,7 @@ window.me.$config = {
     }
   },
   "player": {
-    "speed": 4,
-    "allow_diagonal": false
+    "speed": 2
   },
   "initial_scene": "S01_NewBarkTown"
 };

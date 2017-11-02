@@ -19,7 +19,7 @@ class Game {
     /**
      * @type {(Zepto|HTMLElement)}
      */
-    this.element = $(this.config.wrapper);
+    this.element = $('#' + this.config.wrapper);
 
     // Register all entities
     _.forOwn(entities, function (entity, entityName) {

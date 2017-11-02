@@ -41,6 +41,10 @@ body > footer {
   left: 0;
   right: 0;
   text-align: center;
+  text-shadow: -1px -1px 0 #22384F,
+  1px -1px 0 #22384F,
+  -1px 1px 0 #22384F,
+  1px 1px 0 #22384F;
 }
 
 body > footer, .debug {
@@ -84,13 +88,13 @@ html.xy-centered .main {
   -ms-interpolation-mode: nearest-neighbor;
 }
 
-.with-frame .main {
+.default-resolution .main {
   background: transparent url(../img/gui/frame_gold_sm.png) no-repeat top left;
   width: 352px;
   height: 320px;
 }
 
-.with-frame .main .game {
+.default-resolution .main .game {
   position: absolute;
   top: 50%;
   left: 50%;

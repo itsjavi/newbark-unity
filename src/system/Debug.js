@@ -1,20 +1,19 @@
 'use strict';
-import {Melon, $, _} from 'externals';
-import Config from 'config';
+import {Melon, $, _, config} from 'externals';
 import Events from 'system/Events';
-import Movement from 'system/Movement';
+import Movement from 'system/physics/Movement';
 
 export default {
   get enabled() {
-    return (Config.debug === true);
+    return (config.debug === true);
   },
 
   disable() {
-    Config.debug = false;
+    config.debug = false;
   },
 
   enable() {
-    Config.debug = true;
+    config.debug = true;
   },
 
   /**
@@ -26,16 +25,15 @@ export default {
 
   init() {
     // Set debug to false (even if true) if the location does not have #debug
-    Config.debug = (
-      Config.debug === true
+    config.debug = (
+      config.debug === true
       && !_.isEmpty(window.location.hash)
       && !!(window.location.hash.toLowerCase().match(/debug/ig))
     );
 
     if (this.enabled) {
-      // Make it available so it can be tweaked on run time
-      Melon.game.config = Config;
       // Melon.debug.renderHitBox = true; // TODO: check the utility of this
+      this.debugUpdate('-', '-', 0, 0);
     }
 
     // Show/hide debug elements on level load, depending on current debug mode
@@ -97,7 +95,7 @@ export default {
     this.element.html(this.format(data));
   },
 
-  debugUpdate(direction, deltaTime, remainingPixels, pixelBuffer) {
+  debugUpdate(direction, deltaTime, remainingPixels, deltaVelocity = null) {
     if (!this.enabled) {
       return;
     }
@@ -105,12 +103,12 @@ export default {
     this.debug({
       'FPS': Movement.fps,
       'Delta Time': deltaTime,
-      'Direction': direction,
-      'Pixels per move': Movement.pixelsPerMove,
-      'Pixels per frame': Movement.pixelsPerFrame,
-      'Remaining Pixels': remainingPixels,
-      'Pixel Buffer': pixelBuffer,
+      'Velocity (pixels per frame)': Movement.velocity,
+      'Distance (pixels per move)': Movement.distancePerMove,
+      'Distance (current move)': remainingPixels,
+      'Velocity (current move)': !isNaN(deltaVelocity) ? deltaVelocity : 0,
       'Last Collision': '-',
+      'Direction': direction
     });
   },
 

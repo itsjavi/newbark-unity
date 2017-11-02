@@ -56,7 +56,7 @@ window.me.$config = {
     }
   },
   "player": {
-    "speed": 4, // this affects the number of tiles to move
+    "speed": 4,
     "allow_diagonal": false
   },
   "initial_scene": "S01_NewBarkTown"

@@ -2,7 +2,7 @@
 import {Melon, assets, _} from 'externals';
 import Controls from 'system/Controls';
 import Sound from 'system/Sound';
-import Movement from 'system/Movement';
+import Movement from 'system/physics/Movement';
 import Debug from 'system/Debug';
 
 let createAnimation = function (frames) {
@@ -23,14 +23,14 @@ let createAnimation = function (frames) {
     } else { // e.g. 7
       animation.push({
         name: frame,
-        delay: 125
+        delay: Movement.fps + (Movement.fps / Movement.velocity)
       });
     }
   });
   return animation;
 };
 
-let Controllable = Melon.Entity.extend({
+let Character = Melon.Entity.extend({
   initProperties() {
     this.defaultSettings = {
       anchorPoint: new Melon.Vector2d(0, 0)
@@ -92,8 +92,6 @@ let Controllable = Melon.Entity.extend({
       // Wrap sprites in a container
       let container = new Melon.Container();
       container.ancestor = this;
-      container.inViewport = true;
-      container.alwaysUpdate = true;
       container.updateBoundsPos(0, 0);
       container.addChild(this.debugSprite);
       container.addChild(this.mainSprite);
@@ -105,8 +103,9 @@ let Controllable = Melon.Entity.extend({
     this.mainSprite.setCurrentAnimation(this.initialAnimation);
 
     // set the default horizontal & vertical speed (accel vector)
-    this.body.vel.set(1, 1);
-    this.body.maxVel.set(1, 1);
+    this.body.vel.set(0, 0);
+    this.body.maxVel.set(Movement.velocity, Movement.velocity);
+    this.body.accel.set(0, 0);
     this.body.friction.set(0, 0);
 
     //  do not fall
@@ -117,20 +116,18 @@ let Controllable = Melon.Entity.extend({
     // Set the sprite anchor point
     this.anchorPoint.set(settings.anchorPoint.x, settings.anchorPoint.y);
 
-    // set the display to follow our position on both axis
-    Melon.game.viewport.follow(this.pos, Melon.game.viewport.AXIS.BOTH);
-
     // ensure the player is updated even when outside of the viewport
     this.alwaysUpdate = true;
+
+    // set the display to follow our position on both axis
+    Melon.game.viewport.follow(this.pos, Melon.game.viewport.AXIS.BOTH);
   },
 
   /**
    * update the entity
    */
   update(deltaTime) {
-    this.renderable.inViewport = true;
-    this.debugSprite.inViewport = true;
-    this.mainSprite.inViewport = true;
+    let isUpdated = false;
 
     if (!this.isMoving()) {
       this.body.vel.x = 0;
@@ -139,12 +136,14 @@ let Controllable = Melon.Entity.extend({
         this.mainSprite.setCurrentAnimation("stand_" + this.lastPressedButton.toLowerCase());
       }
       this.lastPressedButton = null;
+      isUpdated = true;
     }
 
     let direction = this.getMoveDirection();
 
     if (!direction && !this.isMoving()) {
       // No action and no pending animation
+      Debug.debugUpdate('-', deltaTime, 0, 0);
       return false;
     }
 
@@ -155,22 +154,19 @@ let Controllable = Melon.Entity.extend({
 
     if (direction && !this.isMoving()) {
       // New move
-      this.remainingPixels = Movement.pixelsPerMove;
+      this.remainingPixels = Movement.distancePerMove;
     }
 
-    if (direction && this.processPixelsToMove()) {
-      this.move(direction);
+    let velocity = 0;
+
+    if (direction && ((velocity = this.getVelocity()) !== 0) ) {
+      // velocity = velocity * deltaTime;
+      if (this.move(direction, velocity)) {
+        isUpdated = true;
+      }
     }
 
-    if (Debug.enabled) {
-      Debug.debugUpdate(direction, deltaTime, this.remainingPixels, this.pixelBuffer);
-    }
-
-    // Always show
-    if (this.debugSprite !== undefined) {
-      this.debugSprite.inViewport = Debug.enabled === true;
-    }
-    this.mainSprite.inViewport = true;
+    Debug.debugUpdate(direction, deltaTime, this.remainingPixels, velocity);
 
     // ---------------------------------------------------------------------------------------------------------
     // apply physics to the body (this moves the entity)
@@ -180,14 +176,17 @@ let Controllable = Melon.Entity.extend({
     Melon.collision.check(this);
 
     // return true if we moved or if the renderable was updated
-    return (this._super(Melon.Entity, 'update', [deltaTime]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
+    isUpdated = false;
+    return (
+      isUpdated
+      || this._super(Melon.Entity, 'update', [deltaTime])
+      || this.hasVelocity()
+    );
   },
 
-  move(pressedButton) {
-    if (!pressedButton) {
-      throw new Error(
-        `Called move() with no button.`
-      );
+  move(pressedButton, velocity) {
+    if (!pressedButton || isNaN(velocity)) {
+      return false;
     }
 
     let axis = Controls.getPressedAxis(pressedButton);
@@ -203,55 +202,36 @@ let Controllable = Melon.Entity.extend({
     }
 
     if (pressedButton === Controls.LEFT || pressedButton === Controls.UP) {
-      this.body.vel[axis] -= Movement.velocityFactor;
+      this.body.vel[axis] -= velocity;
     } else {
-      this.body.vel[axis] += Movement.velocityFactor;
+      this.body.vel[axis] += velocity;
     }
 
     // change to the walking animation
     if (!this.mainSprite.isCurrentAnimation("walk_" + pressedButton.toLowerCase())) {
       this.mainSprite.setCurrentAnimation("walk_" + pressedButton.toLowerCase());
     }
+
+    return this.hasVelocity();
   },
 
   /**
-   * @returns {Integer}
+   * @returns {(Integer|boolean)}
    */
-  processPixelsToMove() {
-    let minPixToMove = 1;
-
-    if (this.remainingPixels === 0 && this.pixelBuffer === 0) {
+  getVelocity() {
+    // TODO: calculate velocity for exact or half pixels
+    if (this.remainingPixels >= Movement.velocity) {
       // Do not move
-      return 0;
+      this.remainingPixels -= Movement.velocity;
+      return Movement.velocity;
+    } else if (this.remainingPixels > 0) {
+      // Remaining pixels
+      let vel = this.remainingPixels;
+      this.remainingPixels = 0;
+      return vel;
     }
 
-    if (this.remainingPixels > 0) {
-      this.pixelBuffer += Movement.pixelsPerFrame;
-    }
-
-    if (this.remainingPixels === 0 && ((this.pixelBuffer < 1) && (this.pixelBuffer > 0))) {
-      // Remaining decimals, means that we only have 1 pixel left
-      this.pixelBuffer = 0;
-      return minPixToMove;
-    }
-
-    if (this.pixelBuffer < 1) {
-      // Do not move until it is 1 or greater
-      return 0;
-    }
-
-    if (this.remainingPixels === 0 && (this.pixelBuffer > 1)) {
-      console.warn(
-        `Unexpected value for pixelBuffer: ${this.pixelBuffer}. Remaining pixels: ${this.remainingPixels}`
-      );
-      // Remaining decimals
-      this.pixelBuffer -= 1;
-      return 1;
-    }
-
-    this.remainingPixels -= minPixToMove;
-    this.pixelBuffer -= minPixToMove;
-    return minPixToMove;
+    return 0;
   },
 
   /**
@@ -288,7 +268,11 @@ let Controllable = Melon.Entity.extend({
   },
 
   isMoving() {
-    return (this.remainingPixels > 0) || (this.pixelBuffer > 0);
+    return (this.remainingPixels > 0);
+  },
+
+  hasVelocity() {
+    return (this.body.vel.x !== 0 || this.body.vel.y !== 0);
   },
 
   getMoveDirection() {
@@ -307,4 +291,4 @@ let Controllable = Melon.Entity.extend({
   },
 });
 
-export default Controllable;
+export default Character;

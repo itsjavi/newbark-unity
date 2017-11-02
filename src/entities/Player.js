@@ -1,5 +1,5 @@
 'use strict';
-import Controllable from 'system/Controllable';
+import Character from 'system/Character';
 import {Melon} from 'externals';
 
 /**
@@ -8,9 +8,9 @@ import {Melon} from 'externals';
  * Name: player
  * Layer: characters
  */
-export default Controllable.extend({
+export default Character.extend({
   initProperties() {
-    this._super(Controllable, 'initProperties');
+    this._super(Character, 'initProperties');
 
     this.defaultSettings.anchorPoint = new Melon.Vector2d(
       // set the anchor point to X center and Y 8px (0.25 // 8px = 25% of 32)

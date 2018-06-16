@@ -7,8 +7,8 @@ public enum DIRECTION
 
 public class GridMovement : MonoBehaviour
 {
-    public int speed = 5;
-    public int inputSpeed = 1;
+    public int speed = 6;
+    public int inputDelay = 6;
 
     private bool canReadInput = true, moving = false;
     private int buttonCooldown = 0;
@@ -25,7 +25,7 @@ public class GridMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (buttonCooldown > 0)
         {
@@ -129,7 +129,7 @@ public class GridMovement : MonoBehaviour
 
         if (dir != newDir)
         {
-            buttonCooldown = inputSpeed;
+            buttonCooldown = inputDelay;
             dir = newDir;
 
             return;

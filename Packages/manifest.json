@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "com.unity.ads": "2.0.8"
+    "com.unity.ads": "2.0.8",
+    "com.unity.purchasing": "exclude"
   }
 }

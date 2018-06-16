@@ -2,15 +2,15 @@
 
 public enum DIRECTION
 {
-    UP, DOWN, LEFT, RIGHT
+    NONE, UP, DOWN, LEFT, RIGHT
 }
 
 public class GridMovement : MonoBehaviour
 {
     public int speed = 5;
-    public int inputThreshold = 5;
+    public int inputSpeed = 1;
 
-    private bool canMove = true, moving = false;
+    private bool canReadInput = true, moving = false;
     private int buttonCooldown = 0;
     private DIRECTION dir = DIRECTION.DOWN;
     private Vector3 pos;
@@ -21,7 +21,7 @@ public class GridMovement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class GridMovement : MonoBehaviour
         {
             buttonCooldown--;
         }
-        if (canMove)
+        if (canReadInput)
         {
             pos = transform.position;
             calcMovement();
@@ -42,11 +42,13 @@ public class GridMovement : MonoBehaviour
             {
                 // done moving in a tile
                 moving = false;
-                canMove = true;
+                canReadInput = true;
                 calcMovement();
             }
             transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * speed);
-        } else {
+        }
+        else
+        {
             animatorMove.x = 0;
             animatorMove.y = 0;
         }
@@ -58,82 +60,85 @@ public class GridMovement : MonoBehaviour
         animator.SetBool("Moving", moving);
     }
 
+    private DIRECTION getPressedDirection()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            return DIRECTION.UP;
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            return DIRECTION.DOWN;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            return DIRECTION.LEFT;
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            return DIRECTION.RIGHT;
+        }
+        return DIRECTION.NONE;
+    }
+
     private void calcMovement()
     {
-        if (buttonCooldown <= 0)
+
+        if (buttonCooldown > 0)
         {
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                if (dir != DIRECTION.UP)
-                {
-                    buttonCooldown = inputThreshold;
-                    dir = DIRECTION.UP;
-                }
-                else
-                {
-                    canMove = false;
-                    moving = true;
-                    pos += Vector3.up;
-                    animatorMove.x = 0;
-                    animatorMove.y = 1;
-                    animatorLastMove.x = 0;
-                    animatorLastMove.y = 1;
-                }
-            }
-            else if (Input.GetKey(KeyCode.DownArrow))
-            {
-                if (dir != DIRECTION.DOWN)
-                {
-                    buttonCooldown = inputThreshold;
-                    dir = DIRECTION.DOWN;
-                }
-                else
-                {
-                    canMove = false;
-                    moving = true;
-                    pos += Vector3.down;
-                    animatorMove.x = 0;
-                    animatorMove.y = -1;
-                    animatorLastMove.x = 0;
-                    animatorLastMove.y = -1;
-                }
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                if (dir != DIRECTION.LEFT)
-                {
-                    buttonCooldown = inputThreshold;
-                    dir = DIRECTION.LEFT;
-                }
-                else
-                {
-                    canMove = false;
-                    moving = true;
-                    pos += Vector3.left;
-                    animatorMove.x = -1;
-                    animatorMove.y = 0;
-                    animatorLastMove.x = -1;
-                    animatorLastMove.y = 0;
-                }
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                if (dir != DIRECTION.RIGHT)
-                {
-                    buttonCooldown = inputThreshold;
-                    dir = DIRECTION.RIGHT;
-                }
-                else
-                {
-                    canMove = false;
-                    moving = true;
-                    pos += Vector3.right;
-                    animatorMove.x = 1;
-                    animatorMove.y = 0;
-                    animatorLastMove.x = 1;
-                    animatorLastMove.y = 0;
-                }
-            }
+            return;
         }
+
+        DIRECTION newDir = getPressedDirection();
+
+        if (newDir == DIRECTION.NONE)
+        {
+            return;
+        }
+
+        float x = 0, y = 0;
+
+        switch (newDir)
+        {
+            case DIRECTION.UP:
+                {
+                    y = 1;
+                }
+                break;
+            case DIRECTION.RIGHT:
+                {
+                    x = 1;
+                }
+                break;
+            case DIRECTION.DOWN:
+                {
+                    y = -1;
+                }
+                break;
+            case DIRECTION.LEFT:
+                {
+                    x = -1;
+                }
+                break;
+            default:
+                break;
+        }
+
+        animatorLastMove.x = x;
+        animatorLastMove.y = y;
+
+        if (dir != newDir)
+        {
+            buttonCooldown = inputSpeed;
+            dir = newDir;
+
+            return;
+        }
+
+        canReadInput = false;
+        moving = true;
+        pos += new Vector3(x, y, 0);
+        animatorMove.x = x;
+        animatorMove.y = y;
     }
 }

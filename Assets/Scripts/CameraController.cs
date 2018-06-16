@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         cameraComponent = GetComponent<Camera>();
-        cameraComponent.orthographicSize = verticalResolution / pixelsPerUnit / 2;
+        //cameraComponent.orthographicSize = verticalResolution / pixelsPerUnit / 2;
     }
 
     // Update is called once per frame

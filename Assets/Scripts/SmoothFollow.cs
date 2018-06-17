@@ -2,7 +2,6 @@
 
 public class SmoothFollow : MonoBehaviour
 {
-
     public Transform target;
     public Vector3 offset;
     public bool delayed = true;

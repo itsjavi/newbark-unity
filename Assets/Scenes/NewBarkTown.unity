@@ -12264,7 +12264,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1506165016}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: -12, y: 6, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -12419,11 +12419,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1971257306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabc04e3cc6b94393bbd4fb9803d1a93, type: 3}
+  m_Script: {fileID: 11500000, guid: 99fba112e30d147fa9c96831eb9fdf6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
   inputDelay: 6
+  tilesToMove: 1
+  animator: {fileID: 1971257310}
 --- !u!95 &1971257310
 Animator:
   serializedVersion: 3

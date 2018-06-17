@@ -1,5 +1,5 @@
 # NewBark
-🌳 Retro Pokémon RPG game engine created with Unity.
+🌳 Pokémon-style Retro RPG game engine created with Unity.
 
 ![screenshot](screenshot.png)
 
@@ -11,7 +11,7 @@
 ## License
 
 This software is copyrighted and licensed under the 
-[MIT license](https://github.com/pokettomonstaa/NewBark/LICENSE).
+[MIT license](https://github.com/capsulemonsters/newbark/LICENSE).
 
 ### Disclaimer
 
@@ -29,4 +29,4 @@ This software is not affiliated in any way with Nintendo,
 Pokémon or any other game company.
 
 A complete revision history of this software is available from
-https://github.com/pokettomonstaa/NewBark
+https://github.com/capsulemonsters/newbark

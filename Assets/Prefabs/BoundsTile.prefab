@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 212944146485574716}
   - component: {fileID: 61003580047008224}
   - component: {fileID: 114073356513688384}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: BoundsTile
-  m_TagString: bounds
-  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -114,8 +114,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300040, guid: 4cd35248240ff4588b0b65dc628a7371, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300016, guid: 4cd35248240ff4588b0b65dc628a7371, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.2509804}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

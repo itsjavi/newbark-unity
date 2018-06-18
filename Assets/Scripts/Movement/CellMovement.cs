@@ -84,6 +84,11 @@ public class CellMovement
         canReadInput = true;
     }
 
+    public void UndoLastMovement()
+    {
+        // TODO: implement this to move back to the previous valid position in case of collision overlap
+    }
+
     // Returns the calculated final destination vector
     private void CalculateMovement(DIRECTION_BUTTON dir, int tilesToMove = 1)
     {

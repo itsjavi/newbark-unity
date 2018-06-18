@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114250137378071304}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,6 +123,7 @@ MonoBehaviour:
   tilesToMove: 1
   animator: {fileID: 0}
   body: {fileID: 0}
+  lastCollisionData: {fileID: 0}
   lastCollisionDir: 0
 --- !u!212 &212376289641527304
 SpriteRenderer:

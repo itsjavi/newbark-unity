@@ -4,8 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - wall
-  - bounds
+  - Invisible
   layers:
   - Default
   - TransparentFX
@@ -40,11 +39,8 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Ground
+  - name: Tilemaps
     uniqueID: 3855415453
-    locked: 0
-  - name: Objects
-    uniqueID: 3841349441
     locked: 0
   - name: Characters
     uniqueID: 1371617319

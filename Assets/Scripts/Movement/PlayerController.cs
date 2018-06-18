@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private CellMovement movement;
 
     // for debugging in the editor:
-    public Collision2D lastCollision;
+    public CollisionData lastCollisionData;
     public DIRECTION_BUTTON lastCollisionDir = DIRECTION_BUTTON.NONE;
 
     // Use this for initialization
@@ -51,11 +51,16 @@ public class PlayerController : MonoBehaviour
         {
             // Debug.Log("cannot continue in this direction");
             StopMoving();
+            if (lastCollisionData is CollisionData)
+            {
+                lastCollisionData.PlaySound();
+            }
             return;
         }
         else if (movement.IsMoving)
         {
             // cleared
+            lastCollisionData = null;
             lastCollisionDir = DIRECTION_BUTTON.NONE;
         }
 
@@ -78,39 +83,31 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Moving", movement.IsMoving);
     }
 
-    void OnCollision2D(Collision2D col)
-    {
-        CollisionData data = col.gameObject.GetComponent<CollisionData>();
-        COLLISION_TYPE collisionType = data ? data.type : COLLISION_TYPE.UNKNOWN;
-
-        lastCollision = col;
-        lastCollisionDir = movement.LastDirection;
-
-        // detect collision type
-        Debug.Log("COLLISION on: " + col.gameObject.transform.position.ToString() + ", button: " + lastCollisionDir + ", type: " + collisionType.ToString());
-        // TODO: play collision sound
-    }
-
     void OnCollisionEnter2D(Collision2D col)
     {
         CollisionData data = col.gameObject.GetComponent<CollisionData>();
         COLLISION_TYPE collisionType = data ? data.type : COLLISION_TYPE.UNKNOWN;
 
-        lastCollision = col;
+        lastCollisionData = data;
         lastCollisionDir = movement.LastDirection;
         StopMoving();
 
         // detect collision type
         Debug.Log("COLLISION ENTER on: " + col.gameObject.transform.position.ToString() + ", button: " + lastCollisionDir + ", type: " + collisionType.ToString());
         // TODO: play collision sound
+
+        if (data is CollisionData)
+        {
+            data.PlaySound();
+        }
     }
 
     void OnCollisionStay2D(Collision2D col)
     {
-        CollisionData data = col.gameObject.GetComponent<CollisionData>();
+        var data = col.gameObject.GetComponent<CollisionData>();
         COLLISION_TYPE collisionType = data ? data.type : COLLISION_TYPE.UNKNOWN;
 
-        lastCollision = col;
+        lastCollisionData = data;
         lastCollisionDir = movement.LastDirection;
         movement.Stop();
         UpdateAnimation();
@@ -118,7 +115,6 @@ public class PlayerController : MonoBehaviour
 
         // detect collision type
         Debug.Log("COLLISION STAY on: " + col.gameObject.transform.position.ToString() + ", button: " + lastCollisionDir + ", type: " + collisionType.ToString());
-        // TODO: play collision sound
     }
 
     void StopMoving()

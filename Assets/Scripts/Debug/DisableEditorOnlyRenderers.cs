@@ -4,10 +4,15 @@ public class DisableEditorOnlyRenderers : MonoBehaviour
 {
     void Awake()
     {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("EditorOnly");
-        foreach (var obj in objs)
+        HideGameObjects(GameObject.FindGameObjectsWithTag("EditorOnly"));
+        HideGameObjects(GameObject.FindGameObjectsWithTag("Invisible"));
+    }
+
+    private void HideGameObjects(GameObject[] gameObjects)
+    {
+        foreach (var obj in gameObjects)
         {
-            Renderer r = obj.gameObject.GetComponent<Renderer>();
+            var r = obj.gameObject.GetComponent<Renderer>();
             if (r)
             {
                 r.enabled = false;

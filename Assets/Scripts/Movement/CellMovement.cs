@@ -24,7 +24,7 @@ public class CellMovement
         this.inputDelay = inputDelay;
     }
 
-    public Vector3? CalculateDestinationPosition(Vector3 origin, DIRECTION_BUTTON dir, int tilesToMove = 1)
+    public Vector3 CalculateDestinationPosition(Vector3 origin, DIRECTION_BUTTON dir, int tilesToMove = 1)
     {
         if (coolDown > 0)
         {
@@ -48,7 +48,7 @@ public class CellMovement
 
             if (origin == destinationPosition)
             {
-                return null;
+                return origin;
             }
 
             return destinationPosition;
@@ -60,7 +60,28 @@ public class CellMovement
             positionDiff.z = 0;
         }
 
-        return null;
+        return FixPosition(origin);
+    }
+
+    public Vector3 FixPosition(Vector3 position)
+    {
+        float multipleOf = 5.0f;
+        int precision = 10;
+
+        int x = (int)Mathf.FloorToInt(position.x * precision), y = (int)Mathf.FloorToInt(position.y * precision);
+        Vector3 fixedPos = new Vector3((x - (x % multipleOf)) / precision, (y - (y % multipleOf)) / precision, 0);
+
+        return fixedPos;
+
+    }
+
+    public void Stop()
+    {
+        positionDiff.x = 0;
+        positionDiff.y = 0;
+        coolDown = 0;
+        isMoving = false;
+        canReadInput = true;
     }
 
     // Returns the calculated final destination vector
@@ -125,5 +146,6 @@ public class CellMovement
         positionDiff.z = z;
 
         destinationPosition += positionDiff;
+        destinationPosition = FixPosition(destinationPosition);
     }
 }

@@ -1,11 +1,17 @@
 # NewBark
 🌳 Pokémon-style Retro RPG game engine created with Unity.
 
-![screenshot](screenshot.png)
+![screenshot](Docs/screenshot.png)
+
+
+## Requirements
+
+- Unity 2018.1.5+
 
 
 ## Resources
 - [Tutorials](https://www.youtube.com/playlist?list=PL0dOETTrhWWCuWcl2OjB3GfvrlfWEzx18)
+- [Recommendations](Docs/recommendations.md)
 
 
 ## License

@@ -5,7 +5,7 @@ public class SmoothFollow : MonoBehaviour
     public Transform target;
     public Vector3 offset;
     public bool delayed = true;
-    public float delaySpeed = 30f, delayTime = 0.1f;
+    public float delaySpeed = 320f, delayTime = 0.1f;
     private Vector3 velocity = Vector3.zero;
 
     // Update is called once per frame after it is rendered

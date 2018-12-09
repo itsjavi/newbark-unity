@@ -6,7 +6,7 @@
 
 ## Requirements
 
-- Unity 2018.1.5+
+- Unity 2018.2.19f1+
 
 
 ## Resources

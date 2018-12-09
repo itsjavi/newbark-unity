@@ -27,6 +27,11 @@ also necessarily used within the software itself. This is all the intellectual
 property of Nintendo, Creatures, inc., and GAME FREAK, inc. and is protected by
 various copyrights and trademarks.
 
+The goal of this project is not to create and/or distribute a game, but to learn
+how to create similar games in Unity. So this project apart from being a possible
+base engine for future similar projects unrelated to the Pokémon franchise,
+has mainly educational purposes.
+
 The author believes that the use of this intellectual property for a fan reference
 is covered by fair use and that the software is significantly impaired without said
 property included. Any use of this copyrighted property is at your own legal risk.

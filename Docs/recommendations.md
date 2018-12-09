@@ -7,3 +7,4 @@
 - Remove default (main) camera and create a new one to avoid "Screen position out of view frustum" errors in the console.
 - Do not use the built-in Unity Tilemap Collider unless you don't need additional data from the collision object,
 use game objects to build box colliders. This way is more flexible and you can add scripts, extra data, etc.
+- Disable vsync

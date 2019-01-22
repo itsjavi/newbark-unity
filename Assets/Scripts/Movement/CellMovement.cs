@@ -65,14 +65,27 @@ public class CellMovement
 
     public Vector3 FixPosition(Vector3 position)
     {
-        float multipleOf = 5.0f;
-        int precision = 10;
-
-        int x = (int)Mathf.FloorToInt(position.x * precision), y = (int)Mathf.FloorToInt(position.y * precision);
-        Vector3 fixedPos = new Vector3((x - (x % multipleOf)) / precision, (y - (y % multipleOf)) / precision, 0);
+        Vector3 fixedPos = new Vector3(fix05(position.x), fix05(position.y), 0);
 
         return fixedPos;
 
+    }
+
+    private float fix05(float val)
+    {
+        float mod = val % 1f;
+        // if (System.Math.Abs(mod) < double.Epsilon)
+        if (mod == 0.5f)
+        {
+            return val;
+        }
+
+        if (val < 0f)
+        {
+            return (val - mod) - 0.5f;
+        }
+
+        return (val - mod) + 0.5f;
     }
 
     public void Stop()

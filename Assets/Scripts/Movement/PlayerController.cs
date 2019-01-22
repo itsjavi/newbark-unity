@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
 
         transform.position = Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * speed);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
         return;
 
         // Vector2 transformPosition = new Vector2(transform.position.x, transform.position.y);
@@ -112,9 +113,10 @@ public class PlayerController : MonoBehaviour
         movement.Stop();
         UpdateAnimation();
         transform.position = movement.FixPosition(transform.position);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
 
-        // detect collision type
-        Debug.Log("COLLISION STAY on: " + col.gameObject.transform.position.ToString() + ", button: " + lastCollisionDir + ", type: " + collisionType.ToString());
+       // detect collision type
+       Debug.Log("COLLISION STAY on: " + col.gameObject.transform.position.ToString() + ", button: " + lastCollisionDir + ", type: " + collisionType.ToString());
     }
 
     void StopMoving()
@@ -122,5 +124,6 @@ public class PlayerController : MonoBehaviour
         //movement.Stop();
         //UpdateAnimation();
         transform.position = movement.FixPosition(transform.position);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 }

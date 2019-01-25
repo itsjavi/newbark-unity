@@ -14,10 +14,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Interactables
+  - Floor
+  - OverFloor
+  - Characters
   - 
   - 
   - 
@@ -39,15 +39,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Tilemaps
+  - name: S3_UnderPlayer
     uniqueID: 3855415453
     locked: 0
-  - name: Characters
+  - name: S2_Characters
     uniqueID: 1371617319
+    locked: 0
+  - name: S1_OverPlayer
+    uniqueID: 4197844559
     locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Debug
-    uniqueID: 2383370387
     locked: 0

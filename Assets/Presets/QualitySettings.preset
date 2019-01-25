@@ -1,0 +1,914 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: QualitySettings
+  m_TargetType:
+    m_NativeTypeID: 47
+    m_ManagedTypePPtr: {fileID: 0}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_CurrentQuality
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.size
+    value: 6
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].name
+    value: Very Low
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].pixelLightCount
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadows
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowResolution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowProjection
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowCascades
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowDistance
+    value: 15
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowNearPlaneOffset
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowCascade2Split
+    value: 0.33333334
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowCascade4Split.x
+    value: 0.06666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowCascade4Split.y
+    value: 0.2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowCascade4Split.z
+    value: 0.46666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].shadowmaskMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].blendWeights
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].textureQuality
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].anisotropicTextures
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].antiAliasing
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].softParticles
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].softVegetation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].realtimeReflectionProbes
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].billboardsFaceCameraPosition
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].vSyncCount
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].lodBias
+    value: 0.3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].maximumLODLevel
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].streamingMipmapsActive
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].streamingMipmapsAddAllCameras
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].streamingMipmapsMemoryBudget
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].streamingMipmapsRenderersPerFrame
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].streamingMipmapsMaxLevelReduction
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].streamingMipmapsMaxFileIORequests
+    value: 1024
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].particleRaycastBudget
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].asyncUploadTimeSlice
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].asyncUploadBufferSize
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].asyncUploadPersistentBuffer
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].resolutionScalingFixedDPIFactor
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].excludedTargetPlatforms.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].name
+    value: Low
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].pixelLightCount
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadows
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowResolution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowProjection
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowCascades
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowDistance
+    value: 20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowNearPlaneOffset
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowCascade2Split
+    value: 0.33333334
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowCascade4Split.x
+    value: 0.06666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowCascade4Split.y
+    value: 0.2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowCascade4Split.z
+    value: 0.46666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].shadowmaskMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].blendWeights
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].textureQuality
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].anisotropicTextures
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].antiAliasing
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].softParticles
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].softVegetation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].realtimeReflectionProbes
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].billboardsFaceCameraPosition
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].vSyncCount
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].lodBias
+    value: 0.4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].maximumLODLevel
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].streamingMipmapsActive
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].streamingMipmapsAddAllCameras
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].streamingMipmapsMemoryBudget
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].streamingMipmapsRenderersPerFrame
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].streamingMipmapsMaxLevelReduction
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].streamingMipmapsMaxFileIORequests
+    value: 1024
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].particleRaycastBudget
+    value: 16
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].asyncUploadTimeSlice
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].asyncUploadBufferSize
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].asyncUploadPersistentBuffer
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].resolutionScalingFixedDPIFactor
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].excludedTargetPlatforms.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].name
+    value: Medium
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].pixelLightCount
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadows
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowResolution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowProjection
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowCascades
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowDistance
+    value: 20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowNearPlaneOffset
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowCascade2Split
+    value: 0.33333334
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowCascade4Split.x
+    value: 0.06666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowCascade4Split.y
+    value: 0.2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowCascade4Split.z
+    value: 0.46666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].shadowmaskMode
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].blendWeights
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].textureQuality
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].anisotropicTextures
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].antiAliasing
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].softParticles
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].softVegetation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].realtimeReflectionProbes
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].billboardsFaceCameraPosition
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].vSyncCount
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].lodBias
+    value: 0.7
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].maximumLODLevel
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].streamingMipmapsActive
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].streamingMipmapsAddAllCameras
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].streamingMipmapsMemoryBudget
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].streamingMipmapsRenderersPerFrame
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].streamingMipmapsMaxLevelReduction
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].streamingMipmapsMaxFileIORequests
+    value: 1024
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].particleRaycastBudget
+    value: 64
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].asyncUploadTimeSlice
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].asyncUploadBufferSize
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].asyncUploadPersistentBuffer
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].resolutionScalingFixedDPIFactor
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].excludedTargetPlatforms.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].name
+    value: High
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].pixelLightCount
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadows
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowResolution
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowProjection
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowCascades
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowDistance
+    value: 40
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowNearPlaneOffset
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowCascade2Split
+    value: 0.33333334
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowCascade4Split.x
+    value: 0.06666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowCascade4Split.y
+    value: 0.2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowCascade4Split.z
+    value: 0.46666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].shadowmaskMode
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].blendWeights
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].textureQuality
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].anisotropicTextures
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].antiAliasing
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].softParticles
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].softVegetation
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].realtimeReflectionProbes
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].billboardsFaceCameraPosition
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].vSyncCount
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].lodBias
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].maximumLODLevel
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].streamingMipmapsActive
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].streamingMipmapsAddAllCameras
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].streamingMipmapsMemoryBudget
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].streamingMipmapsRenderersPerFrame
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].streamingMipmapsMaxLevelReduction
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].streamingMipmapsMaxFileIORequests
+    value: 1024
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].particleRaycastBudget
+    value: 256
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].asyncUploadTimeSlice
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].asyncUploadBufferSize
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].asyncUploadPersistentBuffer
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].resolutionScalingFixedDPIFactor
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].excludedTargetPlatforms.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].name
+    value: Very High
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].pixelLightCount
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadows
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowResolution
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowProjection
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowCascades
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowDistance
+    value: 70
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowNearPlaneOffset
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowCascade2Split
+    value: 0.33333334
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowCascade4Split.x
+    value: 0.06666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowCascade4Split.y
+    value: 0.2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowCascade4Split.z
+    value: 0.46666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].shadowmaskMode
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].blendWeights
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].textureQuality
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].anisotropicTextures
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].antiAliasing
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].softParticles
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].softVegetation
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].realtimeReflectionProbes
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].billboardsFaceCameraPosition
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].vSyncCount
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].lodBias
+    value: 1.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].maximumLODLevel
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].streamingMipmapsActive
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].streamingMipmapsAddAllCameras
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].streamingMipmapsMemoryBudget
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].streamingMipmapsRenderersPerFrame
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].streamingMipmapsMaxLevelReduction
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].streamingMipmapsMaxFileIORequests
+    value: 1024
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].particleRaycastBudget
+    value: 1024
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].asyncUploadTimeSlice
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].asyncUploadBufferSize
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].asyncUploadPersistentBuffer
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].resolutionScalingFixedDPIFactor
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].excludedTargetPlatforms.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].name
+    value: Ultra
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].pixelLightCount
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadows
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowResolution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowProjection
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowCascades
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowDistance
+    value: 150
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowNearPlaneOffset
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowCascade2Split
+    value: 0.33333334
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowCascade4Split.x
+    value: 0.06666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowCascade4Split.y
+    value: 0.2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowCascade4Split.z
+    value: 0.46666667
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].shadowmaskMode
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].blendWeights
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].textureQuality
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].anisotropicTextures
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].antiAliasing
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].softParticles
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].softVegetation
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].realtimeReflectionProbes
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].billboardsFaceCameraPosition
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].vSyncCount
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].lodBias
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].maximumLODLevel
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].streamingMipmapsActive
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].streamingMipmapsAddAllCameras
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].streamingMipmapsMemoryBudget
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].streamingMipmapsRenderersPerFrame
+    value: 512
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].streamingMipmapsMaxLevelReduction
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].streamingMipmapsMaxFileIORequests
+    value: 1024
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].particleRaycastBudget
+    value: 4096
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].asyncUploadTimeSlice
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].asyncUploadBufferSize
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].asyncUploadPersistentBuffer
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].resolutionScalingFixedDPIFactor
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].excludedTargetPlatforms.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.size
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[0].first
+    value: Android
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[0].second
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[1].first
+    value: Standalone
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[1].second
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[2].first
+    value: WebGL
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[2].second
+    value: 0
+    objectReference: {fileID: 0}

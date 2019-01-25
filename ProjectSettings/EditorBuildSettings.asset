@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/001_New_Bark_Town.unity
+    guid: 28b00bfc221684aeb9f11ece038852fc
   m_configObjects: {}

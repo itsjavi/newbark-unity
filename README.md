@@ -1,7 +1,7 @@
 # NewBark
-🌳 Pokémon-style Retro RPG game engine created with Unity.
+🌳 Retro-style Pokémon RPG game engine for Unity 2D.
 
-![screenshot](Docs/screenshot.png)
+![screenshot](Assets/Images/screenshot.png)
 
 
 ## Requirements
@@ -10,8 +10,7 @@
 
 
 ## Resources
-- [Tutorials](https://www.youtube.com/playlist?list=PL0dOETTrhWWCuWcl2OjB3GfvrlfWEzx18)
-- [Recommendations](Docs/recommendations.md)
+- [Learning Unity 2D - Video Tutorials](https://www.youtube.com/playlist?list=PL0dOETTrhWWCuWcl2OjB3GfvrlfWEzx18)
 
 
 ## License

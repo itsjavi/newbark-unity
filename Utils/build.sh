@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+VERSION=${1:-"dev"}
 UNITY_PROJECT="NewBark"
 UNITY_BIN="/Applications/Unity/2018.3.2f1/Unity.app/Contents/MacOS/Unity"
 
@@ -7,32 +8,36 @@ unity_build() {
 	target=$1
 	alias=$2
 	ext=$3
+	dir="$(pwd)/Builds/$UNITY_PROJECT-$alias-v$VERSION"
+	binfile="$dir/$UNITY_PROJECT$ext"
+	zipfile="$UNITY_PROJECT-$alias-v$VERSION.zip"
 
 	echo "Building $UNITY_PROJECT for $target..."
-	mkdir -p $(pwd)/Builds/$alias
-	$UNITY_BIN  \
-	  -batchmode  \
-	  -nographics  \
-	  -force-free \
-	  -silent-crashes \
-	  -logFile $(pwd)/unity-$alias.log  \
-	  -projectPath $(pwd)  \
-	  -build${target}Player "$(pwd)/Builds/$alias/$UNITY_PROJECT$ext"  \
-	  -quit
+	mkdir -p $dir
+	# $UNITY_BIN  \
+	#   -batchmode  \
+	#   -nographics  \
+	#   -force-free \
+	#   -silent-crashes \
+	#   -projectPath $(pwd)  \
+	#   -build${target}Player "$binfile"  \
+	#   -quit
 
-	cat $(pwd)/unity-$alias.log
+    cp LICENSE $dir/LICENSE
+    cp README.md $dir/README.md
 
 	if [ $? = 0 ] ; then
 	  echo "$target build completed successfully."
-	  # echo 'Creating zip file...'
-	  # zip -r $(pwd)/Builds/$alias.zip $(pwd)/Builds/$alias/ || exit 1
+	  echo 'Creating zip file...'
+
+	  cd $dir
+	  zip -r -X ../$zipfile *
+	  cd -
 	else
 	  echo "$target build failed. Exited with $?."
 	  exit 1
 	fi
 }
 
-#unity_build Windows win ".exe"
 unity_build Windows64 win64 ".exe"
 unity_build OSXUniversal osx ".app"
-#unity_build LinuxUniversal linux

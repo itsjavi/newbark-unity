@@ -23,14 +23,14 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_audioClip
     value: 
-    objectReference: {fileID: 8300000, guid: 0d4dc5dc54da04deea49dcd59a869b4e, type: 3}
+    objectReference: {fileID: 8300000, guid: e7aa1061682754e5f919394e893de652, type: 3}
   - target: {fileID: 0}
     propertyPath: m_PlayOnAwake
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_Volume
-    value: 1
+    value: 0.35
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_Pitch

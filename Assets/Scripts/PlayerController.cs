@@ -134,7 +134,11 @@ public class PlayerController : MonoBehaviour
 
     AudioSource GetCollisionSound(GameObject gobj)
     {
-        return gobj.GetComponent<AudioSource>();
+        if (gobj.HasComponent<AudioSource>())
+        {
+            return gobj.GetComponent<AudioSource>();
+        }
+        return null;
     }
 
     void PlayCollisionSound(GameObject gobj)

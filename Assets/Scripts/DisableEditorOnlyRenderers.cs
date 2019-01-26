@@ -12,10 +12,9 @@ public class DisableEditorOnlyRenderers : MonoBehaviour
     {
         foreach (var obj in gameObjects)
         {
-            var r = obj.gameObject.GetComponent<Renderer>();
-            if (r)
+            if (obj.gameObject.HasComponent<Renderer>())
             {
-                r.enabled = false;
+                obj.gameObject.GetComponent<Renderer>().enabled = false;
             }
         }
     }

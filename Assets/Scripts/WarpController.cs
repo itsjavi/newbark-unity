@@ -12,13 +12,13 @@ public class WarpController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("[warp] Trigger ENTER between " + this.name + " and " + other.gameObject.name);
+        // Debug.Log("[warp] Trigger ENTER between " + this.name + " and " + other.gameObject.name);
         Warp(other);
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log("[warp] Trigger STAY between " + this.name + " and " + other.gameObject.name);
+        // Debug.Log("[warp] Trigger STAY between " + this.name + " and " + other.gameObject.name);
         Warp(other);
     }
 
@@ -34,7 +34,7 @@ public class WarpController : MonoBehaviour
         if (WarpAttempt(pendingWarp))
         {
             pendingWarp = null;
-            Debug.LogWarning("[warp] warp pending OK");
+            // Debug.LogWarning("[warp] warp pending OK");
         }
     }
 
@@ -52,7 +52,7 @@ public class WarpController : MonoBehaviour
 
         if (go.HasComponent<BoxCollider2D>())
         {
-            Debug.LogWarning("[warp] Disabling player collider");
+            // Debug.LogWarning("[warp] Disabling player collider");
             go.GetComponent<BoxCollider2D>().enabled = false;
         }
 
@@ -64,13 +64,13 @@ public class WarpController : MonoBehaviour
         // MOVE
         if (go.HasComponent<PlayerController>())
         {
-            Debug.LogWarning("[warp] MOVING steps!");
+            // Debug.LogWarning("[warp] MOVING steps!");
             go.GetComponent<PlayerController>().Move(moveDirection, moveSteps);
         }
 
         if (go.HasComponent<BoxCollider2D>())
         {
-            Debug.LogWarning("[warp] Enabling player collider");
+            // Debug.LogWarning("[warp] Enabling player collider");
             go.GetComponent<BoxCollider2D>().enabled = true;
         }
         return true;

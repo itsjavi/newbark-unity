@@ -14,19 +14,19 @@ public static class InputController
 {
     public static ACTION_BUTTON GetPressedActionButton()
     {
-        if (Input.GetKey(KeyCode.Space) || Input.GetButton("Jump"))
+        if (Input.GetButtonUp("Button A"))
         {
             return ACTION_BUTTON.A;
         }
-        if (Input.GetKey(KeyCode.B) || Input.GetButton("Fire1"))
+        if (Input.GetButtonUp("Button B"))
         {
             return ACTION_BUTTON.B;
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetButton("Fire2"))
+        if (Input.GetButtonUp("Start"))
         {
             return ACTION_BUTTON.START;
         }
-        if (Input.GetKey(KeyCode.A) || Input.GetButton("Fire3"))
+        if (Input.GetButtonUp("Select"))
         {
             return ACTION_BUTTON.SELECT;
         }

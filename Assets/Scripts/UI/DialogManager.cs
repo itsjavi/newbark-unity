@@ -8,18 +8,19 @@ public class DialogManager : MonoBehaviour
 {
     public RectTransform dialogBox;
     public Text dialogText;
-    public int dialogTextCols = 18;
     public int dialogTextRows = 2;
+    public int dialogTextCols = 18;
     public AudioClip nextSentenceEffect;
 
-    private Queue<string> sentences;
     private AudioSource audioSource;
     private bool inDialog = false;
+
+    private DialogScroller dialogScroller;
 
     // Start is called before the first frame update
     void Start()
     {
-        sentences = new Queue<string>();
+        dialogScroller = new DialogScroller(dialogTextRows, dialogTextCols);
         audioSource = gameObject.AddComponent<AudioSource>();
     }
 
@@ -40,7 +41,7 @@ public class DialogManager : MonoBehaviour
     {
         StopAllCoroutines();
         dialogText.text = "";
-        sentences.Clear();
+        dialogScroller.Clear();
     }
 
     private void PlaySound()
@@ -60,72 +61,13 @@ public class DialogManager : MonoBehaviour
 
     public void StartDialog(Dialog dialog)
     {
-        Debug.Log("Dialog start.");
-
         Clear();
         ShowDialog();
 
-        foreach (string sentence in TextToSentences(dialog.text))
-        {
-            sentences.Enqueue(sentence);
-        }
+        dialogScroller.Start(dialog.text);
 
-        PrintNextSentence();
+        PrintNext();
 
-    }
-
-    IEnumerable<string> TextToSentences(string text)
-    {
-        string[] lines = text.Split(Environment.NewLine.ToCharArray());
-
-        string sentence = "";
-        int currentRow = 1;
-        // int maxSentenceLength = (dialogTextCols * dialogTextRows) + (Environment.NewLine.Length * (dialogTextRows - 1));
-
-        foreach (string line in lines)
-        {
-            if (currentRow > dialogTextRows)
-            {
-                yield return sentence;
-                sentence = "";
-                currentRow = 1;
-            }
-
-            sentence += line + Environment.NewLine;
-            currentRow++;
-
-            // TODO: auto fit words
-            // string[] words = text.Split(' ');
-            // 
-            //foreach (string word in words)
-            //{
-            //    string sentenceCont = sentence += " " + word;
-            //    int sentenceContTrimmedLength = sentenceCont.Trim().Length;
-
-            //    if (sentenceContTrimmedLength >= maxSentenceLength)
-            //    {
-            //        yield return sentence.Trim();
-            //        // next sentence
-            //        sentence = "";
-            //        currentRow = 1;
-            //        continue;
-
-            //    }
-
-            //    if ((sentenceContTrimmedLength > (dialogTextCols * currentRow)) && currentRow < dialogTextRows)
-            //    {
-            //        sentence += Environment.NewLine;
-            //        currentRow++;
-            //    }
-
-            //    sentence = sentenceCont;
-            //}
-        }
-
-        if (sentence.Length > 0)
-        {
-            yield return sentence;
-        }
     }
 
     public bool InDialog()
@@ -133,27 +75,23 @@ public class DialogManager : MonoBehaviour
         return inDialog;
     }
 
-    public void PrintNextSentence()
+    public void PrintNext()
     {
-        if (sentences.Count == 0)
+        var lines = dialogScroller.Next();
+
+        if (lines == null || lines.Length == 0)
         {
             EndDialog();
             return;
         }
 
-        Debug.Log("Dialog continue.");
-        
         StopAllCoroutines();
-
         PlaySound();
-        string sentence = sentences.Dequeue();
-        StartCoroutine(PrintCharByChar(sentence));
+        StartCoroutine(Print(lines, dialogScroller.IsInitial() || dialogScroller.IsParagraphStart()));
     }
 
     public void EndDialog()
     {
-        Debug.Log("Dialog end.");
-
         Clear();
         HideDialog();
 
@@ -163,13 +101,64 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    IEnumerator PrintCharByChar(string sentence)
+    private IEnumerator Print(string[] lines, bool delayAll = false)
     {
-        dialogText.text = "";
-        foreach (char ch in sentence)
+        var lineNum = 0;
+        var lastIndex = (lines.Length - 1);
+
+        // find last line index that is not null
+        while ((lines[lastIndex] == null) && lastIndex > 0)
         {
-            dialogText.text += ch;
-            yield return null;
+            lineNum = 0;
+            foreach (string line in lines)
+            {
+                if (line == null && (lineNum == lastIndex))
+                {
+                    lastIndex--;
+                }
+                lineNum++;
+            }
+        }
+
+        lineNum = 0;
+        dialogText.text = "";
+
+        Debug.Log(lines);
+        Debug.Log(lines.Length);
+
+        foreach (string line in lines)
+        {
+            var isLast = (lineNum >= lastIndex);
+            if (line == null)
+            {
+                continue;
+            }
+
+            if (dialogText.text.Length > 0)
+            {
+                dialogText.text += Environment.NewLine;
+            }
+
+            if (delayAll || isLast)
+            {
+                // Print last line
+                foreach (char ch in line)
+                {
+                    dialogText.text += ch;
+                    yield return null; // render frame
+                }
+                if (isLast)
+                {
+                    break;
+                }
+            }
+            else
+            {
+                dialogText.text += line;
+                yield return null; // render frame
+            }
+
+            lineNum++;
         }
     }
 }

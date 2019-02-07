@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class Dialog
 {
-    [TextArea(4, 10)]
+    [TextArea(2, 10)]
     public string text;
 }

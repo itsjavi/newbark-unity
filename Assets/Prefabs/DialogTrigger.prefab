@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8678164167779174701
+--- !u!1 &7719613932962886481
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4861655511843610441}
-  - component: {fileID: 854959584791728990}
-  - component: {fileID: 2922873770776026850}
-  m_Layer: 1
-  m_Name: WarpZone
-  m_TagString: Invisible
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  - component: {fileID: 4532331491285480594}
+  - component: {fileID: 2543398761116309276}
+  - component: {fileID: 1603398549114166130}
+  m_Layer: 0
+  m_Name: DialogTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4861655511843610441
+--- !u!4 &4532331491285480594
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8678164167779174701}
+  m_GameObject: {fileID: 7719613932962886481}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,28 +32,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &854959584791728990
+--- !u!114 &2543398761116309276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8678164167779174701}
+  m_GameObject: {fileID: 7719613932962886481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dddc5ba83e654fed81a83838d4056fa, type: 3}
+  m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warpCoords: {x: 0, y: 0}
-  moveSteps: 0
-  moveDirection: 0
---- !u!61 &2922873770776026850
+  dialog:
+    text: 'NEW BARK TOWN
+
+
+      The Town Where the
+
+      Winds of a New
+
+      Beginning Blow.'
+--- !u!61 &1603398549114166130
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8678164167779174701}
+  m_GameObject: {fileID: 7719613932962886481}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: ccd6a316686b94c969501bac8d9a5cef, type: 2}

@@ -12,18 +12,15 @@ public class DialogTrigger : Interactable
         {
             if (!dm.InDialog())
             {
-                Debug.Log("BUTTON.A: Dialog start.");
                 dm.StartDialog(dialog);
             }
             else
             {
-                Debug.Log("BUTTON.A: Dialog continue.");
-                dm.PrintNextSentence();
+                dm.PrintNext();
             }
         }
         else if (button == ACTION_BUTTON.B)
         {
-            Debug.Log("BUTTON.B: Dialog end.");
             dm.EndDialog();
         }
     }

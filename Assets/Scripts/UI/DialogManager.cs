@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DialogManager : MonoBehaviour
 {
     public RectTransform dialogBox;
+    public RectTransform dialogArrow;
     public Text dialogText;
     public int dialogTextRows = 2;
     public int dialogTextCols = 18;
@@ -32,6 +33,7 @@ public class DialogManager : MonoBehaviour
 
     public void HideDialog()
     {
+        dialogArrow.gameObject.SetActive(false);
         inDialog = false;
         dialogBox.transform.position = new Vector3(dialogBox.transform.position.x, (dialogBox.rect.height * -10), 0);
     }
@@ -77,6 +79,8 @@ public class DialogManager : MonoBehaviour
 
     public void PrintNext()
     {
+        var showArrow = dialogScroller.IsPaged() && !dialogScroller.IsLastPage();
+
         var lines = dialogScroller.Next();
 
         if (lines == null || lines.Length == 0)
@@ -85,9 +89,11 @@ public class DialogManager : MonoBehaviour
             return;
         }
 
+        dialogArrow.gameObject.SetActive(showArrow);
         StopAllCoroutines();
         PlaySound();
-        StartCoroutine(Print(lines, dialogScroller.IsInitial() || dialogScroller.IsParagraphStart()));
+
+        StartCoroutine(Print(lines, dialogScroller.IsFirstBuffer() || dialogScroller.IsFirstBufferLine()));
     }
 
     public void EndDialog()
@@ -123,14 +129,12 @@ public class DialogManager : MonoBehaviour
         lineNum = 0;
         dialogText.text = "";
 
-        Debug.Log(lines);
-        Debug.Log(lines.Length);
-
         foreach (string line in lines)
         {
-            var isLast = (lineNum >= lastIndex);
+            var isLastLine = (lineNum >= lastIndex);
             if (line == null)
             {
+                Debug.LogError("Found a null line at #" + lineNum);
                 continue;
             }
 
@@ -139,7 +143,7 @@ public class DialogManager : MonoBehaviour
                 dialogText.text += Environment.NewLine;
             }
 
-            if (delayAll || isLast)
+            if (delayAll || isLastLine)
             {
                 // Print last line
                 foreach (char ch in line)
@@ -147,7 +151,7 @@ public class DialogManager : MonoBehaviour
                     dialogText.text += ch;
                     yield return null; // render frame
                 }
-                if (isLast)
+                if (isLastLine)
                 {
                     break;
                 }

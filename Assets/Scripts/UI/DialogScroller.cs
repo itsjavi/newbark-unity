@@ -11,9 +11,9 @@ public class DialogScroller
     private readonly int MaxColumns;
     private string Text;
     private string[] TextRows;
-    private string[] TextRowsBuffer;
     private int TextRowsIndex = 0;
-    private bool InTextBufferStart = false;
+    private string[] TextRowsBuffer;
+    private int ScrollIndex = 0;
 
     public DialogScroller(int maxRows, int maxColumns)
     {
@@ -43,32 +43,52 @@ public class DialogScroller
         return (TextRowsIndex + 1) > TextRows.Length;
     }
 
-    public bool IsInitial()
+    public bool IsFirstBuffer()
     {
         return IsStarted() && (TextRowsIndex < MaxRows);
     }
 
-    public bool IsParagraphStart()
+    public bool IsFirstBufferLine()
     {
-        return InTextBufferStart;
+        return ScrollIndex == 0;
+    }
+
+    public bool IsPaged()
+    {
+        return TextRows.Length > MaxRows;
+    }
+
+    public bool IsLastPage()
+    {
+        return GetLastPage() >= TextRows.Length;
+    }
+
+    public int GetLastPage()
+    {
+        return TextRowsIndex + MaxRows;
+    }
+
+    public int GetLength()
+    {
+        return TextRows.Length;
     }
 
     public void Clear()
     {
         Text = null;
+        TextRows = null;
         TextRowsIndex = 0;
         TextRowsBuffer = null;
-        TextRows = null;
-        InTextBufferStart = false;
+        ScrollIndex = 0;
     }
 
     private void SetText(string text)
     {
         Text = text;
+        TextRows = BuildScrollableSentences().ToArray();
         TextRowsIndex = 0;
         TextRowsBuffer = new string[MaxRows];
-        TextRows = BuildScrollableSentences().ToArray();
-        InTextBufferStart = true;
+        ScrollIndex = 0;
     }
 
     public string[] Next()
@@ -87,19 +107,21 @@ public class DialogScroller
         if (TextRowsIndex == 0)
         {
             FillBuffer();
+            // Debug.Log(string.Join(", ", TextRowsBuffer));
             return TextRowsBuffer;
         }
 
         ScrollUp();
-        TextRowsBuffer[TextRowsBuffer.Length - 1] = TextRows[TextRowsIndex];
-        TextRowsIndex++;
 
+        // Debug.Log(string.Join(", ", TextRowsBuffer));
         return TextRowsBuffer;
     }
 
     private void FillBuffer()
     {
         int i = 0;
+        ScrollIndex = 0;
+        TextRowsBuffer = new string[MaxRows];
 
         while ((i < MaxRows) && (TextRowsIndex < TextRows.Length))
         {
@@ -111,23 +133,58 @@ public class DialogScroller
 
     private void ScrollUp()
     {
-        InTextBufferStart = false;
-        if (MaxRows <= 1)
+        // start new buffer if:
+        // - cannot scroll with less than 2 rows
+        // - last element of buffer is a new line
+        if ((MaxRows < 2) || (TextRowsBuffer[TextRowsBuffer.Length - 1] == Environment.NewLine))
         {
-            TextRowsBuffer = new string[MaxRows];
-            InTextBufferStart = true;
+            FillBuffer();
             return;
         }
+
+        var hadTrailingNewLines = BufferHasTrailingNewLines();
 
         TextRowsBuffer.Skip(1).ToArray().CopyTo(TextRowsBuffer, 0);
+        TextRowsBuffer[TextRowsBuffer.Length - 1] = TextRows[TextRowsIndex];
+        ScrollIndex = TextRowsBuffer.Length - 1;
+        TextRowsIndex++;
 
-        if (TextRowsBuffer[0] == Environment.NewLine)
+        // start new buffer if:
+        // - next line is new line
+        if (!hadTrailingNewLines && BufferHasTrailingNewLines())
         {
-            // first line = EOL? clear buffer
-            TextRowsBuffer = new string[MaxRows];
-            InTextBufferStart = true;
+            // TextRowsIndex += (MaxRows - 1);
+            FillBuffer();
             return;
         }
+    }
+
+    private bool NextLineIsNewLine()
+    {
+        if ((TextRowsIndex + 1) >= TextRows.Length)
+        {
+            return false;
+        }
+        return TextRows[TextRowsIndex + 1] == Environment.NewLine;
+    }
+
+    private bool BufferHasTrailingNewLines()
+    {
+        return (TextRowsBuffer[0] == Environment.NewLine)
+        || (TextRowsBuffer[TextRowsBuffer.Length - 1] == Environment.NewLine);
+    }
+
+    private int CountBufferNewLines()
+    {
+        int count = 0;
+        foreach (var line in TextRowsBuffer)
+        {
+            if (line == Environment.NewLine)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     private IEnumerable<string> BuildSentences()

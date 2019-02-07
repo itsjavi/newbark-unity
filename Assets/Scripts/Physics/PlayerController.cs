@@ -97,14 +97,15 @@ public class PlayerController : MonoBehaviour
         }
 
         RaycastHit2D hit = CheckRaycast(dirVector);
-        Debug.DrawRay(transform.position, dirVector, Color.green);
+        // Debug.DrawRay(transform.position, dirVector, Color.green);
         if (hit.collider)
         {
-            Debug.DrawRay(transform.position, dirVector, Color.red);
-            Debug.DrawRay(transform.position, hit.point, Color.blue);
+            // Debug.DrawRay(transform.position, dirVector, Color.red);
+            // Debug.DrawRay(transform.position, hit.point, Color.blue);
 
             if (hit.collider.gameObject.HasComponent<Interactable>())
             {
+                // Debug.Log("[raycast hit] @interactable " + hit.collider.gameObject.name);
                 hit.collider.gameObject.GetComponent<Interactable>().Interact(dir, action);
             }
         }

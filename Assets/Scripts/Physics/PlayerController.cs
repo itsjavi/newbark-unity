@@ -34,7 +34,16 @@ public class PlayerController : MonoBehaviour
         DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
         ACTION_BUTTON action = InputController.GetPressedActionButton();
 
-        MovementUpdate(dir);
+        if (!CanMove() && IsMoving())
+        {
+            StopMoving();
+        }
+
+        if (CanMove())
+        {
+            MovementUpdate(dir);
+        }
+
         RaycastUpdate(dir, action);
     }
 
@@ -74,6 +83,16 @@ public class PlayerController : MonoBehaviour
             default:
                 return Vector2.zero;
         }
+    }
+
+    public bool CanMove()
+    {
+        return !FindObjectOfType<DialogManager>().InDialog();
+    }
+
+    public bool CanMoveManually()
+    {
+        return CanMove();
     }
 
     private void MovementUpdate(DIRECTION_BUTTON dir)

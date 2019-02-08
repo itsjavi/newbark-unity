@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'GB Regular';
-  src: url('../font/PokemonGB/GBRegular.woff2') format('woff2'),
-  url('../font/PokemonGB/GBRegular.woff') format('woff');
+  src: url('../font/GBRegular.woff2') format('woff2'),
+  url('../font/GBRegular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -71,7 +71,7 @@ html.xy-centered .main {
   transform: translate(-50%, -50%);
 }
 
-.main, .game canvas {
+.main, #gameContainer canvas {
   margin: auto;
   /* Hide the gap for font descenders. */
   display: block;
@@ -89,12 +89,12 @@ html.xy-centered .main {
 }
 
 .default-resolution .main {
-  background: transparent url(../img/gui/frame_gold_sm.png) no-repeat top left;
+  background: transparent url(../img/frame_gold_sm.png) no-repeat top left;
   width: 352px;
   height: 320px;
 }
 
-.default-resolution .main .game {
+.default-resolution .main #gameContainer {
   position: absolute;
   top: 50%;
   left: 50%;

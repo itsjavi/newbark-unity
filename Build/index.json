@@ -1,0 +1,13 @@
+{
+"companyName": "capsumon",
+"productName": "NewBark",
+"dataUrl": "index.data.unityweb",
+"wasmCodeUrl": "index.wasm.code.unityweb",
+"wasmFrameworkUrl": "index.wasm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Light",
+"backgroundColor": "#F8F8F8",
+"cacheControl": {"default": "must-revalidate"}
+}

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 VERSION=${1:-"dev"}
-UNITY_PROJECT="NewBark"
-UNITY_BIN="/Applications/Unity/2018.3.2f1/Unity.app/Contents/MacOS/Unity"
+UNITY_PROJECT="newbark"
+UNITY_BIN="/Applications/Unity/2018.3.4f1/Unity.app/Contents/MacOS/Unity"
 
 unity_build() {
 	target=$1
@@ -14,14 +14,14 @@ unity_build() {
 
 	echo "Building $UNITY_PROJECT for $target..."
 	mkdir -p $dir
-	# $UNITY_BIN  \
-	#   -batchmode  \
-	#   -nographics  \
-	#   -force-free \
-	#   -silent-crashes \
-	#   -projectPath $(pwd)  \
-	#   -build${target}Player "$binfile"  \
-	#   -quit
+	$UNITY_BIN  \
+	  -batchmode  \
+	  -nographics  \
+	  -force-free \
+	  -silent-crashes \
+	  -projectPath $(pwd)  \
+	  -build${target}Player "$binfile"  \
+	  -quit
 
     cp LICENSE $dir/LICENSE
     cp README.md $dir/README.md

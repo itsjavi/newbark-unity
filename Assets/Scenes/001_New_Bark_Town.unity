@@ -44895,6 +44895,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159c2bef1288e4f49ae60474227a3d6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultWindowWidth: 640
+  defaultWindowHeight: 576
 --- !u!212 &7000609427314950066
 SpriteRenderer:
   m_ObjectHideFlags: 0

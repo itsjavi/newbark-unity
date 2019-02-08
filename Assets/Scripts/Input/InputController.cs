@@ -30,7 +30,7 @@ public static class InputController
         {
             return ACTION_BUTTON.SELECT;
         }
-        return ACTION_BUTTON.NONE;
+        return TouchController.GetTouchAction();
     }
 
     public static DIRECTION_BUTTON GetPressedDirectionButton()
@@ -51,6 +51,6 @@ public static class InputController
         {
             return DIRECTION_BUTTON.RIGHT;
         }
-        return DIRECTION_BUTTON.NONE;
+        return TouchController.GetSwipeDirection();
     }
 }

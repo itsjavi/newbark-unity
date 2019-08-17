@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class WarpController : MonoBehaviour
 {
     public Vector2 warpCoords;
     public int moveSteps = 0;
-    public DIRECTION_BUTTON moveDirection = DIRECTION_BUTTON.NONE;
-    private GameObject pendingWarp;
-    private Vector2 pivot = new Vector2(0.5f, 0.5f);
+    [FormerlySerializedAs("moveDirection")]
+    public DIRECTION_BUTTON faceDirection = DIRECTION_BUTTON.NONE;
+    private GameObject _pendingWarp;
+    private Vector2 _pivot = new Vector2(0.5f, 0.5f);
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -24,16 +26,16 @@ public class WarpController : MonoBehaviour
 
     void Warp(Collider2D other)
     {
-        if ((pendingWarp is GameObject) == false)
+        if (_pendingWarp is null)
         {
             WarpAttempt(other.gameObject);
             return;
         }
 
-        StopPlayer(pendingWarp);
-        if (WarpAttempt(pendingWarp))
+        StopPlayer(_pendingWarp);
+        if (WarpAttempt(_pendingWarp))
         {
-            pendingWarp = null;
+            _pendingWarp = null;
             // Debug.LogWarning("[warp] warp pending OK");
         }
     }
@@ -45,7 +47,7 @@ public class WarpController : MonoBehaviour
         if (player.IsMoving()) // is probably warping?
         {
             // Debug.Log("[warp] Player is still moving...");
-            pendingWarp = go;
+            _pendingWarp = go;
             return false;
         }
 
@@ -57,7 +59,7 @@ public class WarpController : MonoBehaviour
         }
 
         // WARP
-        Vector2 coords = warpCoords + pivot;
+        Vector2 coords = warpCoords + _pivot;
         player.ClampPositionTo(new Vector3(coords.x, coords.y, 0));
 
 
@@ -65,7 +67,7 @@ public class WarpController : MonoBehaviour
         if (go.HasComponent<PlayerController>())
         {
             // Debug.LogWarning("[warp] MOVING steps!");
-            go.GetComponent<PlayerController>().Move(moveDirection, moveSteps);
+            go.GetComponent<PlayerController>().Move(faceDirection, moveSteps);
         }
 
         if (go.HasComponent<BoxCollider2D>())

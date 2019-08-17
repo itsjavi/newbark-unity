@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 1
   m_Name: WarpZone
   m_TagString: Invisible
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -56,7 +56,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 8678164167779174701}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: ccd6a316686b94c969501bac8d9a5cef, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0

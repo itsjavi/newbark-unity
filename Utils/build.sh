@@ -2,7 +2,7 @@
 
 VERSION=${1:-"dev"}
 UNITY_PROJECT="newbark"
-UNITY_BIN="/Applications/Unity/2018.3.4f1/Unity.app/Contents/MacOS/Unity"
+UNITY_BIN="/Applications/Unity/2019.2.1f1/Unity.app/Contents/MacOS/Unity"
 
 unity_build() {
 	target=$1

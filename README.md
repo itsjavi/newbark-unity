@@ -1,12 +1,12 @@
 # NewBark
-🌳 Retro-style Pokémon RPG game engine for Unity 2D.
+🌳 Retro-style 2D RPG game engine for Unity, inspired on Pokémon Gold and Silver.
 
 ![screenshot](Assets/Images/screenshot.png)
 
 
 ## Requirements
 
-- Unity 2019.1.9f1+
+- Unity 2019.2.1f1+
 
 
 ## Resources
@@ -27,7 +27,7 @@ property of Nintendo, Creatures, inc., and GAME FREAK, inc. and is protected by
 various copyrights and trademarks.
 
 The goal of this project is not to create and/or distribute a game, but to learn
-how to create similar games in Unity. So this project apart from being a possible
+how to create similar retro games in Unity. So this project, apart from being a possible
 base engine for future similar projects unrelated to the Pokémon franchise,
 has mainly educational purposes.
 

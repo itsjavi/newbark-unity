@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Warp
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4861655511843610441
 Transform:
@@ -45,9 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dddc5ba83e654fed81a83838d4056fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destination: {fileID: 0}
   warpCoords: {x: 0, y: 0}
   moveSteps: 0
   finalFacingDirection: 0
+  fader: {fileID: 0}
 --- !u!61 &2922873770776026850
 BoxCollider2D:
   m_ObjectHideFlags: 0

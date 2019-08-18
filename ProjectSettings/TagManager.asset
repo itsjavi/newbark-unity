@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Invisible
   - Warp
+  - Item
+  - NPC
+  - ScreenFader
   layers:
   - Default
   - TransparentFX

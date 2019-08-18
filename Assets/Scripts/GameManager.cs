@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     {
         public const string Player = "Player";
         public const string Warp = "Warp";
+        public const string ScreenFader = "ScreenFader";
     }
     
     // TODO: add in-game options to scale/go to fullscreen

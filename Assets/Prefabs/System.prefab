@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Audio
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7672103783218374131
 Transform:
@@ -150,7 +150,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7672103784573489995
 Transform:
@@ -178,13 +178,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7667643576000933959}
   - component: {fileID: 4387025727235128692}
-  - component: {fileID: 7777351109106183309}
   m_Layer: 1
   m_Name: GameManager
   m_TagString: GameController
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7667643576000933959
 Transform:
@@ -212,18 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159c2bef1288e4f49ae60474227a3d6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  antialiasing: 0
-  vSync: 0
-  frameRate: 64
---- !u!114 &7777351109106183309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7673840009532929365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8386491b5df7643138f87f171f6e31fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  defaultWindowWidth: 640
+  defaultWindowHeight: 576
+  forceResolution: 0

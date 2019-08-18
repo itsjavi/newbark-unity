@@ -1,19 +1,17 @@
 ﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     private CellMovement movement;
 
-    [Header("Movement")]
-    public Animator animator;
+    [Header("Movement")] public Animator animator;
     public int speed = 6;
     public int inputDelay = 8;
     public int tilesToMove = 1;
     public float clampAt = 0.5f;
     public float raycastDistance = 1f;
 
-    [Header("Debug")]
-    private int currentTilesToMove = 1;
+    [Header("Debug")] private int currentTilesToMove = 1;
     public GameObject lastCollidedObject;
     public DIRECTION_BUTTON lastCollisionDir = DIRECTION_BUTTON.NONE;
 
@@ -53,18 +51,22 @@ public class PlayerController : MonoBehaviour
         {
             return DIRECTION_BUTTON.RIGHT;
         }
+
         if (animator.GetFloat("LastMoveX") < 0)
         {
             return DIRECTION_BUTTON.LEFT;
         }
+
         if (animator.GetFloat("LastMoveY") > 0)
         {
             return DIRECTION_BUTTON.UP;
         }
+
         if (animator.GetFloat("LastMoveY") < 0)
         {
             return DIRECTION_BUTTON.DOWN;
         }
+
         return DIRECTION_BUTTON.DOWN;
     }
 
@@ -101,6 +103,7 @@ public class PlayerController : MonoBehaviour
         {
             currentTilesToMove = tilesToMove;
         }
+
         Move(dir, currentTilesToMove);
 
         Vector3 dirVector = Vector3.zero;
@@ -132,14 +135,14 @@ public class PlayerController : MonoBehaviour
 
     private RaycastHit2D CheckRaycast(Vector2 direction)
     {
-        Vector2 startingPosition = (Vector2)transform.position;
+        Vector2 startingPosition = (Vector2) transform.position;
 
         return Physics2D.Raycast(startingPosition, direction, raycastDistance);
     }
 
     private RaycastHit2D CheckFutureRaycast(Vector2 direction)
     {
-        Vector2 startingPosition = (Vector2)transform.position;
+        Vector2 startingPosition = (Vector2) transform.position;
 
         return Physics2D.Raycast(startingPosition, direction, raycastDistance * 2);
     }
@@ -161,6 +164,7 @@ public class PlayerController : MonoBehaviour
             {
                 PlayCollisionSound(lastCollidedObject);
             }
+
             return true;
         }
         else if (movement.IsMoving)
@@ -229,11 +233,13 @@ public class PlayerController : MonoBehaviour
 
     AudioSource GetCollisionSound(GameObject gobj)
     {
-        if (gobj.HasComponent<AudioSource>())
+        if (!HasCollisionSound(gobj))
         {
-            return gobj.GetComponent<AudioSource>();
+            return null;
         }
-        return null;
+
+        gobj.TryGetComponent(typeof(AudioSource), out Component aud);
+        return (AudioSource) aud;
     }
 
     void PlayCollisionSound(GameObject gobj)
@@ -266,6 +272,8 @@ public class PlayerController : MonoBehaviour
     public void ClampPositionTo(Vector3 position)
     {
         transform.position = movement.ClampPosition(position);
+        
+        // override in case collision physics caused object rotation
         transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 }

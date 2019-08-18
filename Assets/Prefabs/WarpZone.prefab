@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4861655511843610441}
-  - component: {fileID: 854959584791728990}
   - component: {fileID: 2922873770776026850}
   - component: {fileID: 6027281901822561998}
+  - component: {fileID: 8442121494777395711}
   m_Layer: 1
   m_Name: WarpZone
-  m_TagString: Warp
+  m_TagString: WarpZone
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -33,23 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &854959584791728990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8678164167779174701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dddc5ba83e654fed81a83838d4056fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destination: {fileID: 0}
-  warpCoords: {x: 0, y: 0}
-  moveSteps: 0
-  finalFacingDirection: 0
-  fader: {fileID: 0}
 --- !u!61 &2922873770776026850
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -125,3 +108,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8442121494777395711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8678164167779174701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a1d8b26f1941d5b4ec89d3e35c2757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropStartZone: {fileID: 0}
+  dropEndZone:
+    steps: 0
+    direction: 0

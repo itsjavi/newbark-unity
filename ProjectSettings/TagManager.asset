@@ -9,6 +9,9 @@ TagManager:
   - Item
   - NPC
   - ScreenFader
+  - Audio
+  - WarpDropZone
+  - WarpZone
   layers:
   - Default
   - TransparentFX

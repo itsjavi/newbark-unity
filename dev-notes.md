@@ -11,3 +11,4 @@
 - Maybe warpCoords make moveSteps to not work in WarpController
 - Sometimes text dialogs are not in the right order
 - Triggering a dialog may not respond to buttons
+- When fading on warp player can still move

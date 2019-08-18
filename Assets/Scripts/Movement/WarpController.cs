@@ -7,25 +7,30 @@ public class WarpController : MonoBehaviour
 {
     public Vector2 warpCoords;
     public int moveSteps = 0;
-    [FormerlySerializedAs("moveDirection")]
-    public DIRECTION_BUTTON faceDirection = DIRECTION_BUTTON.NONE;
+    public DIRECTION_BUTTON finalFacingDirection = DIRECTION_BUTTON.NONE;
     private GameObject _pendingWarp;
     private Vector2 _pivot = new Vector2(0.5f, 0.5f);
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug.Log("[warp] Trigger ENTER between " + this.name + " and " + other.gameObject.name);
+        // warp when the player starts to touch the warp
         Warp(other);
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
-        // Debug.Log("[warp] Trigger STAY between " + this.name + " and " + other.gameObject.name);
+        // warp when the player is still inside the warp
         Warp(other);
     }
 
     void Warp(Collider2D other)
     {
+        // we don't want other objects to warp when hitting this Warp object, only Player-tagged objects
+        if(!other.CompareTag(GameManager.Tag.Player))
+        {
+            return;
+        }
+        
         if (_pendingWarp is null)
         {
             WarpAttempt(other.gameObject);
@@ -67,7 +72,7 @@ public class WarpController : MonoBehaviour
         if (go.HasComponent<PlayerController>())
         {
             // Debug.LogWarning("[warp] MOVING steps!");
-            go.GetComponent<PlayerController>().Move(faceDirection, moveSteps);
+            go.GetComponent<PlayerController>().Move(finalFacingDirection, moveSteps);
         }
 
         if (go.HasComponent<BoxCollider2D>())

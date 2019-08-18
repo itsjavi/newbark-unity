@@ -2,6 +2,12 @@
 
 public class GameManager : MonoBehaviour
 {
+    public static class Tag
+    {
+        public const string Player = "Player";
+        public const string Warp = "Warp";
+    }
+    
     // TODO: add in-game options to scale/go to fullscreen
     public int defaultWindowWidth = 320 * 2;
     public int defaultWindowHeight = 288 * 2;

@@ -24148,12 +24148,12 @@ PrefabInstance:
     - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Warp
       objectReference: {fileID: 0}
     - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -24244,6 +24244,16 @@ PrefabInstance:
         type: 3}
       propertyPath: warpCoords.y
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 854959584791728990, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: faceDirection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 854959584791728990, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: finalFacingDirection
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81da04f0b0dc34148bcd24007f3b42e2, type: 3}
@@ -24643,12 +24653,12 @@ PrefabInstance:
     - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Warp
       objectReference: {fileID: 0}
     - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -24768,12 +24778,12 @@ PrefabInstance:
     - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Warp
       objectReference: {fileID: 0}
     - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -42969,12 +42979,12 @@ PrefabInstance:
     - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Warp
       objectReference: {fileID: 0}
     - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -43071,10 +43081,10 @@ PrefabInstance:
       propertyPath: faceDirection
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+    - target: {fileID: 854959584791728990, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
+      propertyPath: finalFacingDirection
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81da04f0b0dc34148bcd24007f3b42e2, type: 3}
@@ -44705,7 +44715,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 53
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

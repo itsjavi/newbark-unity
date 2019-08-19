@@ -1,13 +1,21 @@
-using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Movement
 {
-    [Serializable]
-    public class InteractionManager
+    public class InteractionController : MonoBehaviour
     {
         [Tooltip("Maximum distance over which to cast the ray.")]
-        public float maxDistance = 1f;
+        public float maxObjectDistance = 1f;
+
+        [FormerlySerializedAs("animationManager")]
+        public AnimationController animationController;
+
+        void FixedUpdate()
+        {
+            InputInfo input = InputManager.GetPressedButtons();
+            RaycastUpdate(input, transform.position, animationController.GetCurrentFaceDirectionVector());
+        }
 
         public void RaycastUpdate(InputInfo input, Vector2 currentPosition, Vector2 currentFaceDirection)
         {
@@ -16,7 +24,7 @@ namespace Movement
                 return;
             }
 
-            RaycastHit2D hit = Physics2D.Raycast(currentPosition, currentFaceDirection, maxDistance);
+            RaycastHit2D hit = Physics2D.Raycast(currentPosition, currentFaceDirection, maxObjectDistance);
 
             // Debug.DrawRay(transform.position, dirVector, Color.green);
             OnRaycastHit(hit, input);

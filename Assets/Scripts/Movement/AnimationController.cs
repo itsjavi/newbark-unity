@@ -1,12 +1,21 @@
-using System;
 using UnityEngine;
 
 namespace Movement
 {
-    [Serializable]
-    public class AnimationManager
+    public class AnimationController : MonoBehaviour
     {
         public Animator animator;
+
+        void FixedUpdate()
+        {
+            InputInfo input = InputManager.GetPressedButtons();
+            if (input.direction != MoveDirection.NONE)
+            {
+                Debug.Log(input.direction);
+            }
+
+            UpdateAnimation(input.direction);
+        }
 
         public bool IsMoving()
         {
@@ -18,7 +27,7 @@ namespace Movement
             return !IsMoving();
         }
 
-        public void Update(Vector2 current, Vector2 previous, bool isMoving)
+        public void UpdateAnimation(Vector2 current, Vector2 previous, bool isMoving)
         {
             animator.SetFloat("MoveX", current.x);
             animator.SetFloat("MoveY", current.y);
@@ -27,24 +36,24 @@ namespace Movement
             animator.SetBool("Moving", isMoving);
         }
 
-        public void Update(Vector2 current, bool isMoving)
+        public void UpdateAnimation(Vector2 current, bool isMoving)
         {
-            Update(current, current, isMoving);
+            UpdateAnimation(current, current, isMoving);
         }
 
-        public void Update(Vector2 current)
+        public void UpdateAnimation(Vector2 current)
         {
-            Update(current, current, IsMoving());
+            UpdateAnimation(current, current, IsMoving());
         }
 
-        public void Update(MoveDirection direction)
+        public void UpdateAnimation(MoveDirection direction)
         {
             if (direction == MoveDirection.NONE)
             {
                 return;
             }
 
-            Update(DirectionToVector(direction));
+            UpdateAnimation(DirectionToVector(direction));
         }
 
         public MoveDirection GetCurrentFaceDirection()

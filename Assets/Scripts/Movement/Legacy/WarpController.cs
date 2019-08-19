@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 public class WarpController : MonoBehaviour
 {
     public BoxCollider2D warperCollider;
-    public MovementController movementController;
+    [FormerlySerializedAs("movementController")] public LegacyMovementController legacyMovementController;
     public UnityEvent onWarpEnter;
     public UnityEvent onWarpStay;
     public UnityEvent onWarpFinish;
@@ -19,7 +19,7 @@ public class WarpController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isWarping && !movementController.IsMoving())
+        if (_isWarping && !legacyMovementController.IsMoving())
         {
             _isWarping = false;
         }
@@ -48,7 +48,7 @@ public class WarpController : MonoBehaviour
     private void WarpToDropStart(WarpZone destination)
     {
         Vector2 coords = destination.dropZone.transform.position.AsVector2() + destination.dropZoneOffset;
-        movementController.ClampPositionTo(new Vector3(coords.x, coords.y, 0));
+        legacyMovementController.ClampPositionTo(new Vector3(coords.x, coords.y, 0));
     }
 
     private void MoveToDropEnd(WarpZone destination)
@@ -57,13 +57,13 @@ public class WarpController : MonoBehaviour
         {
             if (destination.postDropMove.direction != MoveDirection.NONE)
             {
-                movementController.TriggerButtons(destination.postDropMove.direction, ActionButton.NONE);
+                legacyMovementController.TriggerButtons(destination.postDropMove.direction, ActionButton.NONE);
             }
 
             return;
         }
 
-        if (!movementController.Move(destination.postDropMove.direction, destination.postDropMove.steps))
+        if (!legacyMovementController.Move(destination.postDropMove.direction, destination.postDropMove.steps))
         {
             Debug.LogWarning("!!! WARPER CANNOT BE MOVED");
         }

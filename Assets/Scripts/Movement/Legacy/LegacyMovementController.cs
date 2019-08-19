@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MovementController : MonoBehaviour
+public class LegacyMovementController : MonoBehaviour
 {
     private CellMovement movement;
 

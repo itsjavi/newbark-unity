@@ -6,15 +6,11 @@ using UnityEngine.Events;
 
 namespace Movement
 {
-    [Serializable]
-    public class MovementManager
+    public class MovementController : MonoBehaviour
     {
-        [Header("Character")] 
-        public Transform transform;
         public Vector2 pivotOffset = new Vector2(0.5f, 0.5f);
-        public Animator animator;
+        public int initialSpeed = WalkMove.DefaultSpeed;
 
-        [Header("Movement Params")] public int initialSpeed = WalkMove.DefaultSpeed;
         public int CurrentSpeed { get; private set; } = WalkMove.DefaultSpeed;
         // public int inputDelay = 6;
 

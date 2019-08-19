@@ -14,6 +14,10 @@ namespace Movement
         void FixedUpdate()
         {
             InputData input = InputController.GetPressedButtons();
+            if (input.direction != MoveDirection.NONE)
+            {
+                Debug.Log(input.direction);
+            }
             
             animationManager.Update(input.direction);
 

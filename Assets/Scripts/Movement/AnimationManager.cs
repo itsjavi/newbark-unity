@@ -29,15 +29,12 @@ namespace Movement
 
         public void Update(Vector2 current, bool isMoving)
         {
-            animator.SetFloat("MoveX", current.x);
-            animator.SetFloat("MoveY", current.y);
-            animator.SetBool("Moving", isMoving);
+            Update(current, current, isMoving);
         }
 
         public void Update(Vector2 current)
         {
-            animator.SetFloat("MoveX", current.x);
-            animator.SetFloat("MoveY", current.y);
+            Update(current, current, IsMoving());
         }
 
         public void Update(MoveDirection direction)

@@ -21,7 +21,6 @@ public class WarpController : MonoBehaviour
     {
         if (_isWarping && !movementController.IsMoving())
         {
-            Debug.Log("NOT WARPING ANYMORE");
             _isWarping = false;
         }
     }
@@ -33,13 +32,11 @@ public class WarpController : MonoBehaviour
 
     public void EnableWarping()
     {
-        Debug.Log("Enabled Warping");
         _warpingEnabled = true;
     }
 
     public void DisableWarping()
     {
-        Debug.Log("Disabled Warping");
         _warpingEnabled = false;
     }
 
@@ -50,32 +47,27 @@ public class WarpController : MonoBehaviour
 
     private void WarpToDropStart(WarpZone destination)
     {
-        Debug.Log("WarpToDropStart");
         Vector2 coords = destination.dropZone.transform.position.AsVector2() + destination.dropZoneOffset;
         movementController.ClampPositionTo(new Vector3(coords.x, coords.y, 0));
     }
 
     private void MoveToDropEnd(WarpZone destination)
     {
-        Debug.Log("MoveToDropEnd");
         if (destination.postDropMove.steps == 0)
         {
+            if (destination.postDropMove.direction != DIRECTION_BUTTON.NONE)
+            {
+                movementController.TriggerButtons(destination.postDropMove.direction, ACTION_BUTTON.NONE);
+            }
+
             return;
         }
+
         if (!movementController.Move(destination.postDropMove.direction, destination.postDropMove.steps))
         {
             Debug.LogWarning("!!! WARPER CANNOT BE MOVED");
         }
     }
-
-//    private void StopMoving()
-//    {
-//        Debug.Log("Stopping moving");
-//        if (movementController.IsMoving())
-//        {
-//            movementController.StopMoving();
-//        }
-//    }
 
     private bool IsWarpZone(Collider2D other)
     {
@@ -89,22 +81,8 @@ public class WarpController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsWarpZone(other))
+        if (!IsWarpZone(other) || !IsWarpingEnabled() || IsWarping())
         {
-            return;
-        }
-
-        if (IsWarping())
-        {
-            Debug.Log("OnTriggerEnter2D: STILL warping");
-            return;
-        }
-
-        if (!IsWarpingEnabled())
-        {
-            Debug.Log("OnTriggerEnter2D: warping is disabled");
-            // prevent warper to move around while fading
-            //StopMoving();
             return;
         }
 
@@ -115,26 +93,11 @@ public class WarpController : MonoBehaviour
     // For the OnTriggerStay2D event to work properly, the Rigid2D body Sleep Mode has to be on "Never Sleep", otherwise this is only triggered once
     void OnTriggerStay2D(Collider2D other)
     {
-        if (!IsWarpZone(other))
+        if (!IsWarpZone(other) || !IsWarpingEnabled() || IsWarping())
         {
             return;
         }
 
-        if (IsWarping())
-        {
-            Debug.Log("OnTriggerStay2D: STILL warping");
-            return;
-        }
-
-        if (!IsWarpingEnabled())
-        {
-            Debug.Log("OnTriggerStay2D: warping is disabled");
-            // prevent warper to move around while fading
-            //StopMoving();
-            return;
-        }
-
-        Debug.Log("OnTriggerStay2D: ------- OK");
         _isWarping = true;
         WarpToDropStart(GetWarpZone(other));
         onWarpStay.Invoke();
@@ -142,22 +105,8 @@ public class WarpController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (!IsWarpZone(other))
+        if (!IsWarpZone(other) || !IsWarpingEnabled() || IsWarping())
         {
-            return;
-        }
-
-        if (IsWarping())
-        {
-            Debug.Log("OnTriggerExit2D: STILL warping");
-            return;
-        }
-
-        if (!IsWarpingEnabled())
-        {
-            Debug.Log("OnTriggerExit2D: warping is disabled");
-            // prevent warper to move around while fading
-            //StopMoving();
             return;
         }
 

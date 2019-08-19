@@ -29,20 +29,15 @@ public class MovementController : MonoBehaviour
 
     void FixedUpdate()
     {
-        DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
-        ACTION_BUTTON action = InputController.GetPressedActionButton();
-
         if (!CanMove() && IsMoving())
         {
             StopMoving();
         }
 
-        if (CanMove())
-        {
-            MovementUpdate(dir);
-        }
+        DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
+        ACTION_BUTTON action = InputController.GetPressedActionButton();
 
-        RaycastUpdate(dir, action);
+        TriggerButtons(dir, action);
     }
 
     public DIRECTION_BUTTON GetFaceDirection()
@@ -89,6 +84,7 @@ public class MovementController : MonoBehaviour
 
     public bool CanMove()
     {
+        // TODO optimize with events
         return !FindObjectOfType<DialogManager>().InDialog();
     }
 
@@ -197,6 +193,21 @@ public class MovementController : MonoBehaviour
         animator.SetBool("Moving", movement.IsMoving);
     }
 
+    public void TriggerButtons(DIRECTION_BUTTON dir, ACTION_BUTTON action)
+    {
+        if (!CanMove() && IsMoving())
+        {
+            StopMoving();
+        }
+
+        if (CanMove())
+        {
+            MovementUpdate(dir);
+        }
+
+        RaycastUpdate(dir, action);
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         // Debug.Log("Collision ENTER between " + this.name + " and " + col.gameObject.name);
@@ -270,7 +281,7 @@ public class MovementController : MonoBehaviour
     public void ClampPositionTo(Vector3 position)
     {
         transform.position = movement.ClampPosition(position);
-        
+
         // override in case collision physics caused object rotation
         transform.rotation = new Quaternion(0, 0, 0, 0);
     }

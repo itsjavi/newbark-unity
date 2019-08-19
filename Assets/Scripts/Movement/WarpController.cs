@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -12,8 +13,23 @@ public class WarpController : MonoBehaviour
     public UnityEvent onWarpEnter;
     public UnityEvent onWarpStay;
     public UnityEvent onWarpFinish;
+
     private bool _warpingEnabled = true;
-    private WarpZone _currentWarpZone;
+    private bool _isWarping = false;
+
+    private void FixedUpdate()
+    {
+        if (_isWarping && !movementController.IsMoving())
+        {
+            Debug.Log("NOT WARPING ANYMORE");
+            _isWarping = false;
+        }
+    }
+
+    public bool IsWarping()
+    {
+        return _isWarping;
+    }
 
     public void EnableWarping()
     {
@@ -32,42 +48,34 @@ public class WarpController : MonoBehaviour
         return _warpingEnabled;
     }
 
-    public bool IsWarping()
-    {
-        return !(_currentWarpZone is null);
-    }
-
-    private bool IsDifferentWarpZone(Collider2D other)
-    {
-        return _currentWarpZone && (_currentWarpZone != GetWarpZone(other));
-    }
-
     private void WarpToDropStart(WarpZone destination)
     {
         Debug.Log("WarpToDropStart");
-
-        // disable to avoid collisions with the destination drop point (in case it is another collider) 
-        // warperCollider.enabled = false;
-        Vector2 correctionCoords = new Vector2(0.5f, 0.5f);
-        Vector2 coords = destination.dropStartZone.transform.position.AsVector2();
+        Vector2 coords = destination.dropZone.transform.position.AsVector2() + destination.dropZoneOffset;
         movementController.ClampPositionTo(new Vector3(coords.x, coords.y, 0));
     }
 
     private void MoveToDropEnd(WarpZone destination)
     {
-        // warperCollider.enabled = true;
         Debug.Log("MoveToDropEnd");
-        movementController.Move(destination.dropEndZone.direction, destination.dropEndZone.steps);
-    }
-
-    private void StopMoving()
-    {
-        Debug.Log("Stopping moving");
-        if (movementController.IsMoving())
+        if (destination.postDropMove.steps == 0)
         {
-            movementController.StopMoving();
+            return;
+        }
+        if (!movementController.Move(destination.postDropMove.direction, destination.postDropMove.steps))
+        {
+            Debug.LogWarning("!!! WARPER CANNOT BE MOVED");
         }
     }
+
+//    private void StopMoving()
+//    {
+//        Debug.Log("Stopping moving");
+//        if (movementController.IsMoving())
+//        {
+//            movementController.StopMoving();
+//        }
+//    }
 
     private bool IsWarpZone(Collider2D other)
     {
@@ -81,8 +89,22 @@ public class WarpController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsWarpZone(other) || IsDifferentWarpZone(other))
+        if (!IsWarpZone(other))
         {
+            return;
+        }
+
+        if (IsWarping())
+        {
+            Debug.Log("OnTriggerEnter2D: STILL warping");
+            return;
+        }
+
+        if (!IsWarpingEnabled())
+        {
+            Debug.Log("OnTriggerEnter2D: warping is disabled");
+            // prevent warper to move around while fading
+            //StopMoving();
             return;
         }
 
@@ -93,8 +115,14 @@ public class WarpController : MonoBehaviour
     // For the OnTriggerStay2D event to work properly, the Rigid2D body Sleep Mode has to be on "Never Sleep", otherwise this is only triggered once
     void OnTriggerStay2D(Collider2D other)
     {
-        if (!IsWarpZone(other) || IsDifferentWarpZone(other))
+        if (!IsWarpZone(other))
         {
+            return;
+        }
+
+        if (IsWarping())
+        {
+            Debug.Log("OnTriggerStay2D: STILL warping");
             return;
         }
 
@@ -106,32 +134,35 @@ public class WarpController : MonoBehaviour
             return;
         }
 
-        if (_currentWarpZone)
-        {
-            Debug.Log("OnTriggerStay2D: warping already in progress");
-            return;
-        }
-
-        _currentWarpZone = GetWarpZone(other);
-
-
         Debug.Log("OnTriggerStay2D: ------- OK");
+        _isWarping = true;
+        WarpToDropStart(GetWarpZone(other));
         onWarpStay.Invoke();
-        WarpToDropStart(_currentWarpZone);
-        MoveToDropEnd(_currentWarpZone);
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (!IsWarpZone(other) || IsDifferentWarpZone(other))
+        if (!IsWarpZone(other))
         {
             return;
         }
 
-        Debug.Log("OnTriggerExit2D");
-        MoveToDropEnd(_currentWarpZone);
-        _currentWarpZone = null;
+        if (IsWarping())
+        {
+            Debug.Log("OnTriggerExit2D: STILL warping");
+            return;
+        }
 
+        if (!IsWarpingEnabled())
+        {
+            Debug.Log("OnTriggerExit2D: warping is disabled");
+            // prevent warper to move around while fading
+            //StopMoving();
+            return;
+        }
+
+        Debug.Log("OnTriggerExit2D");
+        MoveToDropEnd(GetWarpZone(other));
         onWarpFinish.Invoke();
     }
 }

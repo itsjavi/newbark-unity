@@ -208,10 +208,25 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7875915832743167752, guid: 0a95b8f9adc2449cb977c69d04567b44,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875915832743167752, guid: 0a95b8f9adc2449cb977c69d04567b44,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ccd6a316686b94c969501bac8d9a5cef, type: 2}
     - target: {fileID: 7864506063045644056, guid: 0a95b8f9adc2449cb977c69d04567b44,
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864506063045644056, guid: 0a95b8f9adc2449cb977c69d04567b44,
+        type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a95b8f9adc2449cb977c69d04567b44, type: 3}
@@ -45855,10 +45870,10 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ccd6a316686b94c969501bac8d9a5cef, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!1 &7192301008348172418
 GameObject:

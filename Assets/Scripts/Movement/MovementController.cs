@@ -105,8 +105,6 @@ public class MovementController : MonoBehaviour
         }
 
         Move(dir, currentTilesToMove);
-
-        Vector3 dirVector = Vector3.zero;
     }
 
     private void RaycastUpdate(DIRECTION_BUTTON dir, ACTION_BUTTON action)
@@ -160,7 +158,7 @@ public class MovementController : MonoBehaviour
         if (movement.IsMoving && (dir != DIRECTION_BUTTON.NONE) && (dir == lastCollisionDir))
         {
             ClampCurrentPosition();
-            if (lastCollidedObject is GameObject)
+            if (!(lastCollidedObject is null))
             {
                 PlayCollisionSound(lastCollidedObject);
             }

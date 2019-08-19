@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 /**
  * Warp Controller. Attach this controller to the object that moves an warps, usually the player.
@@ -8,8 +9,8 @@ public class WarpController : MonoBehaviour
 {
     public BoxCollider2D warperCollider;
     public MovementController movementController;
-    public UnityEvent onWarpTrigger;
-    public UnityEvent onWarpStart;
+    public UnityEvent onWarpEnter;
+    public UnityEvent onWarpStay;
     public UnityEvent onWarpFinish;
     private bool _warpingEnabled = true;
     private WarpZone _currentWarpZone;
@@ -47,8 +48,8 @@ public class WarpController : MonoBehaviour
 
         // disable to avoid collisions with the destination drop point (in case it is another collider) 
         // warperCollider.enabled = false;
-        Vector2 correctionCoords = new Vector2(0f, 0f);
-        Vector2 coords = destination.dropStartZone.transform.position.AsVector2() + correctionCoords;
+        Vector2 correctionCoords = new Vector2(0.5f, 0.5f);
+        Vector2 coords = destination.dropStartZone.transform.position.AsVector2();
         movementController.ClampPositionTo(new Vector3(coords.x, coords.y, 0));
     }
 
@@ -86,9 +87,7 @@ public class WarpController : MonoBehaviour
         }
 
         Debug.Log("OnTriggerEnter2D");
-        _currentWarpZone = GetWarpZone(other);
-
-        onWarpTrigger.Invoke();
+        onWarpEnter.Invoke();
     }
 
     // For the OnTriggerStay2D event to work properly, the Rigid2D body Sleep Mode has to be on "Never Sleep", otherwise this is only triggered once
@@ -99,10 +98,6 @@ public class WarpController : MonoBehaviour
             return;
         }
 
-        _currentWarpZone = GetWarpZone(other);
-
-        Debug.Log("OnTriggerStay2D");
-
         if (!IsWarpingEnabled())
         {
             Debug.Log("OnTriggerStay2D: warping is disabled");
@@ -111,7 +106,17 @@ public class WarpController : MonoBehaviour
             return;
         }
 
-        onWarpStart.Invoke();
+        if (_currentWarpZone)
+        {
+            Debug.Log("OnTriggerStay2D: warping already in progress");
+            return;
+        }
+
+        _currentWarpZone = GetWarpZone(other);
+
+
+        Debug.Log("OnTriggerStay2D: ------- OK");
+        onWarpStay.Invoke();
         WarpToDropStart(_currentWarpZone);
         MoveToDropEnd(_currentWarpZone);
     }
@@ -124,8 +129,9 @@ public class WarpController : MonoBehaviour
         }
 
         Debug.Log("OnTriggerExit2D");
+        MoveToDropEnd(_currentWarpZone);
+        _currentWarpZone = null;
 
         onWarpFinish.Invoke();
-        _currentWarpZone = null;
     }
 }

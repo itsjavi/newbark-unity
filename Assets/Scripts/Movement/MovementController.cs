@@ -1,288 +1,111 @@
-﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 
-public class MovementController : MonoBehaviour
+namespace Movement
 {
-    private CellMovement movement;
-
-    [Header("Movement")] public Animator animator;
-    public int speed = 6;
-    public int inputDelay = 8;
-    public int tilesToMove = 1;
-    public float clampAt = 0.5f;
-    public float raycastDistance = 1f;
-
-    [Header("Debug")] private int currentTilesToMove = 1;
-    public GameObject lastCollidedObject;
-    public DIRECTION_BUTTON lastCollisionDir = DIRECTION_BUTTON.NONE;
-
-    void Start()
+    public class MovementController: MonoBehaviour
     {
-        if (!animator)
+        [Header("Character")]
+        public Animator animator;
+        public int speed = 6;
+        
+        [Header("Events")] 
+        public UnityEvent onMoveStart;
+        public UnityEvent onMoveFinish;
+        public UnityEvent onMoveCancel;
+        
+        private Stack<Move> _moveStack = new Stack<Move>();
+        private bool _paused;
+        
+        public MoveDirection GetFaceDirection()
         {
-            animator = GetComponentInChildren<Animator>();
-        }
-
-        currentTilesToMove = tilesToMove;
-
-        movement = new CellMovement(inputDelay, clampAt);
-    }
-
-    void FixedUpdate()
-    {
-        if (!CanMove() && IsMoving())
-        {
-            StopMoving();
-        }
-
-        DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
-        ACTION_BUTTON action = InputController.GetPressedActionButton();
-
-        TriggerButtons(dir, action);
-    }
-
-    public DIRECTION_BUTTON GetFaceDirection()
-    {
-        if (animator.GetFloat("LastMoveX") > 0)
-        {
-            return DIRECTION_BUTTON.RIGHT;
-        }
-
-        if (animator.GetFloat("LastMoveX") < 0)
-        {
-            return DIRECTION_BUTTON.LEFT;
-        }
-
-        if (animator.GetFloat("LastMoveY") > 0)
-        {
-            return DIRECTION_BUTTON.UP;
-        }
-
-        if (animator.GetFloat("LastMoveY") < 0)
-        {
-            return DIRECTION_BUTTON.DOWN;
-        }
-
-        return DIRECTION_BUTTON.DOWN;
-    }
-
-    public Vector2 GetFaceDirectionVector()
-    {
-        switch (GetFaceDirection())
-        {
-            case DIRECTION_BUTTON.UP:
-                return Vector2.up;
-            case DIRECTION_BUTTON.DOWN:
-                return Vector2.down;
-            case DIRECTION_BUTTON.LEFT:
-                return Vector2.left;
-            case DIRECTION_BUTTON.RIGHT:
-                return Vector2.right;
-            default:
-                return Vector2.zero;
-        }
-    }
-
-    public bool CanMove()
-    {
-        // TODO optimize with events
-        return !FindObjectOfType<DialogManager>().InDialog();
-    }
-
-    public bool CanMoveManually()
-    {
-        return CanMove();
-    }
-
-    private void MovementUpdate(DIRECTION_BUTTON dir)
-    {
-        if (movement != null && !movement.IsMoving)
-        {
-            currentTilesToMove = tilesToMove;
-        }
-
-        Move(dir, currentTilesToMove);
-    }
-
-    private void RaycastUpdate(DIRECTION_BUTTON dir, ACTION_BUTTON action)
-    {
-        Vector3 dirVector = GetFaceDirectionVector();
-
-        if (dirVector == Vector3.zero)
-        {
-            return;
-        }
-
-        RaycastHit2D hit = CheckRaycast(dirVector);
-        // Debug.DrawRay(transform.position, dirVector, Color.green);
-        if (hit.collider)
-        {
-            // Debug.DrawRay(transform.position, dirVector, Color.red);
-            // Debug.DrawRay(transform.position, hit.point, Color.blue);
-
-            if (hit.collider.gameObject.HasComponent<Interactable>())
+            if (animator.GetFloat("LastMoveX") > 0)
             {
-                // Debug.Log("[raycast hit] @interactable " + hit.collider.gameObject.name);
-                hit.collider.gameObject.GetComponent<Interactable>().Interact(dir, action);
-            }
-        }
-    }
-
-    private RaycastHit2D CheckRaycast(Vector2 direction)
-    {
-        Vector2 startingPosition = (Vector2) transform.position;
-
-        return Physics2D.Raycast(startingPosition, direction, raycastDistance);
-    }
-
-    private RaycastHit2D CheckFutureRaycast(Vector2 direction)
-    {
-        Vector2 startingPosition = (Vector2) transform.position;
-
-        return Physics2D.Raycast(startingPosition, direction, raycastDistance * 2);
-    }
-
-    public bool MoveTo(DIRECTION_BUTTON dir, Vector3 destinationPosition)
-    {
-        UpdateAnimation();
-
-        if (!movement.IsMoving || (destinationPosition == transform.position))
-        {
-            ClampCurrentPosition();
-            return false;
-        }
-
-        if (movement.IsMoving && (dir != DIRECTION_BUTTON.NONE) && (dir == lastCollisionDir))
-        {
-            ClampCurrentPosition();
-            if (!(lastCollidedObject is null))
-            {
-                PlayCollisionSound(lastCollidedObject);
+                return MoveDirection.RIGHT;
             }
 
-            return true;
+            if (animator.GetFloat("LastMoveX") < 0)
+            {
+                return MoveDirection.LEFT;
+            }
+
+            if (animator.GetFloat("LastMoveY") > 0)
+            {
+                return MoveDirection.UP;
+            }
+
+            if (animator.GetFloat("LastMoveY") < 0)
+            {
+                return MoveDirection.DOWN;
+            }
+
+            return MoveDirection.DOWN;
         }
-        else if (movement.IsMoving)
+
+        public Vector2 GetFaceDirectionVector()
         {
-            lastCollidedObject = null;
-            lastCollisionDir = DIRECTION_BUTTON.NONE;
+            return WalkDirectionVector.get(GetFaceDirection());
         }
 
-
-        transform.position = Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * speed);
-        transform.rotation = new Quaternion(0, 0, 0, 0);
-        return true;
-    }
-
-    public bool Move(DIRECTION_BUTTON dir, int tiles)
-    {
-        currentTilesToMove = tiles;
-
-        Vector3 destinationPosition = movement.CalculateDestinationPosition(
-            transform.position, dir, tiles
-        );
-
-        return MoveTo(dir, destinationPosition);
-    }
-
-    private void UpdateAnimation()
-    {
-        animator.SetFloat("MoveX", movement.PositionDiff.x);
-        animator.SetFloat("MoveY", movement.PositionDiff.y);
-        animator.SetFloat("LastMoveX", movement.LastPositionDiff.x);
-        animator.SetFloat("LastMoveY", movement.LastPositionDiff.y);
-        animator.SetBool("Moving", movement.IsMoving);
-    }
-
-    public void TriggerButtons(DIRECTION_BUTTON dir, ACTION_BUTTON action)
-    {
-        if (!CanMove() && IsMoving())
+        public bool HasMovesLeft()
         {
-            StopMoving();
+            return _moveStack.Count > 0;
         }
 
-        if (CanMove())
+        public bool IsCurrentMoveComplete()
         {
-            MovementUpdate(dir);
+            throw new NotImplementedException();
         }
 
-        RaycastUpdate(dir, action);
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        // Debug.Log("Collision ENTER between " + this.name + " and " + col.gameObject.name);
-
-        lastCollidedObject = col.gameObject;
-        lastCollisionDir = movement.LastDirection;
-
-        ClampCurrentPosition();
-
-        PlayCollisionSound(lastCollidedObject);
-    }
-
-    void OnCollisionStay2D(Collision2D col)
-    {
-        // Debug.Log("Collision STAY between " + this.name + " and " + col.gameObject.name);
-
-        lastCollidedObject = col.gameObject;
-        lastCollisionDir = movement.LastDirection;
-
-        if (movement.IsMoving)
+        public bool IsMoving()
         {
-            PlayCollisionSound(lastCollidedObject);
+            return !IsPaused() && !IsCurrentMoveComplete();
         }
 
-        StopMoving();
-    }
-
-    bool HasCollisionSound(GameObject gobj)
-    {
-        return gobj.HasComponent<AudioSource>();
-    }
-
-    AudioSource GetCollisionSound(GameObject gobj)
-    {
-        if (!HasCollisionSound(gobj))
+        public void Pause()
         {
-            return null;
+            _paused = true;
         }
 
-        gobj.TryGetComponent(typeof(AudioSource), out Component aud);
-        return (AudioSource) aud;
-    }
-
-    void PlayCollisionSound(GameObject gobj)
-    {
-        AudioSource audioSource = GetCollisionSound(gobj);
-
-        if (audioSource is AudioSource && !audioSource.isPlaying)
+        public void Resume()
         {
-            audioSource.Play();
+            _paused = false;
         }
-    }
 
-    public void ClampCurrentPosition()
-    {
-        ClampPositionTo(transform.position);
-    }
+        public void Stop()
+        {
+            if (!IsCurrentMoveComplete() || HasMovesLeft())
+            {
+                onMoveCancel.Invoke();
+            }
+            _moveStack.Clear();
+        }
 
-    public void StopMoving()
-    {
-        movement.Stop();
-        UpdateAnimation();
-        ClampCurrentPosition();
-    }
+        public bool IsPaused()
+        {
+            return _paused;
+        }
 
-    public bool IsMoving()
-    {
-        return movement.IsMoving;
-    }
+        public bool Move(Move action)
+        {
+            throw new NotImplementedException();
+        }
 
-    public void ClampPositionTo(Vector3 position)
-    {
-        transform.position = movement.ClampPosition(position);
+        public bool Move(Move[] action)
+        {
+            throw new NotImplementedException();
+        }
 
-        // override in case collision physics caused object rotation
-        transform.rotation = new Quaternion(0, 0, 0, 0);
+        public bool AppendMove(Move action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AppendMove(Move[] action)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

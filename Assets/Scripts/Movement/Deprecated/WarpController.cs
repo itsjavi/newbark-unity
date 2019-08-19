@@ -55,9 +55,9 @@ public class WarpController : MonoBehaviour
     {
         if (destination.postDropMove.steps == 0)
         {
-            if (destination.postDropMove.direction != DIRECTION_BUTTON.NONE)
+            if (destination.postDropMove.direction != MoveDirection.NONE)
             {
-                movementController.TriggerButtons(destination.postDropMove.direction, ACTION_BUTTON.NONE);
+                movementController.TriggerButtons(destination.postDropMove.direction, ActionButton.NONE);
             }
 
             return;

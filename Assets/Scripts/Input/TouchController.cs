@@ -1,51 +1,49 @@
-﻿using System.Collections;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
 public static class TouchController
 {
     private static bool isSwiping = false;
     private static Vector2 lastPosition;
 
-    public static ACTION_BUTTON GetTouchAction()
+    public static ActionButton GetTouchAction()
     {
         if (Input.touchCount == 0 || isSwiping)
         {
-            return ACTION_BUTTON.NONE;
+            return ActionButton.NONE;
         }
 
         // A = 1 finger, 1 tap
         if (Input.touchCount == 1 && Input.GetTouch(0).tapCount == 1)
         {
-            return ACTION_BUTTON.A;
+            return ActionButton.A;
         }
 
         // B = 2 fingers, 1 tap
         if (Input.touchCount == 2 && Input.GetTouch(0).tapCount == 1)
         {
-            return ACTION_BUTTON.B;
+            return ActionButton.B;
         }
 
         // START = 1 finger, 2 taps
         if (Input.touchCount == 1 && Input.GetTouch(0).tapCount == 2)
         {
-            return ACTION_BUTTON.START;
+            return ActionButton.START;
         }
 
         // SELECT = 2 fingers, 2 taps
         if (Input.touchCount == 2 && Input.GetTouch(0).tapCount == 2)
         {
-            return ACTION_BUTTON.SELECT;
+            return ActionButton.SELECT;
         }
 
-        return ACTION_BUTTON.NONE;
+        return ActionButton.NONE;
     }
 
-    public static DIRECTION_BUTTON GetSwipeDirection()
+    public static MoveDirection GetSwipeDirection()
     {
         if (Input.touchCount == 0)
         {
-            return DIRECTION_BUTTON.NONE;
+            return MoveDirection.NONE;
         }
 
         if (Input.GetTouch(0).deltaPosition.sqrMagnitude != 0)
@@ -54,7 +52,7 @@ public static class TouchController
             {
                 isSwiping = true;
                 lastPosition = Input.GetTouch(0).position;
-                return DIRECTION_BUTTON.NONE;
+                return MoveDirection.NONE;
             }
             else
             {
@@ -63,22 +61,22 @@ public static class TouchController
                 if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
                 {
                     if (direction.x > 0)
-                        return DIRECTION_BUTTON.RIGHT;
+                        return MoveDirection.RIGHT;
                     else
-                        return DIRECTION_BUTTON.LEFT;
+                        return MoveDirection.LEFT;
                 }
                 else
                 {
                     if (direction.y > 0)
-                        return DIRECTION_BUTTON.UP;
+                        return MoveDirection.UP;
                     else
-                        return DIRECTION_BUTTON.LEFT;
+                        return MoveDirection.LEFT;
                 }
             }
         }
         else
         {
-            return DIRECTION_BUTTON.NONE;
+            return MoveDirection.NONE;
         }
     }
 }

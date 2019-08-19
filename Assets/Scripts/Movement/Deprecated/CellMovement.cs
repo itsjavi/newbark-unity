@@ -9,8 +9,8 @@ public class CellMovement
     private bool isMoving = false;
     public bool IsMoving => isMoving;
 
-    private DIRECTION_BUTTON lastDirection = DIRECTION_BUTTON.NONE;
-    public DIRECTION_BUTTON LastDirection => lastDirection;
+    private MoveDirection _lastMoveDirection = MoveDirection.NONE;
+    public MoveDirection LastMoveDirection => _lastMoveDirection;
 
     private Vector3 destinationPosition;
     private Vector3 positionDiff;
@@ -27,7 +27,7 @@ public class CellMovement
         this.inputDelay = inputDelay;
     }
 
-    public Vector3 CalculateDestinationPosition(Vector3 origin, DIRECTION_BUTTON dir, int tilesToMove = 1)
+    public Vector3 CalculateDestinationPosition(Vector3 origin, MoveDirection dir, int tilesToMove = 1)
     {
         if (coolDown > 0)
         {
@@ -39,6 +39,7 @@ public class CellMovement
             destinationPosition = origin;
             CalculateMovement(dir, tilesToMove);
         }
+
         if (isMoving)
         {
             if (origin == destinationPosition)
@@ -70,7 +71,6 @@ public class CellMovement
     {
         Vector3 fixedPos = new Vector3(ClampPositionAxis(position.x), ClampPositionAxis(position.y), 0);
         return fixedPos;
-
     }
 
     private float ClampPositionAxis(float val)
@@ -100,15 +100,14 @@ public class CellMovement
     }
 
     // Returns the calculated final destination vector
-    private void CalculateMovement(DIRECTION_BUTTON dir, int tilesToMove = 1)
+    private void CalculateMovement(MoveDirection dir, int tilesToMove = 1)
     {
-
         if (coolDown > 0)
         {
             return;
         }
 
-        if (dir == DIRECTION_BUTTON.NONE)
+        if (dir == MoveDirection.NONE)
         {
             return;
         }
@@ -117,25 +116,25 @@ public class CellMovement
 
         switch (dir)
         {
-            case DIRECTION_BUTTON.UP:
-                {
-                    y = tilesToMove;
-                }
+            case MoveDirection.UP:
+            {
+                y = tilesToMove;
+            }
                 break;
-            case DIRECTION_BUTTON.RIGHT:
-                {
-                    x = tilesToMove;
-                }
+            case MoveDirection.RIGHT:
+            {
+                x = tilesToMove;
+            }
                 break;
-            case DIRECTION_BUTTON.DOWN:
-                {
-                    y = tilesToMove * -1;
-                }
+            case MoveDirection.DOWN:
+            {
+                y = tilesToMove * -1;
+            }
                 break;
-            case DIRECTION_BUTTON.LEFT:
-                {
-                    x = tilesToMove * -1;
-                }
+            case MoveDirection.LEFT:
+            {
+                x = tilesToMove * -1;
+            }
                 break;
             default:
                 break;
@@ -145,10 +144,10 @@ public class CellMovement
         lastPositionDiff.y = y;
         lastPositionDiff.z = z;
 
-        if (lastDirection != dir)
+        if (_lastMoveDirection != dir)
         {
             coolDown = inputDelay;
-            lastDirection = dir;
+            _lastMoveDirection = dir;
 
             return;
         }

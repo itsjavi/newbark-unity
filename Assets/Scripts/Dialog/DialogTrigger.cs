@@ -4,11 +4,11 @@ public class DialogTrigger : Interactable
 {
     public Dialog dialog;
 
-    public override void Interact(DIRECTION_BUTTON dir, ACTION_BUTTON button)
+    public override void Interact(MoveDirection dir, ActionButton button)
     {
         DialogManager dm = FindObjectOfType<DialogManager>();
 
-        if (button == ACTION_BUTTON.A)
+        if (button == ActionButton.A)
         {
             if (!dm.InDialog())
             {
@@ -19,7 +19,7 @@ public class DialogTrigger : Interactable
                 dm.PrintNext();
             }
         }
-        else if (button == ACTION_BUTTON.B)
+        else if (button == ActionButton.B)
         {
             dm.EndDialog();
         }

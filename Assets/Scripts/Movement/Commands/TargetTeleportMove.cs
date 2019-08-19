@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Movement
+namespace Movement.Commands
 {
     [System.Serializable]
     public class TargetTeleportMove : Move

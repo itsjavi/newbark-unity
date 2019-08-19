@@ -45779,7 +45779,7 @@ GameObject:
   - component: {fileID: 7079746402777195698}
   - component: {fileID: 7192301008348172419}
   m_Layer: 2
-  m_Name: Player
+  m_Name: LegacyPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

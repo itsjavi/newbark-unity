@@ -15,6 +15,7 @@ public class MovementController : MonoBehaviour
     public GameObject lastCollidedObject;
     public MoveDirection lastCollisionDir = MoveDirection.NONE;
 
+    // TODO: REMOVE
     void Start()
     {
         if (!animator)
@@ -40,6 +41,7 @@ public class MovementController : MonoBehaviour
         TriggerButtons(dir, action);
     }
 
+    // TODO: REMOVE
     public MoveDirection GetFaceDirection()
     {
         if (animator.GetFloat("LastMoveX") > 0)
@@ -65,6 +67,7 @@ public class MovementController : MonoBehaviour
         return MoveDirection.DOWN;
     }
 
+    // TODO: REMOVE
     public Vector2 GetFaceDirectionVector()
     {
         switch (GetFaceDirection())
@@ -88,11 +91,6 @@ public class MovementController : MonoBehaviour
         return !FindObjectOfType<DialogManager>().InDialog();
     }
 
-    public bool CanMoveManually()
-    {
-        return CanMove();
-    }
-
     private void MovementUpdate(MoveDirection dir)
     {
         if (movement != null && !movement.IsMoving)
@@ -103,6 +101,7 @@ public class MovementController : MonoBehaviour
         Move(dir, currentTilesToMove);
     }
 
+    // TODO: REMOVE
     private void RaycastUpdate(MoveDirection dir, ActionButton action)
     {
         Vector3 dirVector = GetFaceDirectionVector();
@@ -127,18 +126,12 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    // TODO: REMOVE
     private RaycastHit2D CheckRaycast(Vector2 direction)
     {
         Vector2 startingPosition = (Vector2) transform.position;
 
         return Physics2D.Raycast(startingPosition, direction, raycastDistance);
-    }
-
-    private RaycastHit2D CheckFutureRaycast(Vector2 direction)
-    {
-        Vector2 startingPosition = (Vector2) transform.position;
-
-        return Physics2D.Raycast(startingPosition, direction, raycastDistance * 2);
     }
 
     public bool MoveTo(MoveDirection dir, Vector3 destinationPosition)
@@ -184,6 +177,7 @@ public class MovementController : MonoBehaviour
         return MoveTo(dir, destinationPosition);
     }
 
+    // TODO: REMOVE
     private void UpdateAnimation()
     {
         animator.SetFloat("MoveX", movement.PositionDiff.x);
@@ -208,6 +202,7 @@ public class MovementController : MonoBehaviour
         RaycastUpdate(dir, action);
     }
 
+    // TODO: REMOVE
     void OnCollisionEnter2D(Collision2D col)
     {
         // Debug.Log("Collision ENTER between " + this.name + " and " + col.gameObject.name);
@@ -220,6 +215,7 @@ public class MovementController : MonoBehaviour
         PlayCollisionSound(lastCollidedObject);
     }
 
+    // TODO: REMOVE
     void OnCollisionStay2D(Collision2D col)
     {
         // Debug.Log("Collision STAY between " + this.name + " and " + col.gameObject.name);
@@ -235,11 +231,13 @@ public class MovementController : MonoBehaviour
         StopMoving();
     }
 
+    // TODO: REMOVE
     bool HasCollisionSound(GameObject gobj)
     {
         return gobj.HasComponent<AudioSource>();
     }
 
+    // TODO: REMOVE
     AudioSource GetCollisionSound(GameObject gobj)
     {
         if (!HasCollisionSound(gobj))
@@ -251,6 +249,7 @@ public class MovementController : MonoBehaviour
         return (AudioSource) aud;
     }
 
+    // TODO: REMOVE
     void PlayCollisionSound(GameObject gobj)
     {
         AudioSource audioSource = GetCollisionSound(gobj);
@@ -261,6 +260,7 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    // TODO: REMOVE
     public void ClampCurrentPosition()
     {
         ClampPositionTo(transform.position);
@@ -273,11 +273,13 @@ public class MovementController : MonoBehaviour
         ClampCurrentPosition();
     }
 
+    // TODO: REMOVE
     public bool IsMoving()
     {
         return movement.IsMoving;
     }
 
+    // TODO: REMOVE
     public void ClampPositionTo(Vector3 position)
     {
         transform.position = movement.ClampPosition(position);

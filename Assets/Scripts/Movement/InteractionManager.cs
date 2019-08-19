@@ -9,7 +9,7 @@ namespace Movement
         [Tooltip("Maximum distance over which to cast the ray.")]
         public float maxDistance = 1f;
 
-        public void RaycastUpdate(InputData input, Vector2 currentPosition, Vector2 currentFaceDirection)
+        public void RaycastUpdate(InputInfo input, Vector2 currentPosition, Vector2 currentFaceDirection)
         {
             if (currentFaceDirection == Vector2.zero)
             {
@@ -22,14 +22,14 @@ namespace Movement
             OnRaycastHit(hit, input);
         }
 
-        private void OnRaycastHit(RaycastHit2D hit, InputData input)
+        private void OnRaycastHit(RaycastHit2D hit, InputInfo input)
         {
             if (!hit.collider)
             {
                 return;
             }
 
-            var interactable = hit.collider.gameObject.GetComponent<Interactable>();
+            var interactable = hit.collider.gameObject.GetComponentSafe<Interactable>();
             if (!interactable)
             {
                 return;

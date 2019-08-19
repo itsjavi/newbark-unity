@@ -35,8 +35,8 @@ public class MovementController : MonoBehaviour
             StopMoving();
         }
 
-        MoveDirection dir = InputController.GetPressedDirectionButton();
-        ActionButton action = InputController.GetPressedActionButton();
+        MoveDirection dir = InputManager.GetPressedDirectionButton();
+        ActionButton action = InputManager.GetPressedActionButton();
 
         TriggerButtons(dir, action);
     }

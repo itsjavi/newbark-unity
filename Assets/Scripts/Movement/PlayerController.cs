@@ -11,15 +11,21 @@ namespace Movement
         public CollisionManager collisionManager;
         public InteractionManager interactionManager;
 
+        private void Awake()
+        {
+            collisionManager.Init(animationManager, movementManager);
+        }
+
         void FixedUpdate()
         {
-            InputData input = InputController.GetPressedButtons();
+            InputInfo input = InputManager.GetPressedButtons();
             if (input.direction != MoveDirection.NONE)
             {
                 Debug.Log(input.direction);
             }
             
             animationManager.Update(input.direction);
+            movementManager.Snap();
 
             interactionManager
                 .RaycastUpdate(input, transform.position, animationManager.GetCurrentFaceDirectionVector());

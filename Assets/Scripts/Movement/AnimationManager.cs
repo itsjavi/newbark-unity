@@ -44,7 +44,7 @@ namespace Movement
                 return;
             }
 
-            Update(WalkDirectionVector.get(direction));
+            Update(DirectionToVector(direction));
         }
 
         public MoveDirection GetCurrentFaceDirection()
@@ -74,7 +74,24 @@ namespace Movement
 
         public Vector2 GetCurrentFaceDirectionVector()
         {
-            return WalkDirectionVector.get(GetCurrentFaceDirection());
+            return DirectionToVector(GetCurrentFaceDirection());
+        }
+
+        private Vector2 DirectionToVector(MoveDirection dir)
+        {
+            switch (dir)
+            {
+                case MoveDirection.UP:
+                    return Vector2.up;
+                case MoveDirection.DOWN:
+                    return Vector2.down;
+                case MoveDirection.LEFT:
+                    return Vector2.left;
+                case MoveDirection.RIGHT:
+                    return Vector2.right;
+                default:
+                    return Vector2.zero;
+            }
         }
     }
 }

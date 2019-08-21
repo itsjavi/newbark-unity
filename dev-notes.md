@@ -7,15 +7,18 @@
 - To avoid built-in physics and use own's, the BoxCollider2D needs to be in trigger mode. That also applies to the player, NPCs, etc. This prevents sending away other RigidBody2D objects.
 - In order to detect the collision trigger, the player still needs a RigidBody2D with a material with friction=0, bounciness=0 and
 mass=0.1, collision detection = discrete, sleep mode = never sleep, constaints freeze rotation = Z, everything else = 0
+- it is enough that the player has the rigid body and everything else just a boxcollider with trigger enabled
 
 ## ToDos
 - Refactor Movement system (using editor-assigned properties, events like onMoveEnd, move disable/enable, better decoupling,...)
 	- MoveTo does not work with warp post movement
 	- We need a way to disable step-movement when teleporting, enabling it again for the postWarpMove
 	- We need a way to reactivate warping and collisions when movement is finished
+	- Events for all of that
 - Refactor Warping system after movement one, if needed
 - add debug GUI and enable it via the PlayerHouse PC. add steps counter and show it, together with FPS
-- add a way to disable input (eg when warping) without disabling movement actions
+- DONE: add a way to disable input (eg when warping) without disabling movement actions
+- Disable rigidbody when warping, enable when reaching destination. It may help preventing bouncing/teleport issues.
 
 
 ## Issues

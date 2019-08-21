@@ -8,11 +8,13 @@ namespace Movement
 {
     public class MovementController : MonoBehaviour
     {
-        public Vector2 pivotOffset = new Vector2(0.5f, 0.5f);
+        [Tooltip("Offset between the transform dimensions and the transform anchor point")]
+        public Vector2 anchorPointOffset = new Vector2(0.5f, 0.5f);
+
+        [Tooltip("Initial movement speed. This can be customized per movement command individually.")]
         public int initialSpeed = WalkMove.DefaultSpeed;
 
-        public int CurrentSpeed { get; private set; } = WalkMove.DefaultSpeed;
-        // public int inputDelay = 6;
+        private int _currentSpeed = WalkMove.DefaultSpeed;
 
         [Header("Events")] public UnityEvent onMoveStart;
         public UnityEvent onMoveFinish;
@@ -92,7 +94,7 @@ namespace Movement
 
         public void Snap(Vector2 position)
         {
-            transform.position = MovementCalculator.CalcSnappedPosition(position);
+            transform.position = MovementCalculator.CalcSnappedPosition(position, anchorPointOffset);
             ResetRotation();
         }
 

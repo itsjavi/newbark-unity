@@ -1,26 +1,19 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Movement
 {
     public class CollisionController : MonoBehaviour
     {
         public AudioSource defaultCollisionSound;
-
-        [FormerlySerializedAs("animationManager")]
         public AnimationController animationController;
-
-        [FormerlySerializedAs("movementManager")]
         public MovementController movementController;
+        private Collider2D _lastCollision;
+        private MoveDirection _lastCollisionDirection;
 
-        [field: Header("Debug Info")] public Collision2D LastCollision { get; private set; }
-        public MoveDirection LastCollisionDirection { get; private set; }
-
-        void OnCollisionEnter2D(Collision2D other)
+        void OnTriggerEnter2D(Collider2D other)
         {
-            LastCollision = other;
-            LastCollisionDirection = animationController.GetCurrentFaceDirection();
+            _lastCollision = other;
+            _lastCollisionDirection = animationController.GetCurrentFaceDirection();
 
             // keep character snapped in the tile
             movementController.Snap();
@@ -28,10 +21,10 @@ namespace Movement
             PlayCollisionSound(other);
         }
 
-        void OnCollisionStay2D(Collision2D other)
+        void OnTriggerStay2D(Collider2D other)
         {
-            LastCollision = other;
-            LastCollisionDirection = animationController.GetCurrentFaceDirection();
+            _lastCollision = other;
+            _lastCollisionDirection = animationController.GetCurrentFaceDirection();
 
             if (movementController.IsMoving())
             {
@@ -41,7 +34,7 @@ namespace Movement
             movementController.StopAll();
         }
 
-        private bool PlayCollisionSound(Collision2D other)
+        private bool PlayCollisionSound(Collider2D other)
         {
             AudioSource audioSource = defaultCollisionSound;
 

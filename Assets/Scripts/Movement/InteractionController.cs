@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Movement
 {
@@ -8,13 +7,12 @@ namespace Movement
         [Tooltip("Maximum distance over which to cast the ray.")]
         public float maxObjectDistance = 1f;
 
-        [FormerlySerializedAs("animationManager")]
         public AnimationController animationController;
 
-        void FixedUpdate()
+        public void RaycastUpdate(InputController inputController)
         {
-            InputInfo input = InputManager.GetPressedButtons();
-            RaycastUpdate(input, transform.position, animationController.GetCurrentFaceDirectionVector());
+            RaycastUpdate(inputController.GetInputInfo(), transform.position,
+                animationController.GetCurrentFaceDirectionVector());
         }
 
         public void RaycastUpdate(InputInfo input, Vector2 currentPosition, Vector2 currentFaceDirection)

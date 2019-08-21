@@ -12,6 +12,8 @@ TagManager:
   - Audio
   - WarpDropZone
   - WarpZone
+  - Bounds
+  - CollisionTiles
   layers:
   - Default
   - TransparentFX

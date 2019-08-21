@@ -10,6 +10,7 @@ public class LegacyMovementController : MonoBehaviour
     public int tilesToMove = 1;
     public float clampAt = 0.5f;
     public float raycastDistance = 1f;
+    public WarpController warpController;
 
     [Header("Debug")] private int currentTilesToMove = 1;
     public GameObject lastCollidedObject;
@@ -204,9 +205,14 @@ public class LegacyMovementController : MonoBehaviour
     }
 
     // TODO: REMOVE
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        // Debug.Log("Collision ENTER between " + this.name + " and " + col.gameObject.name);
+        if (warpController.IsWarpZone(col) || col.gameObject.CompareTag("Bounds"))
+        {
+            return;
+        }
+
+        Debug.Log("[move] Collision ENTER between " + this.name + " and " + col.gameObject.name);
 
         lastCollidedObject = col.gameObject;
         lastCollisionDir = movement.LastMoveDirection;
@@ -217,9 +223,14 @@ public class LegacyMovementController : MonoBehaviour
     }
 
     // TODO: REMOVE
-    void OnCollisionStay2D(Collision2D col)
+    void OnTriggerStay2D(Collider2D col)
     {
-        // Debug.Log("Collision STAY between " + this.name + " and " + col.gameObject.name);
+        if (warpController.IsWarpZone(col) || col.gameObject.CompareTag("Bounds"))
+        {
+            return;
+        }
+
+        Debug.Log("[move] Collision STAY between " + this.name + " and " + col.gameObject.name);
 
         lastCollidedObject = col.gameObject;
         lastCollisionDir = movement.LastMoveDirection;

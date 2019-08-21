@@ -208,26 +208,6 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7875915832743167752, guid: 0a95b8f9adc2449cb977c69d04567b44,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7875915832743167752, guid: 0a95b8f9adc2449cb977c69d04567b44,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: ccd6a316686b94c969501bac8d9a5cef, type: 2}
-    - target: {fileID: 7864506063045644056, guid: 0a95b8f9adc2449cb977c69d04567b44,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864506063045644056, guid: 0a95b8f9adc2449cb977c69d04567b44,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a95b8f9adc2449cb977c69d04567b44, type: 3}
 --- !u!1 &213110414
@@ -24927,7 +24907,7 @@ GameObject:
   - component: {fileID: 923128062}
   m_Layer: 2
   m_Name: MainCameraBounds
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45807,6 +45787,7 @@ MonoBehaviour:
   tilesToMove: 1
   clampAt: 0.5
   raycastDistance: 1
+  warpController: {fileID: 7192301008348172419}
   lastCollidedObject: {fileID: 0}
   lastCollisionDir: 0
 --- !u!95 &7099427508898048894
@@ -45838,7 +45819,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: ccd6a316686b94c969501bac8d9a5cef, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

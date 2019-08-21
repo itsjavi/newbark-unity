@@ -45,13 +45,13 @@ public class WarpController : MonoBehaviour
         return _warpingEnabled;
     }
 
-    private void WarpToDropStart(WarpZone destination)
+    public void WarpToDropStart(WarpZone destination)
     {
         Vector2 coords = destination.dropZone.transform.position.AsVector2() + destination.dropZoneOffset;
         legacyMovementController.ClampPositionTo(new Vector3(coords.x, coords.y, 0));
     }
 
-    private void MoveToDropEnd(WarpZone destination)
+    public void MoveToDropEnd(WarpZone destination)
     {
         if (destination.postDropMove.steps == 0)
         {
@@ -69,12 +69,12 @@ public class WarpController : MonoBehaviour
         }
     }
 
-    private bool IsWarpZone(Collider2D other)
+    public bool IsWarpZone(Collider2D other)
     {
         return other.gameObject.HasComponent<WarpZone>();
     }
 
-    private WarpZone GetWarpZone(Collider2D other)
+    public WarpZone GetWarpZone(Collider2D other)
     {
         return other.gameObject.GetComponent<WarpZone>();
     }
@@ -86,7 +86,7 @@ public class WarpController : MonoBehaviour
             return;
         }
 
-        Debug.Log("OnTriggerEnter2D");
+        Debug.Log("[warp] OnTriggerEnter2D");
         onWarpEnter.Invoke();
     }
 
@@ -98,6 +98,8 @@ public class WarpController : MonoBehaviour
             return;
         }
 
+
+        Debug.Log("[warp] OnTriggerStay2D");
         _isWarping = true;
         WarpToDropStart(GetWarpZone(other));
         onWarpStay.Invoke();
@@ -110,7 +112,7 @@ public class WarpController : MonoBehaviour
             return;
         }
 
-        Debug.Log("OnTriggerExit2D");
+        Debug.Log("[warp] OnTriggerExit2D");
         MoveToDropEnd(GetWarpZone(other));
         onWarpFinish.Invoke();
     }

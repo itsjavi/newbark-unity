@@ -6,19 +6,9 @@ namespace Movement
     {
         public Animator animator;
 
-        void FixedUpdate()
-        {
-            InputInfo input = InputManager.GetPressedButtons();
-            if (input.direction != MoveDirection.NONE)
-            {
-                Debug.Log(input.direction);
-            }
-
-            UpdateAnimation(input.direction);
-        }
-
         public bool IsMoving()
         {
+            // TODO: change for "Walking"
             return animator.GetBool("Moving");
         }
 
@@ -34,6 +24,17 @@ namespace Movement
             animator.SetFloat("LastMoveX", previous.x);
             animator.SetFloat("LastMoveY", previous.y);
             animator.SetBool("Moving", isMoving);
+        }
+
+        public void UpdateAnimation(InputController inputController)
+        {
+            InputInfo input = inputController.GetInputInfo();
+            if (input.direction != MoveDirection.NONE)
+            {
+                Debug.Log(input.direction);
+            }
+
+            UpdateAnimation(input.direction);
         }
 
         public void UpdateAnimation(Vector2 current, bool isMoving)
@@ -53,7 +54,7 @@ namespace Movement
                 return;
             }
 
-            UpdateAnimation(DirectionToVector(direction));
+            UpdateAnimation(GetFaceDirectionVector(direction));
         }
 
         public MoveDirection GetCurrentFaceDirection()
@@ -83,10 +84,10 @@ namespace Movement
 
         public Vector2 GetCurrentFaceDirectionVector()
         {
-            return DirectionToVector(GetCurrentFaceDirection());
+            return GetFaceDirectionVector(GetCurrentFaceDirection());
         }
 
-        private Vector2 DirectionToVector(MoveDirection dir)
+        public Vector2 GetFaceDirectionVector(MoveDirection dir)
         {
             switch (dir)
             {

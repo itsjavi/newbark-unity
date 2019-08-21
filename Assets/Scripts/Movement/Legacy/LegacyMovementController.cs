@@ -212,7 +212,7 @@ public class LegacyMovementController : MonoBehaviour
             return;
         }
 
-        Debug.Log("[move] Collision ENTER between " + this.name + " and " + col.gameObject.name);
+        //Debug.Log("[move] Collision ENTER between " + this.name + " and " + col.gameObject.name);
 
         lastCollidedObject = col.gameObject;
         lastCollisionDir = movement.LastMoveDirection;
@@ -230,7 +230,7 @@ public class LegacyMovementController : MonoBehaviour
             return;
         }
 
-        Debug.Log("[move] Collision STAY between " + this.name + " and " + col.gameObject.name);
+        //Debug.Log("[move] Collision STAY between " + this.name + " and " + col.gameObject.name);
 
         lastCollidedObject = col.gameObject;
         lastCollisionDir = movement.LastMoveDirection;

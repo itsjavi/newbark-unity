@@ -65,7 +65,7 @@ public class WarpController : MonoBehaviour
 
         if (!legacyMovementController.Move(destination.postDropMove.direction, destination.postDropMove.steps))
         {
-            Debug.LogWarning("!!! WARPER CANNOT BE MOVED");
+            Debug.LogError("!!! WARPER CANNOT BE MOVED");
         }
     }
 
@@ -86,7 +86,7 @@ public class WarpController : MonoBehaviour
             return;
         }
 
-        Debug.Log("[warp] OnTriggerEnter2D");
+        //Debug.Log("[warp] OnTriggerEnter2D");
         onWarpEnter.Invoke();
     }
 
@@ -99,7 +99,7 @@ public class WarpController : MonoBehaviour
         }
 
 
-        Debug.Log("[warp] OnTriggerStay2D");
+        //Debug.Log("[warp] OnTriggerStay2D");
         _isWarping = true;
         WarpToDropStart(GetWarpZone(other));
         onWarpStay.Invoke();
@@ -112,7 +112,7 @@ public class WarpController : MonoBehaviour
             return;
         }
 
-        Debug.Log("[warp] OnTriggerExit2D");
+        //Debug.Log("[warp] OnTriggerExit2D");
         MoveToDropEnd(GetWarpZone(other));
         onWarpFinish.Invoke();
     }

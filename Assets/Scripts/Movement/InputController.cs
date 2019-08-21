@@ -73,13 +73,13 @@ namespace Movement
 
             if (directionChanged)
             {
-                Debug.Log("Input Direction Changed: " + _lastInput.direction);
+                //Debug.Log("Input Direction Changed: " + _lastInput.direction);
                 onInputDirectionChange.Invoke();
             }
 
             if (actionChanged)
             {
-                Debug.Log("Input Action Changed: " + _lastInput.action);
+                //Debug.Log("Input Action Changed: " + _lastInput.action);
                 onInputActionChange.Invoke();
             }
 

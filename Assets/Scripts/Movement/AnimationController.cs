@@ -29,10 +29,10 @@ namespace Movement
         public void UpdateAnimation(InputController inputController)
         {
             InputInfo input = inputController.GetInputInfo();
-            if (input.direction != MoveDirection.NONE)
-            {
-                Debug.Log(input.direction);
-            }
+//            if (input.direction != MoveDirection.NONE)
+//            {
+//                Debug.Log(input.direction);
+//            }
 
             UpdateAnimation(input.direction);
         }

@@ -87,7 +87,7 @@ public class ScreenFaderController : MonoBehaviour
 
     public void OnFadeComplete()
     {
-        Debug.Log("OnFadeComplete");
+        //Debug.Log("OnFadeComplete");
         _fading = false;
         onFadeComplete.Invoke();
     }

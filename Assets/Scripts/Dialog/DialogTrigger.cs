@@ -24,4 +24,9 @@ public class DialogTrigger : Interactable
             dm.EndDialog();
         }
     }
+
+    public override void Interact(InputInfo inputInfo)
+    {
+        Interact(inputInfo.direction, inputInfo.action);
+    }
 }

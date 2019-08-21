@@ -42,7 +42,7 @@ namespace Movement
             }
 
             // Debug.Log("[raycast hit] @interactable " + hit.collider.gameObject.name);
-            interactable.Interact(input.direction, input.action);
+            interactable.Interact(input);
         }
     }
 }

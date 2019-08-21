@@ -6,6 +6,7 @@ public static class GameObjectExtension
     {
         return obj.TryGetComponent(typeof(T), out _);
     }
+
     public static T GetComponentSafe<T>(this GameObject obj) where T : Component
     {
         obj.TryGetComponent(typeof(T), out Component component);

@@ -7,7 +7,7 @@ public class ScreenFaderController : MonoBehaviour
     private bool _fading;
     public UnityEvent onFadeStart;
     public UnityEvent onFadeComplete;
-    
+
 
     void Awake()
     {
@@ -35,7 +35,7 @@ public class ScreenFaderController : MonoBehaviour
             throw new MissingComponentException("The ScreenFader object has no 'Animator' attached.");
         }
     }
-    
+
     public bool IsFading()
     {
         return _fading;
@@ -45,17 +45,17 @@ public class ScreenFaderController : MonoBehaviour
     {
         return !IsFading() && animator.GetCurrentAnimatorStateInfo(0).IsName("FadeOut");
     }
-    
+
     public bool IsFadeOut()
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName("FadeOut");
     }
-    
+
     public bool IsFadeIn()
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName("FadeIn");
     }
-    
+
     public bool IsNoFade()
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName("NoFade");

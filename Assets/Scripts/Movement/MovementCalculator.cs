@@ -17,11 +17,11 @@ namespace Movement
             );
         }
 
-        public static Vector2 CalcSnappedPosition(Vector2 position, Vector2 pivotOffset)
+        public static Vector2 CalcSnappedPosition(Vector2 position, Vector2 anchorPointOffset)
         {
             return new Vector2(
-                CalcSnappedValue(position.x, pivotOffset.x),
-                CalcSnappedValue(position.y, pivotOffset.y)
+                CalcSnappedValue(position.x, anchorPointOffset.x),
+                CalcSnappedValue(position.y, anchorPointOffset.y)
             );
         }
 

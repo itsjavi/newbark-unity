@@ -154,7 +154,8 @@ public class LegacyMovementController : MonoBehaviour
 
             return true;
         }
-        else if (movement.IsMoving)
+
+        if (movement.IsMoving)
         {
             lastCollidedObject = null;
             lastCollisionDir = MoveDirection.NONE;

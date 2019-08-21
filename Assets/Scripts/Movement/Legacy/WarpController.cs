@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 public class WarpController : MonoBehaviour
 {
     public BoxCollider2D warperCollider;
-    [FormerlySerializedAs("movementController")] public LegacyMovementController legacyMovementController;
+    public LegacyMovementController legacyMovementController;
     public UnityEvent onWarpEnter;
     public UnityEvent onWarpStay;
     public UnityEvent onWarpFinish;

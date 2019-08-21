@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
         public const string Warp = "Warp";
         public const string ScreenFader = "ScreenFader";
     }
-    
+
     // TODO: add in-game options to scale/go to fullscreen
     public int defaultWindowWidth = 320 * 2;
     public int defaultWindowHeight = 288 * 2;
@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-
     }
 
     void Update()

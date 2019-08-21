@@ -165,13 +165,14 @@ public class DialogScroller
         {
             return false;
         }
+
         return TextRows[TextRowsIndex + 1] == Environment.NewLine;
     }
 
     private bool BufferHasTrailingNewLines()
     {
         return (TextRowsBuffer[0] == Environment.NewLine)
-        || (TextRowsBuffer[TextRowsBuffer.Length - 1] == Environment.NewLine);
+               || (TextRowsBuffer[TextRowsBuffer.Length - 1] == Environment.NewLine);
     }
 
     private int CountBufferNewLines()
@@ -184,6 +185,7 @@ public class DialogScroller
                 count++;
             }
         }
+
         return count;
     }
 
@@ -201,6 +203,7 @@ public class DialogScroller
                     yield return buffer;
                     buffer = "";
                 }
+
                 yield return Environment.NewLine;
                 continue;
             }
@@ -235,6 +238,7 @@ public class DialogScroller
                     yield return buffer;
                     buffer = "";
                 }
+
                 yield return Environment.NewLine;
                 continue;
             }

@@ -69,7 +69,6 @@ public class DialogManager : MonoBehaviour
         dialogScroller.Start(dialog.text);
 
         PrintNext();
-
     }
 
     public bool InDialog()
@@ -122,6 +121,7 @@ public class DialogManager : MonoBehaviour
                 {
                     lastIndex--;
                 }
+
                 lineNum++;
             }
         }
@@ -151,6 +151,7 @@ public class DialogManager : MonoBehaviour
                     dialogText.text += ch;
                     yield return null; // render frame
                 }
+
                 if (isLastLine)
                 {
                     break;

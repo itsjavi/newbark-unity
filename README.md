@@ -6,7 +6,7 @@
 
 ## Requirements
 
-- Unity 2019.2.1f1+
+- Unity 2019.2.2f1+
 
 
 ## Resources

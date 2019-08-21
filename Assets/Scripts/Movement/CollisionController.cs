@@ -12,6 +12,12 @@ namespace Movement
 
         void OnTriggerEnter2D(Collider2D other)
         {
+            // if (warpController.IsWarpZone(col) || other.gameObject.CompareTag("Bounds"))
+            if (other.gameObject.CompareTag("Bounds"))
+            {
+                return;
+            }
+            
             _lastCollision = other;
             _lastCollisionDirection = animationController.GetCurrentFaceDirection();
 
@@ -23,6 +29,12 @@ namespace Movement
 
         void OnTriggerStay2D(Collider2D other)
         {
+            // if (warpController.IsWarpZone(col) || other.gameObject.CompareTag("Bounds"))
+            if (other.gameObject.CompareTag("Bounds"))
+            {
+                return;
+            }
+            
             _lastCollision = other;
             _lastCollisionDirection = animationController.GetCurrentFaceDirection();
 

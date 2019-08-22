@@ -10,7 +10,7 @@ public class LegacyMovementController : MonoBehaviour
     public int tilesToMove = 1;
     public float clampAt = 0.5f;
     public float raycastDistance = 1f;
-    public WarpController warpController;
+    public LegacyWarpController warpController;
 
     [Header("Debug")] private int currentTilesToMove = 1;
     public GameObject lastCollidedObject;

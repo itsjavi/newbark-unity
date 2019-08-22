@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Movement.Commands
 {
     [System.Serializable]
-    public class CoordsTeleportMove : Move
+    public class WarpToCoordsCommand : MovementCommand
     {
         public Vector2 coords;
     }

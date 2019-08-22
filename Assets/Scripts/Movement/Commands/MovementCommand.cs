@@ -1,7 +1,7 @@
 namespace Movement.Commands
 {
     [System.Serializable]
-    public abstract class Move
+    public abstract class MovementCommand
     {
         public MoveDirection direction = MoveDirection.NONE;
     }

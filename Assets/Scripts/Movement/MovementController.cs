@@ -12,15 +12,15 @@ namespace Movement
         public Vector2 anchorPointOffset = new Vector2(0.5f, 0.5f);
 
         [Tooltip("Initial movement speed. This can be customized per movement command individually.")]
-        public int initialSpeed = WalkMove.DefaultSpeed;
+        public int initialSpeed = WalkCommand.DefaultSpeed;
 
-        private int _currentSpeed = WalkMove.DefaultSpeed;
+        private int _currentSpeed = WalkCommand.DefaultSpeed;
 
         [Header("Events")] public UnityEvent onMoveStart;
         public UnityEvent onMoveFinish;
         public UnityEvent onMoveCancel;
 
-        private Stack<Move> _moveStack = new Stack<Move>();
+        private Stack<MovementCommand> _moveStack = new Stack<MovementCommand>();
         private bool _paused;
 
         public bool HasMovesLeft()
@@ -72,22 +72,22 @@ namespace Movement
             return _paused;
         }
 
-        public bool Move(Move action)
+        public bool Move(MovementCommand action)
         {
             throw new NotImplementedException();
         }
 
-        public bool Move(Move[] action)
+        public bool Move(MovementCommand[] action)
         {
             throw new NotImplementedException();
         }
 
-        public bool AppendMove(Move action)
+        public bool AppendMove(MovementCommand action)
         {
             throw new NotImplementedException();
         }
 
-        public bool AppendMove(Move[] action)
+        public bool AppendMove(MovementCommand[] action)
         {
             throw new NotImplementedException();
         }

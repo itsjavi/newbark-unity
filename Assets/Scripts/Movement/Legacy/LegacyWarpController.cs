@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 /**
  * Warp Controller. Attach this controller to the object that moves an warps, usually the player.
  */
-public class WarpController : MonoBehaviour
+public class LegacyWarpController : MonoBehaviour
 {
     public BoxCollider2D warperCollider;
     public LegacyMovementController legacyMovementController;

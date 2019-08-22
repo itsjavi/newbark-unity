@@ -1,7 +1,7 @@
 namespace Movement.Commands
 {
     [System.Serializable]
-    public class WalkMove : Move
+    public class WalkCommand : MovementCommand
     {
         public const int DefaultSpeed = 4;
         public int steps = 0;

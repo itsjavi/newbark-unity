@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Movement
 {
-    public class InteractionController : MonoBehaviour
+    public class ProximityController : MonoBehaviour
     {
         [Tooltip("Maximum distance over which to cast the ray.")]
         public float maxObjectDistance = 1f;

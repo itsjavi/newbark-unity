@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Movement.Commands
 {
     [System.Serializable]
-    public class TargetTeleportMove : Move
+    public class WarpToTargetCommand : MovementCommand
     {
         public Transform target;
         public Vector2 offset;

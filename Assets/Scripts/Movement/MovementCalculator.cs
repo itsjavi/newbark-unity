@@ -1,9 +1,61 @@
+using Movement.GridLocation;
 using UnityEngine;
 
 namespace Movement
 {
     public class MovementCalculator
     {
+        public static Vector2 CalcDeltaPosition(Vector2 origin, Vector2 destination, int speed)
+        {
+            return Vector2.MoveTowards(origin, destination, Time.deltaTime * speed);
+        }
+
+        public static GridRoute CalcRoute(GridRelativeRoute path)
+        {
+            GridRoute route = new GridRoute();
+            route.origin = path.origin;
+
+            if (!path.HasMovement())
+            {
+                route.destination = route.origin;
+                return route;
+            }
+
+            float x = 0, y = 0;
+
+            switch (path.direction)
+            {
+                case MoveDirection.UP:
+                {
+                    y = path.steps;
+                }
+                    break;
+                case MoveDirection.RIGHT:
+                {
+                    x = path.steps;
+                }
+                    break;
+                case MoveDirection.DOWN:
+                {
+                    y = path.steps * -1;
+                }
+                    break;
+                case MoveDirection.LEFT:
+                {
+                    x = path.steps * -1;
+                }
+                    break;
+            }
+
+            route.destination.coords.x = x;
+            route.destination.coords.y = y;
+
+            // fix position, snapping it to the grid
+            route.destination.coords = CalcSnappedPosition(route.destination.coords, path.anchorPointOffset);
+
+            return route;
+        }
+
         public static Quaternion ZeroRotation()
         {
             return new Quaternion(0, 0, 0, 0);

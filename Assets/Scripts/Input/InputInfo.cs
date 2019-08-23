@@ -8,4 +8,14 @@ public class InputInfo
         this.direction = direction;
         this.action = action;
     }
+
+    public bool HasDirection()
+    {
+        return direction != MoveDirection.NONE;
+    }
+
+    public bool HasAction()
+    {
+        return action != ActionButton.NONE;
+    }
 }

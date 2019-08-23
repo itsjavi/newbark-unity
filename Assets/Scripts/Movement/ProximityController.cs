@@ -6,16 +6,16 @@ namespace Movement
     {
         [Tooltip("Maximum distance over which to cast the ray.")]
         public float maxObjectDistance = 1f;
-
+        // TODO: add lastHit
         public AnimationController animationController;
 
-        public void RaycastUpdate(InputController inputController)
+        public void UpdateRaycast(InputController inputController)
         {
-            RaycastUpdate(inputController.GetInputInfo(), transform.position,
+            UpdateRaycast(inputController.GetInputInfo(), transform.position,
                 animationController.GetCurrentFaceDirectionVector());
         }
 
-        public void RaycastUpdate(InputInfo input, Vector2 currentPosition, Vector2 currentFaceDirection)
+        public void UpdateRaycast(InputInfo input, Vector2 currentPosition, Vector2 currentFaceDirection)
         {
             if (currentFaceDirection == Vector2.zero)
             {

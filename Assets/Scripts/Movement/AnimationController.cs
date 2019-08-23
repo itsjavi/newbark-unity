@@ -1,15 +1,19 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Movement
 {
     public class AnimationController : MonoBehaviour
     {
+        public const string StateMoving = "IsMoving";
+
         public Animator animator;
+        public UnityEvent onBeforeAnimationChange;
+        public UnityEvent onAnimationChange;
 
         public bool IsMoving()
         {
-            // TODO: change for "Walking"
-            return animator.GetBool("Moving");
+            return animator.GetBool(StateMoving);
         }
 
         public bool IsIdle()
@@ -17,44 +21,48 @@ namespace Movement
             return !IsMoving();
         }
 
-        public void UpdateAnimation(Vector2 current, Vector2 previous, bool isMoving)
-        {
-            animator.SetFloat("MoveX", current.x);
-            animator.SetFloat("MoveY", current.y);
-            animator.SetFloat("LastMoveX", previous.x);
-            animator.SetFloat("LastMoveY", previous.y);
-            animator.SetBool("Moving", isMoving);
-        }
-
-        public void UpdateAnimation(InputController inputController)
-        {
-            InputInfo input = inputController.GetInputInfo();
-//            if (input.direction != MoveDirection.NONE)
+//        public void UpdateAnimation(InputController inputController)
+//        {
+//            var direction = inputController.GetInputInfo().direction;
+//            if (direction == inputController.GetPreviousInputInfo().direction)
 //            {
-//                Debug.Log(input.direction);
+//                return;
 //            }
+//
+//            UpdateAnimation(direction);
+//        }
 
-            UpdateAnimation(input.direction);
+        public void UpdateAnimation(bool isMoving)
+        {
+            onBeforeAnimationChange.Invoke();
+            animator.SetBool(StateMoving, isMoving);
+            onAnimationChange.Invoke();
         }
 
         public void UpdateAnimation(Vector2 current, bool isMoving)
         {
-            UpdateAnimation(current, current, isMoving);
+            onBeforeAnimationChange.Invoke();
+            animator.SetFloat("MoveX", current.x); // todo replace 4 x,y vars with pos_x and pos_y
+            animator.SetFloat("MoveY", current.y);
+            animator.SetFloat("LastMoveX", current.x);
+            animator.SetFloat("LastMoveY", current.y);
+            animator.SetBool(StateMoving, isMoving);
+            onAnimationChange.Invoke();
         }
 
         public void UpdateAnimation(Vector2 current)
         {
-            UpdateAnimation(current, current, IsMoving());
+            UpdateAnimation(current, IsMoving());
         }
 
-        public void UpdateAnimation(MoveDirection direction)
+        public void UpdateAnimation(MoveDirection current)
         {
-            if (direction == MoveDirection.NONE)
+            if (current == MoveDirection.NONE)
             {
                 return;
             }
 
-            UpdateAnimation(GetFaceDirectionVector(direction));
+            UpdateAnimation(GetFaceDirectionVector(current));
         }
 
         public MoveDirection GetCurrentFaceDirection()

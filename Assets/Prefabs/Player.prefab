@@ -264,9 +264,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b3272e7c6f4ad5b3a66ab517dcb5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  framesDelay: 6
-  directionButtonsEnabled: 1
-  actionButtonsEnabled: 1
+  frameThrottle: 6
+  directionsEnabled: 1
+  actionsEnabled: 1
   onInputChange:
     m_PersistentCalls:
       m_Calls: []
@@ -287,7 +287,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1308590125686892936}
-        m_MethodName: RaycastUpdate
+        m_MethodName: UpdateRaycast
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2118898325065786878}
+          m_ObjectArgumentAssemblyTypeName: Movement.InputController, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8237813267569809289}
+        m_MethodName: UpdateMovement
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2118898325065786878}
@@ -317,6 +328,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7830996759928198686}
+  onBeforeAnimationChange:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onAnimationChange:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &8237813267569809289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,8 +350,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1eae19173be47d0b53719ca391e210b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionController: {fileID: 4368599008164651466}
   anchorPointOffset: {x: 0.5, y: 0.5}
-  initialSpeed: 4
+  speed: 4
+  tilesPerStep: 1
   onMoveStart:
     m_PersistentCalls:
       m_Calls: []
@@ -361,6 +384,21 @@ MonoBehaviour:
   defaultCollisionSound: {fileID: 3830255616506969312}
   animationController: {fileID: 5018163520780393960}
   movementController: {fileID: 8237813267569809289}
+  onCollisionEnter:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onCollisionStay:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onCollisionExit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1308590125686892936
 MonoBehaviour:
   m_ObjectHideFlags: 0

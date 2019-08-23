@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Movement
 {
@@ -9,13 +10,14 @@ namespace Movement
         public static InputInfo NoInput = new InputInfo(MoveDirection.NONE, ActionButton.NONE);
 
         [Tooltip("Number of frames needed in order to react to the button")]
-        public int framesDelay = 6;
+        public int frameThrottle = 6;
 
-        public bool directionButtonsEnabled = true;
-        public bool actionButtonsEnabled = true;
+        public bool directionsEnabled = true;
+        public bool actionsEnabled = true;
 
         private int _delayCountdown = 0;
-        private InputInfo _lastInput = NoInput;
+        private InputInfo _previousInput = NoInput;
+        private InputInfo _currentInput = NoInput;
 
         [Header("Event")] public UnityEvent onInputChange;
         public UnityEvent onInputDirectionChange;
@@ -31,19 +33,29 @@ namespace Movement
             _delayCountdown = 0;
         }
 
-        public InputInfo GetInputInfo()
+        public InputInfo GetPreviousInputInfo()
         {
-            if (_lastInput is null)
+            if (_previousInput is null)
             {
                 return NoInput;
             }
 
-            return _lastInput;
+            return _previousInput;
+        }
+
+        public InputInfo GetInputInfo()
+        {
+            if (_currentInput is null)
+            {
+                return NoInput;
+            }
+
+            return _currentInput;
         }
 
         public InputInfo RefreshInputInfo()
         {
-            if (!enabled || (directionButtonsEnabled == false && actionButtonsEnabled == false))
+            if (!enabled || (directionsEnabled == false && actionsEnabled == false))
             {
                 return null;
             }
@@ -54,42 +66,29 @@ namespace Movement
                 return null;
             }
 
-            InputInfo newInput = InputManager.GetPressedButtons();
+            _previousInput = _currentInput;
+            _currentInput = InputManager.GetPressedButtons();
 
-            bool directionChanged = directionButtonsEnabled && (_lastInput.direction != newInput.direction);
-            bool actionChanged = actionButtonsEnabled && (_lastInput.action != newInput.action);
-
-            if (directionChanged)
-            {
-                _lastInput.direction = newInput.direction;
-            }
-
-            if (actionChanged)
-            {
-                _lastInput.action = newInput.action;
-            }
-
-            // trigger events:
+            bool directionChanged = directionsEnabled && (_previousInput.direction != _currentInput.direction);
+            bool actionChanged = actionsEnabled && (_previousInput.action != _currentInput.action);
 
             if (directionChanged)
             {
-                //Debug.Log("Input Direction Changed: " + _lastInput.direction);
                 onInputDirectionChange.Invoke();
             }
 
             if (actionChanged)
             {
-                //Debug.Log("Input Action Changed: " + _lastInput.action);
                 onInputActionChange.Invoke();
             }
 
             if (directionChanged || actionChanged)
             {
-                _delayCountdown = framesDelay;
+                _delayCountdown = frameThrottle;
                 onInputChange.Invoke();
             }
 
-            return _lastInput;
+            return _previousInput;
         }
     }
 }

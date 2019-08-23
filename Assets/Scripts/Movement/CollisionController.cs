@@ -1,4 +1,6 @@
+using Movement.GridLocation;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Movement
 {
@@ -7,36 +9,63 @@ namespace Movement
         public AudioSource defaultCollisionSound;
         public AnimationController animationController;
         public MovementController movementController;
-        private Collider2D _lastCollision;
-        private MoveDirection _lastCollisionDirection;
+        public GridCollision lastCollision;
+        public UnityEvent onCollisionEnter;
+        public UnityEvent onCollisionStay;
+        public UnityEvent onCollisionExit;
 
-        void OnTriggerEnter2D(Collider2D other)
+        private bool IsIgnored(Collider2D other)
         {
             // if (warpController.IsWarpZone(col) || other.gameObject.CompareTag("Bounds"))
             if (other.gameObject.CompareTag("Bounds"))
             {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool RegisterCollision(Collider2D other)
+        {
+            if (IsIgnored(other))
+            {
+                return false;
+            }
+
+            if (lastCollision is null)
+            {
+                lastCollision = new GridCollision();
+            }
+
+            lastCollision.collider = other;
+            lastCollision.direction = animationController.GetCurrentFaceDirection();
+
+            return true;
+        }
+
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!RegisterCollision(other))
+            {
                 return;
             }
-            
-            _lastCollision = other;
-            _lastCollisionDirection = animationController.GetCurrentFaceDirection();
+
+            onCollisionEnter.Invoke();
 
             // keep character snapped in the tile
-            movementController.Snap();
+            movementController.SnapToGrid();
 
             PlayCollisionSound(other);
         }
 
         void OnTriggerStay2D(Collider2D other)
         {
-            // if (warpController.IsWarpZone(col) || other.gameObject.CompareTag("Bounds"))
-            if (other.gameObject.CompareTag("Bounds"))
+            if (!RegisterCollision(other))
             {
                 return;
             }
-            
-            _lastCollision = other;
-            _lastCollisionDirection = animationController.GetCurrentFaceDirection();
+
+            onCollisionStay.Invoke();
 
             if (movementController.IsMoving())
             {
@@ -44,9 +73,21 @@ namespace Movement
             }
 
             movementController.StopAll();
+            movementController.SnapToGrid();
         }
 
-        private bool PlayCollisionSound(Collider2D other)
+        void OnTriggerExit2D(Collider2D other)
+        {
+            if (IsIgnored(other))
+            {
+                return;
+            }
+
+            onCollisionExit.Invoke();
+            lastCollision = null;
+        }
+
+        public bool PlayCollisionSound(Collider2D other)
         {
             AudioSource audioSource = defaultCollisionSound;
 

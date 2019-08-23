@@ -186,7 +186,7 @@ public class LegacyMovementController : MonoBehaviour
         animator.SetFloat("MoveY", movement.PositionDiff.y);
         animator.SetFloat("LastMoveX", movement.LastPositionDiff.x);
         animator.SetFloat("LastMoveY", movement.LastPositionDiff.y);
-        animator.SetBool("Moving", movement.IsMoving);
+        animator.SetBool("IsMoving", movement.IsMoving);
     }
 
     public void TriggerButtons(MoveDirection dir, ActionButton action)

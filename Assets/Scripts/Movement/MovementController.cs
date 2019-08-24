@@ -19,7 +19,7 @@ namespace Movement
         public int speed = GridRoute.DefaultSpeed;
 
         public int tilesPerStep = 1;
-        public GridRoute currentRoute = null;
+        private GridRoute _currentRoute;
         private bool _paused = false;
 
         [Header("Events")] public UnityEvent onMoveStart;
@@ -68,53 +68,58 @@ namespace Movement
                 SnapToGrid();
                 return;
             }
+            _currentRoute = CreateRoute(prevInput.direction, input.direction, tilesPerStep);
+//            if (_currentRoute is null || _currentRoute.IsDefaults())
+//            {
+//                _currentRoute = CreateRoute(prevInput.direction, input.direction, tilesPerStep);
+//                onMoveStart.Invoke();
+//            }
 
-            if (currentRoute is null || currentRoute.IsDefaults())
+            if (prevInput.direction != _currentRoute.destination.direction)
             {
-                currentRoute = CreateRoute(prevInput.direction, input.direction, tilesPerStep);
-                onMoveStart.Invoke();
+                animationController.UpdateAnimation(_currentRoute.destination.direction);
+                _currentRoute = null;
+                return;
             }
+            animationController.UpdateAnimation(_currentRoute.destination.direction);
 
-            if (prevInput.direction != currentRoute.destination.direction)
-            {
-                animationController.UpdateAnimation(currentRoute.destination.direction);
-            }
-
-            if (currentRoute.destination.coords == transform.position.ToVector2())
+            if (IsCurrentMoveComplete())
             {
                 Debug.LogFormat("<b>Movement Controller</b>: Arrived to Destination");
-                currentRoute = null;
+                _currentRoute = null;
                 onMoveFinish.Invoke();
                 SnapToGrid();
                 return;
             }
 
-            if (currentRoute.destination.direction == MoveDirection.NONE)
+            if (!(_currentRoute is null) && _currentRoute.destination.direction == MoveDirection.NONE)
             {
-                Debug.LogWarning("<b>Movement Controller</b>: Destination Direction is NONE. currentRoute = " +
-                                 currentRoute);
-                currentRoute = null;
+                Debug.LogWarning("<b>Movement Controller</b>: Destination Direction is NONE");
                 SnapToGrid();
                 return;
             }
 
-            if (IsMoving() && (currentRoute.destination.direction != MoveDirection.NONE) &&
-                (currentRoute.destination.direction == collisionController.lastCollision.direction))
-            {
-                // if moving to the direction of the last collision, just snap
-                Debug.LogFormat("<b>Movement Controller</b>: Movement Blocked By Collision");
-                currentRoute = null;
-                SnapToGrid();
-                return;
-            }
+            var mm = IsMoving();
+
+//            if (
+//                IsMoving()
+//                && (_currentRoute.destination.direction != MoveDirection.NONE)
+//                && (_currentRoute.destination.direction == collisionController.lastCollision.direction))
+//            {
+//                // if moving to the direction of the last collision, just snap
+//                Debug.LogFormat("<b>Movement Controller</b>: Movement Blocked By Collision");
+//                _currentRoute = null;
+//                SnapToGrid();
+//                return;
+//            }
 
             animationController.UpdateAnimation(true);
-            DeltaMoveTo(currentRoute);
+            DeltaMoveTo(_currentRoute);
 
             var pos = transform.position;
 
             Debug.LogFormat(
-                "<b>Movement Controller</b>: Movement Detected, route=(" + currentRoute +
+                "<b>Movement Controller</b>: Movement Detected, route=(" + _currentRoute +
                 "), currentPosition=" + pos.ToFormattedString()
             );
         }
@@ -162,7 +167,7 @@ namespace Movement
 
         public bool IsCurrentMoveComplete()
         {
-            return (currentRoute is null) || (currentRoute.destination.coords == transform.position.ToVector2());
+            return (_currentRoute is null) || (_currentRoute.destination.coords == transform.position.ToVector2());
         }
 
         public bool IsMoving()
@@ -192,7 +197,7 @@ namespace Movement
                 onMoveCancel.Invoke();
             }
 
-            currentRoute = null;
+            _currentRoute = null;
         }
 
         public bool IsPaused()

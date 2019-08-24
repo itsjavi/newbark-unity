@@ -72,7 +72,7 @@ namespace Movement
 
             onCollisionStay.Invoke();
 
-            movementController.Stop();
+           // movementController.Stop();
             movementController.SnapToGrid();
             PlayCollisionSound(other);
         }

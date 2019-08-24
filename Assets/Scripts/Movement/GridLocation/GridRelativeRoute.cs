@@ -17,7 +17,7 @@ namespace Movement.GridLocation
 
         public bool HasMovement()
         {
-            return direction != MoveDirection.NONE && steps > 0;
+            return direction != MoveDirection.NONE && steps == 0;
         }
 
         public override string ToString()

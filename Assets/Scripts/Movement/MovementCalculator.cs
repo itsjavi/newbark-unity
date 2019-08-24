@@ -12,50 +12,52 @@ namespace Movement
 
         public static GridRoute CalcRoute(GridRelativeRoute path)
         {
-            Debug.LogFormat("<b>Movement Calculator - CalcRoute</b> path=" + path);
             GridRoute route = new GridRoute();
             route.origin = path.origin;
-            
-            if (!path.HasMovement())
+
+            if (!path.HasMovement() || (path.direction != route.origin.direction))
             {
-                route.destination = route.origin;
-                Debug.LogFormat("<b>Movement Calculator - CalcRoute</b> Path has no movement. route=" + route);
+                // No movement, or it is just a change of direction
+                route.destination.direction = route.origin.direction;
+                route.destination.coords.x = route.origin.coords.x;
+                route.destination.coords.y = route.origin.coords.y;
+                
                 return route;
             }
-            
+
             route.destination.direction = path.direction;
-            
-            float x = 0, y = 0;
+
+            float x = route.origin.coords.x,
+                y = route.origin.coords.y,
+                xSteps = (path.steps * path.anchorPointOffset.x),
+                ySteps = (path.steps * path.anchorPointOffset.y);
 
             switch (route.destination.direction)
             {
                 case MoveDirection.UP:
                 {
-                    y = route.origin.coords.y + path.steps;
+                    y += ySteps;
                 }
                     break;
                 case MoveDirection.RIGHT:
                 {
-                    x = route.origin.coords.x + path.steps;
+                    x += xSteps;
                 }
                     break;
                 case MoveDirection.DOWN:
                 {
-                    y = route.origin.coords.y - path.steps;
+                    y -= ySteps;
                 }
                     break;
                 case MoveDirection.LEFT:
                 {
-                    x = route.origin.coords.x - path.steps;
+                    x -= xSteps;
                 }
                     break;
             }
 
             route.destination.coords.x = x;
             route.destination.coords.y = y;
-
-            // fix position, snapping it to the grid
-            route.destination.coords = CalcSnappedPosition(route.destination.coords, path.anchorPointOffset);
 
             return route;
         }

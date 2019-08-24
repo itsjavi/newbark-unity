@@ -121,7 +121,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e7aa1061682754e5f919394e893de652, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -269,40 +269,7 @@ MonoBehaviour:
   actionsEnabled: 1
   onInputDirectionTrigger:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5018163520780393960}
-        m_MethodName: UpdateAnimation
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2118898325065786878}
-          m_ObjectArgumentAssemblyTypeName: Movement.InputController, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1308590125686892936}
-        m_MethodName: UpdateRaycast
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2118898325065786878}
-          m_ObjectArgumentAssemblyTypeName: Movement.InputController, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8237813267569809289}
-        m_MethodName: UpdateMovement
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2118898325065786878}
-          m_ObjectArgumentAssemblyTypeName: Movement.InputController, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onInputActionTrigger:
@@ -346,6 +313,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionController: {fileID: 4368599008164651466}
+  inputController: {fileID: 2118898325065786878}
+  animationController: {fileID: 5018163520780393960}
   anchorPointOffset: {x: 0.5, y: 0.5}
   speed: 4
   tilesPerStep: 1
@@ -408,6 +377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxObjectDistance: 1
   animationController: {fileID: 5018163520780393960}
+  inputController: {fileID: 2118898325065786878}
 --- !u!114 &5000968212106356855
 MonoBehaviour:
   m_ObjectHideFlags: 0

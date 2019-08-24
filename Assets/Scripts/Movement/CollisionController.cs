@@ -55,8 +55,9 @@ namespace Movement
             onCollisionEnter.Invoke();
 
             // keep character snapped in the tile
-            movementController.SnapToGrid();
+            //  movementController.SnapToGrid();
 
+            movementController.SnapToGrid();
             PlayCollisionSound(other);
         }
 
@@ -71,13 +72,9 @@ namespace Movement
 
             onCollisionStay.Invoke();
 
-            if (movementController.IsMoving())
-            {
-                PlayCollisionSound(other);
-            }
-
-            movementController.StopAll();
+            movementController.Stop();
             movementController.SnapToGrid();
+            PlayCollisionSound(other);
         }
 
         void OnTriggerExit2D(Collider2D other)
@@ -91,6 +88,7 @@ namespace Movement
 
             onCollisionExit.Invoke();
             lastCollision = null;
+            movementController.SnapToGrid();
         }
 
         public bool PlayCollisionSound(Collider2D other)

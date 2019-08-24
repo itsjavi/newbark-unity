@@ -9,6 +9,8 @@ namespace Movement
     public class MovementController : MonoBehaviour
     {
         public CollisionController collisionController;
+        public InputController inputController;
+        public AnimationController animationController;
 
         [Tooltip("Offset between the transform dimensions and the transform anchor point")]
         public Vector2 anchorPointOffset = new Vector2(0.5f, 0.5f);
@@ -17,9 +19,8 @@ namespace Movement
         public int speed = GridRoute.DefaultSpeed;
 
         public int tilesPerStep = 1;
-
-        private bool _paused;
-        private Stack<GridRelativeRoute> _routeStack = new Stack<GridRelativeRoute>();
+        public GridRoute currentRoute = null;
+        private bool _paused = false;
 
         [Header("Events")] public UnityEvent onMoveStart;
         public UnityEvent onMoveFinish;
@@ -37,108 +38,93 @@ namespace Movement
             return MovementCalculator.CalcRoute(route);
         }
 
-        public void UpdateMovement(InputController inputController)
+        private void FixedUpdate()
         {
-            InputInfo input = inputController.GetInputInfo();
-            if (!input.HasDirection())
+            if (IsPaused())
             {
-                Debug.LogFormat("<b>Movement Controller</b>: No Movement Detected. input=(" + input + ")");
                 return;
             }
 
+            UpdateMovement();
+        }
+
+        public void UpdateMovement()
+        {
+            if (IsPaused())
+            {
+                return;
+            }
+
+            InputInfo input = inputController.GetInputInfo();
             InputInfo prevInput = inputController.GetPreviousInputInfo();
 
-            var route = CreateRoute(prevInput.direction, input.direction, tilesPerStep);
-
-            if (route.destination.direction == MoveDirection.NONE)
+            if (!input.HasDirection())
             {
-                Debug.LogWarning("<b>Movement Controller</b>: Destination Direction is NONE");
-                Debug.LogWarning("<b>Movement Controller</b>: Destination Direction is NONE");
+                if (animationController.IsMoving())
+                {
+                    animationController.UpdateAnimation(false);
+                }
+
                 SnapToGrid();
                 return;
             }
 
-            if (route.destination.coords == transform.position.ToVector2())
+            if (currentRoute is null || currentRoute.IsDefaults())
+            {
+                currentRoute = CreateRoute(prevInput.direction, input.direction, tilesPerStep);
+                onMoveStart.Invoke();
+            }
+
+            if (prevInput.direction != currentRoute.destination.direction)
+            {
+                animationController.UpdateAnimation(currentRoute.destination.direction);
+            }
+
+            if (currentRoute.destination.coords == transform.position.ToVector2())
             {
                 Debug.LogFormat("<b>Movement Controller</b>: Arrived to Destination");
+                currentRoute = null;
+                onMoveFinish.Invoke();
                 SnapToGrid();
                 return;
             }
 
-            if (IsMoving() && (route.destination.direction != MoveDirection.NONE) &&
-                (route.destination.direction == collisionController.lastCollision.direction))
+            if (currentRoute.destination.direction == MoveDirection.NONE)
+            {
+                Debug.LogWarning("<b>Movement Controller</b>: Destination Direction is NONE. currentRoute = " +
+                                 currentRoute);
+                currentRoute = null;
+                SnapToGrid();
+                return;
+            }
+
+            if (IsMoving() && (currentRoute.destination.direction != MoveDirection.NONE) &&
+                (currentRoute.destination.direction == collisionController.lastCollision.direction))
             {
                 // if moving to the direction of the last collision, just snap
                 Debug.LogFormat("<b>Movement Controller</b>: Movement Blocked By Collision");
+                currentRoute = null;
                 SnapToGrid();
                 return;
             }
 
-            WalkTo(route);
+            animationController.UpdateAnimation(true);
+            DeltaMoveTo(currentRoute);
 
             var pos = transform.position;
 
             Debug.LogFormat(
-                "<b>Movement Controller</b>: Movement Detected, route=(" + route +
+                "<b>Movement Controller</b>: Movement Detected, route=(" + currentRoute +
                 "), currentPosition=" + pos.ToFormattedString()
             );
         }
 
-        public bool HasMovesLeft()
+        public void DeltaMoveTo(GridRelativeRoute path)
         {
-            return _routeStack.Count > 0;
+            DeltaMoveTo(MovementCalculator.CalcRoute(path));
         }
 
-        public bool IsCurrentMoveComplete()
-        {
-            return true;
-        }
-
-        public bool IsMoving()
-        {
-            return !IsPaused() && !IsCurrentMoveComplete();
-        }
-
-        public bool IsIdle()
-        {
-            return !IsPaused() && !IsMoving();
-        }
-
-        public void Pause()
-        {
-            _paused = true;
-        }
-
-        public void Resume()
-        {
-            _paused = false;
-        }
-
-        public void StopAll()
-        {
-            if (!IsCurrentMoveComplete() || HasMovesLeft())
-            {
-                onMoveCancel.Invoke();
-            }
-
-            _routeStack.Clear();
-        }
-
-        public void StopCurrent()
-        {
-        }
-
-        public bool IsPaused()
-        {
-            return _paused;
-        }
-
-        public void WalkTo(GridRelativeRoute path)
-        {
-            WalkTo(MovementCalculator.CalcRoute(path));
-        }
-
-        public void WalkTo(GridRoute route)
+        public void DeltaMoveTo(GridRoute route)
         {
             transform.position =
                 MovementCalculator.CalcDeltaPosition(transform.position, route.destination.coords, speed);
@@ -172,6 +158,46 @@ namespace Movement
             Debug.LogFormat("<b>Movement Controller</b>: Resetting rotation to zero.");
             // override in case collision physics caused object rotation
             transform.rotation = MovementCalculator.ZeroRotation();
+        }
+
+        public bool IsCurrentMoveComplete()
+        {
+            return (currentRoute is null) || (currentRoute.destination.coords == transform.position.ToVector2());
+        }
+
+        public bool IsMoving()
+        {
+            return !IsPaused() && !IsCurrentMoveComplete();
+        }
+
+        public bool IsIdle()
+        {
+            return !IsPaused() && !IsMoving();
+        }
+
+        public void Pause()
+        {
+            _paused = true;
+        }
+
+        public void Resume()
+        {
+            _paused = false;
+        }
+
+        public void Stop()
+        {
+            if (!IsCurrentMoveComplete())
+            {
+                onMoveCancel.Invoke();
+            }
+
+            currentRoute = null;
+        }
+
+        public bool IsPaused()
+        {
+            return _paused;
         }
     }
 }

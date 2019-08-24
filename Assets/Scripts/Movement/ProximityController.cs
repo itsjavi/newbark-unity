@@ -9,8 +9,14 @@ namespace Movement
 
         // TODO: add lastHit
         public AnimationController animationController;
+        public InputController inputController;
 
-        public void UpdateRaycast(InputController inputController)
+        private void FixedUpdate()
+        {
+            UpdateRaycast();
+        }
+
+        public void UpdateRaycast()
         {
             UpdateRaycast(inputController.GetInputInfo(), transform.position,
                 animationController.GetCurrentFaceDirectionVector());

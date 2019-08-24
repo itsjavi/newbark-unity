@@ -21,22 +21,23 @@ namespace Movement
             return !IsMoving();
         }
 
-//        public void UpdateAnimation(InputController inputController)
-//        {
-//            var direction = inputController.GetInputInfo().direction;
-//            if (direction == inputController.GetPreviousInputInfo().direction)
-//            {
-//                return;
-//            }
-//
-//            UpdateAnimation(direction);
-//        }
+        public void UpdateAnimation(InputController inputController)
+        {
+            var direction = inputController.GetInputInfo().direction;
+            if (direction == inputController.GetPreviousInputInfo().direction)
+            {
+                return;
+            }
+
+            UpdateAnimation(direction);
+        }
 
         public void UpdateAnimation(bool isMoving)
         {
             onBeforeAnimationChange.Invoke();
             animator.SetBool(StateMoving, isMoving);
             onAnimationChange.Invoke();
+            Debug.LogFormat("<b>Animation Updated</b> isMoving=" + isMoving);
         }
 
         public void UpdateAnimation(Vector2 current, bool isMoving)
@@ -47,6 +48,8 @@ namespace Movement
             animator.SetFloat("LastMoveX", current.x);
             animator.SetFloat("LastMoveY", current.y);
             animator.SetBool(StateMoving, isMoving);
+            Debug.LogFormat("<b>Animation Updated</b> current=" + current.ToFormattedString() + 
+                            ", isMoving=" + isMoving);
             onAnimationChange.Invoke();
         }
 

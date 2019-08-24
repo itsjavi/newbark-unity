@@ -18,4 +18,9 @@ public class InputInfo
     {
         return action != ActionButton.NONE;
     }
+
+    public override string ToString()
+    {
+        return "<b>" + GetType() + ":</b> direction=<color=navy>" + direction + "</color>, action=<color=navy>" + action + "</color>";
+    }
 }

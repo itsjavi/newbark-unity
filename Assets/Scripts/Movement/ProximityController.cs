@@ -6,6 +6,7 @@ namespace Movement
     {
         [Tooltip("Maximum distance over which to cast the ray.")]
         public float maxObjectDistance = 1f;
+
         // TODO: add lastHit
         public AnimationController animationController;
 
@@ -40,6 +41,8 @@ namespace Movement
             {
                 return;
             }
+
+            Debug.LogFormat("<b>Proximity Controller:</b> Raycast Hit Detected: " + hit.collider.gameObject.name);
 
             // Debug.Log("[raycast hit] @interactable " + hit.collider.gameObject.name);
             interactable.Interact(input);

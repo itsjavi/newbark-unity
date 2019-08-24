@@ -12,37 +12,41 @@ namespace Movement
 
         public static GridRoute CalcRoute(GridRelativeRoute path)
         {
+            Debug.LogFormat("<b>Movement Calculator - CalcRoute</b> path=" + path);
             GridRoute route = new GridRoute();
             route.origin = path.origin;
-
+            
             if (!path.HasMovement())
             {
                 route.destination = route.origin;
+                Debug.LogFormat("<b>Movement Calculator - CalcRoute</b> Path has no movement. route=" + route);
                 return route;
             }
-
+            
+            route.destination.direction = path.direction;
+            
             float x = 0, y = 0;
 
-            switch (path.direction)
+            switch (route.destination.direction)
             {
                 case MoveDirection.UP:
                 {
-                    y = path.steps;
+                    y = route.origin.coords.y + path.steps;
                 }
                     break;
                 case MoveDirection.RIGHT:
                 {
-                    x = path.steps;
+                    x = route.origin.coords.x + path.steps;
                 }
                     break;
                 case MoveDirection.DOWN:
                 {
-                    y = path.steps * -1;
+                    y = route.origin.coords.y - path.steps;
                 }
                     break;
                 case MoveDirection.LEFT:
                 {
-                    x = path.steps * -1;
+                    x = route.origin.coords.x - path.steps;
                 }
                     break;
             }

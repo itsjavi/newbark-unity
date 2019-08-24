@@ -10,14 +10,20 @@ namespace Movement.GridLocation
         public int steps = 0; // distance in steps or tiles
         public Vector2 anchorPointOffset = Vector2.zero;
 
-        public bool IsEmpty()
+        public bool IsDefaults()
         {
-            return origin.IsEmpty() || direction == MoveDirection.NONE || steps == 0;
+            return origin.IsDefaults() && direction == MoveDirection.NONE && steps == 0;
         }
 
         public bool HasMovement()
         {
-            return !IsEmpty() && (origin.direction != direction);
+            return direction != MoveDirection.NONE && steps > 0;
+        }
+
+        public override string ToString()
+        {
+            return "<b>" + GetType() + ":</b> origin=(" + origin + "), direction=" + direction + ", steps=" + steps +
+                   ", anchorPointOffset=" + anchorPointOffset.ToFormattedString();
         }
     }
 }

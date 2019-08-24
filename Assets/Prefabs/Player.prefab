@@ -267,12 +267,7 @@ MonoBehaviour:
   frameThrottle: 6
   directionsEnabled: 1
   actionsEnabled: 1
-  onInputChange:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onInputDirectionChange:
+  onInputDirectionTrigger:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5018163520780393960}
@@ -310,7 +305,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  onInputActionChange:
+  onInputActionTrigger:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,

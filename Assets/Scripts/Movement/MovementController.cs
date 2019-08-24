@@ -40,8 +40,9 @@ namespace Movement
         public void UpdateMovement(InputController inputController)
         {
             InputInfo input = inputController.GetInputInfo();
-            if (!input.HasDirection() && !IsMoving())
+            if (!input.HasDirection())
             {
+                Debug.LogFormat("<b>Movement Controller</b>: No Movement Detected. input=(" + input + ")");
                 return;
             }
 
@@ -49,12 +50,17 @@ namespace Movement
 
             var route = CreateRoute(prevInput.direction, input.direction, tilesPerStep);
 
-            if (
-                !IsMoving()
-                || (route.destination.direction == MoveDirection.NONE)
-                || (route.destination.coords == transform.position.AsVector2())
-            )
+            if (route.destination.direction == MoveDirection.NONE)
             {
+                Debug.LogWarning("<b>Movement Controller</b>: Destination Direction is NONE");
+                Debug.LogWarning("<b>Movement Controller</b>: Destination Direction is NONE");
+                SnapToGrid();
+                return;
+            }
+
+            if (route.destination.coords == transform.position.ToVector2())
+            {
+                Debug.LogFormat("<b>Movement Controller</b>: Arrived to Destination");
                 SnapToGrid();
                 return;
             }
@@ -63,11 +69,19 @@ namespace Movement
                 (route.destination.direction == collisionController.lastCollision.direction))
             {
                 // if moving to the direction of the last collision, just snap
+                Debug.LogFormat("<b>Movement Controller</b>: Movement Blocked By Collision");
                 SnapToGrid();
                 return;
             }
-            
+
             WalkTo(route);
+
+            var pos = transform.position;
+
+            Debug.LogFormat(
+                "<b>Movement Controller</b>: Movement Detected, route=(" + route +
+                "), currentPosition=" + pos.ToFormattedString()
+            );
         }
 
         public bool HasMovesLeft()
@@ -133,7 +147,18 @@ namespace Movement
 
         public void SnapToGrid(Vector2 position)
         {
-            transform.position = MovementCalculator.CalcSnappedPosition(position, anchorPointOffset);
+            var currPosition = transform.position;
+            var newPosition = MovementCalculator.CalcSnappedPosition(position, anchorPointOffset);
+
+            if (currPosition.ToVector2() == newPosition)
+            {
+                return;
+            }
+
+            Debug.LogFormat("<b>Movement Controller</b>: Snapping To Grid from=" +
+                            currPosition.ToFormattedString() + ", to=" + newPosition.ToFormattedString());
+
+            transform.position = newPosition;
             ResetRotation();
         }
 
@@ -144,6 +169,7 @@ namespace Movement
 
         private void ResetRotation()
         {
+            Debug.LogFormat("<b>Movement Controller</b>: Resetting rotation to zero.");
             // override in case collision physics caused object rotation
             transform.rotation = MovementCalculator.ZeroRotation();
         }

@@ -50,6 +50,8 @@ namespace Movement
                 return;
             }
 
+            Debug.LogFormat("<b>Collision Trigger Enter</b>: " + lastCollision);
+
             onCollisionEnter.Invoke();
 
             // keep character snapped in the tile
@@ -64,6 +66,8 @@ namespace Movement
             {
                 return;
             }
+
+            Debug.LogFormat("<b>Collision Trigger Stay</b>: " + lastCollision);
 
             onCollisionStay.Invoke();
 
@@ -82,6 +86,8 @@ namespace Movement
             {
                 return;
             }
+
+            Debug.LogFormat("<b>Collision Trigger Exit</b>: " + lastCollision);
 
             onCollisionExit.Invoke();
             lastCollision = null;

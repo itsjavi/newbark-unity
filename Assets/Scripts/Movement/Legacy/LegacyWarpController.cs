@@ -47,7 +47,7 @@ public class LegacyWarpController : MonoBehaviour
 
     public void WarpToDropStart(WarpZone destination)
     {
-        Vector2 coords = destination.dropZone.transform.position.AsVector2() + destination.dropZoneOffset;
+        Vector2 coords = destination.dropZone.transform.position.ToVector2() + destination.dropZoneOffset;
         legacyMovementController.ClampPositionTo(new Vector3(coords.x, coords.y, 0));
     }
 

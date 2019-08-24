@@ -19,9 +19,11 @@ namespace Movement
         private InputInfo _previousInput = NoInput;
         private InputInfo _currentInput = NoInput;
 
-        [Header("Event")] public UnityEvent onInputChange;
-        public UnityEvent onInputDirectionChange;
-        public UnityEvent onInputActionChange;
+        [FormerlySerializedAs("onInputDirectionChange")]
+        public UnityEvent onInputDirectionTrigger;
+
+        [FormerlySerializedAs("onInputActionChange")]
+        public UnityEvent onInputActionTrigger;
 
         private void FixedUpdate()
         {
@@ -53,42 +55,67 @@ namespace Movement
             return _currentInput;
         }
 
-        public InputInfo RefreshInputInfo()
+        public bool IsIdle()
+        {
+            return IsIdle(_currentInput);
+        }
+
+        public bool IsIdle(InputInfo inputInfo)
+        {
+            return !inputInfo.HasAction() && !inputInfo.HasDirection();
+        }
+
+        public void RefreshInputInfo()
         {
             if (!enabled || (directionsEnabled == false && actionsEnabled == false))
             {
-                return null;
+                return;
             }
 
             if (_delayCountdown > 0)
             {
                 _delayCountdown--;
-                return null;
+                return;
             }
 
+            _delayCountdown = frameThrottle;
             _previousInput = _currentInput;
             _currentInput = InputManager.GetPressedButtons();
 
             bool directionChanged = directionsEnabled && (_previousInput.direction != _currentInput.direction);
             bool actionChanged = actionsEnabled && (_previousInput.action != _currentInput.action);
+            bool inputChanged = directionChanged || actionChanged;
+            bool directionIsNone = _currentInput.direction == MoveDirection.NONE;
+            bool actionIsNone = _currentInput.action == ActionButton.NONE;
 
-            if (directionChanged)
+            if (IsIdle())
             {
-                onInputDirectionChange.Invoke();
+                if (inputChanged)
+                {
+                    Debug.LogFormat("<b>Input Changed</b> to <color=navy>NONE</color>");
+                }
+
+                return;
             }
 
-            if (actionChanged)
+            if (inputChanged)
             {
-                onInputActionChange.Invoke();
+                Debug.LogFormat("<b>Input Changed</b> FROM (" + _previousInput + ") TO (" + _currentInput + ")");
+            }
+            else
+            {
+                Debug.LogFormat("<b>Input Keep pressing</b>");
             }
 
-            if (directionChanged || actionChanged)
+            if (!directionIsNone)
             {
-                _delayCountdown = frameThrottle;
-                onInputChange.Invoke();
+                onInputDirectionTrigger.Invoke();
             }
 
-            return _previousInput;
+            if (!actionIsNone)
+            {
+                onInputActionTrigger.Invoke();
+            }
         }
     }
 }

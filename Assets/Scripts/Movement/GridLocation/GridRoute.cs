@@ -12,17 +12,19 @@ namespace Movement.GridLocation
 
         public int speed = DefaultSpeed;
 
-        public bool IsEmpty()
+        public bool IsDefaults()
         {
-            return speed == 0 || origin.IsEmpty() || destination.IsEmpty();
+            return speed == 0 && origin.IsDefaults() && destination.IsDefaults();
         }
 
         public bool HasMovement()
         {
-            return !IsEmpty() 
-                   && (origin.coords != destination.coords)
-                   && (origin.direction != destination.direction)
-                ;
+            return speed > 0 && (origin.coords != destination.coords);
+        }
+
+        public override string ToString()
+        {
+            return "<b>" + GetType() + ":</b> origin=(" + origin + "), destination=(" + destination + ")";
         }
     }
 }

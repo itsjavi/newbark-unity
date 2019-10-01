@@ -23685,6 +23685,7 @@ Transform:
   - {fileID: 1609671903}
   - {fileID: 1037737270}
   - {fileID: 652304843}
+  - {fileID: 855600778}
   - {fileID: 752108293}
   - {fileID: 713064901}
   - {fileID: 221357592}
@@ -23695,7 +23696,6 @@ Transform:
   - {fileID: 1211393995}
   - {fileID: 1985213316}
   - {fileID: 605714991}
-  - {fileID: 855600778}
   m_Father: {fileID: 549839365}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23795,6 +23795,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DialogItem (Bed)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7719613932962886481, guid: da67f6acbd19347b194aecf761a795e1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}
@@ -23985,7 +23990,7 @@ PrefabInstance:
     - target: {fileID: 1820661078736008589, guid: 03e4f12a8054c48a6b400f9829bd7af4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1820661078736008589, guid: 03e4f12a8054c48a6b400f9829bd7af4,
         type: 3}
@@ -24430,6 +24435,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogItem (PC)
       objectReference: {fileID: 0}
+    - target: {fileID: 7719613932962886481, guid: da67f6acbd19347b194aecf761a795e1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24806,7 +24816,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 551931628}
-  m_RootOrder: 13
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &923128060
 GameObject:
@@ -24913,6 +24923,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogItem (TV)
       objectReference: {fileID: 0}
+    - target: {fileID: 7719613932962886481, guid: da67f6acbd19347b194aecf761a795e1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24951,7 +24966,7 @@ PrefabInstance:
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}
@@ -25376,6 +25391,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DialogItem (Map)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7719613932962886481, guid: da67f6acbd19347b194aecf761a795e1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}
@@ -43788,6 +43808,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogItem (Radio)
       objectReference: {fileID: 0}
+    - target: {fileID: 7719613932962886481, guid: da67f6acbd19347b194aecf761a795e1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -43971,6 +43996,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogItem (Shelf)
       objectReference: {fileID: 0}
+    - target: {fileID: 7719613932962886481, guid: da67f6acbd19347b194aecf761a795e1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -44009,7 +44039,7 @@ PrefabInstance:
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4532331491285480594, guid: da67f6acbd19347b194aecf761a795e1,
         type: 3}

@@ -1,72 +1,37 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using DG.Tweening;
 
 /**
  * Warp Controller. Attach this controller to the object that moves an warps, usually the player.
  */
-public class WarpController : MonoBehaviour
+public class WarpController : InputConsumer
 {
-    public BoxCollider2D warperCollider;
     public MovementController movementController;
-    public UnityEvent onWarpEnter;
-    public UnityEvent onWarpStay;
-    public UnityEvent onWarpFinish;
 
-    private bool _warpingEnabled = true;
+    public GameObject fadeMask;
     private bool _isWarping = false;
-
-    private void FixedUpdate()
-    {
-        if (_isWarping && !movementController.IsMoving())
-        {
-            _isWarping = false;
-        }
-    }
-
-    public bool IsWarping()
-    {
-        return _isWarping;
-    }
-
-    public void EnableWarping()
-    {
-        _warpingEnabled = true;
-    }
-
-    public void DisableWarping()
-    {
-        _warpingEnabled = false;
-    }
-
-    public bool IsWarpingEnabled()
-    {
-        return _warpingEnabled;
-    }
 
     private void WarpToDropStart(WarpZone destination)
     {
         Vector2 coords = destination.dropZone.transform.position.AsVector2() + destination.dropZoneOffset;
         movementController.ClampPositionTo(new Vector3(coords.x, coords.y, 0));
+
+        if (destination.postDropMove.direction != DIRECTION_BUTTON.NONE)
+            movementController.FaceToDir(destination.postDropMove.direction);
+    }
+
+    public override void OnUpdateHandleInput() {
+        // do nothing to eat input
     }
 
     private void MoveToDropEnd(WarpZone destination)
     {
-        if (destination.postDropMove.steps == 0)
-        {
-            if (destination.postDropMove.direction != DIRECTION_BUTTON.NONE)
-            {
-                movementController.TriggerButtons(destination.postDropMove.direction, ACTION_BUTTON.NONE);
-            }
-
-            return;
-        }
-
-        if (!movementController.Move(destination.postDropMove.direction, destination.postDropMove.steps))
-        {
-            Debug.LogWarning("!!! WARPER CANNOT BE MOVED");
-        }
+        if (destination.postDropMove.steps > 0)
+            movementController.HandleMoveInput(destination.postDropMove.direction, destination.postDropMove.steps);
     }
 
     private bool IsWarpZone(Collider2D other)
@@ -79,39 +44,61 @@ public class WarpController : MonoBehaviour
         return other.gameObject.GetComponent<WarpZone>();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!IsWarpZone(other) || !IsWarpingEnabled() || IsWarping())
-        {
-            return;
-        }
-
-        Debug.Log("OnTriggerEnter2D");
-        onWarpEnter.Invoke();
+    // todo: use generic function
+    private WarpController weakToStrong(WeakReference<WarpController> weakRef) {
+        bool isAlive = weakRef.TryGetTarget(out WarpController target);
+        return target;
     }
 
-    // For the OnTriggerStay2D event to work properly, the Rigid2D body Sleep Mode has to be on "Never Sleep", otherwise this is only triggered once
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsWarpZone(other) || !IsWarpingEnabled() || IsWarping())
-        {
+        if (!IsWarpZone(other))
             return;
-        }
+
+        if (_isWarping)
+            return;
 
         _isWarping = true;
-        WarpToDropStart(GetWarpZone(other));
-        onWarpStay.Invoke();
+        InputConsumerCenter.Instance.Register(this, 0);
+
+        // start warping
+        var image = fadeMask.GetComponent<Image>();
+
+        Color color = image.color;
+        color.a = 0;
+        image.color = color;
+        image.enabled = true;
+
+        var weakThis = new WeakReference<WarpController>(this);
+        var sequence = DOTween.Sequence();
+        sequence.Append(image.DOFade(1, 0.6f));
+        sequence.AppendCallback(() => {
+            // do move player
+            var strongThis = weakToStrong(weakThis);
+            if (!strongThis)
+                return;
+
+            WarpToDropStart(GetWarpZone(other));
+        });
+        sequence.Append(image.DOFade(0, 0.4f));
+        sequence.AppendCallback(() => {
+            // warping terminated
+            var strongThis = weakToStrong(weakThis);
+            if (!strongThis)
+                return;
+
+            MoveToDropEnd(GetWarpZone(other));
+            image.enabled = false;
+            strongThis._isWarping = false;
+            InputConsumerCenter.Instance.UnRegister(strongThis);
+        });
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (!IsWarpZone(other) || !IsWarpingEnabled() || IsWarping())
-        {
-            return;
-        }
-
-        Debug.Log("OnTriggerExit2D");
-        MoveToDropEnd(GetWarpZone(other));
-        onWarpFinish.Invoke();
     }
 }

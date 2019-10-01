@@ -2,6 +2,5 @@
 
 public abstract class Interactable : InputConsumer
 {
-    // todo: remove DIRECTION_BUTTON dir
-    public abstract void Interact(DIRECTION_BUTTON dir, ACTION_BUTTON button);
+    public abstract void Interact(ACTION_BUTTON button);
 }

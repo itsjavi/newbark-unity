@@ -1,32 +1,41 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class DialogTrigger : Interactable
 {
     public Dialog dialog;
 
-    public override void Interact(DIRECTION_BUTTON dir, ACTION_BUTTON button)
-    {
-        DialogManager dm = FindObjectOfType<DialogManager>();
+    private DialogManager dm = null;
 
-        if (button == ACTION_BUTTON.A)
-        {
-            if (!dm.InDialog())
-            {
-                dm.StartDialog(dialog);
-            }
-            else
-            {
-                dm.PrintNext();
-            }
+    public override void Interact(ACTION_BUTTON action)
+    {
+        if (action != ACTION_BUTTON.A)
+            return;
+
+        if (!dm) {
+            dm = FindObjectOfType<DialogManager>();
         }
-        else if (button == ACTION_BUTTON.B)
-        {
-            dm.EndDialog();
-        }
+
+        InputConsumerCenter.Instance.Register(this, 99);
+
+        dm.StartDialog(dialog);
     }
 
-    public override void OnUpdateHandleInput()
-    {
-        // todo: handle input
+    public override void OnUpdateHandleInput() {
+        ACTION_BUTTON action = InputController.GetPressedActionButton();
+
+        bool shouldEndDialog = false;
+        if (action == ACTION_BUTTON.A) {
+            // should end dialog if not next line
+            shouldEndDialog = !dm.PrintNext();
+        } else if (action == ACTION_BUTTON.B) {
+            shouldEndDialog = true;
+        }
+
+        if (shouldEndDialog) {
+            dm.EndDialog();
+            dm = null;
+            InputConsumerCenter.Instance.UnRegister(this);
+        }
     }
 }

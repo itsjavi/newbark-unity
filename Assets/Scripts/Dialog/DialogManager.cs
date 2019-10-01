@@ -77,7 +77,7 @@ public class DialogManager : MonoBehaviour
         return inDialog;
     }
 
-    public void PrintNext()
+    public bool PrintNext()
     {
         var showArrow = dialogScroller.IsPaged() && !dialogScroller.IsLastPage();
 
@@ -85,8 +85,8 @@ public class DialogManager : MonoBehaviour
 
         if (lines == null || lines.Length == 0)
         {
-            EndDialog();
-            return;
+            // no more lines to print
+            return false;
         }
 
         dialogArrow.gameObject.SetActive(showArrow);
@@ -94,6 +94,7 @@ public class DialogManager : MonoBehaviour
         PlaySound();
 
         StartCoroutine(Print(lines, dialogScroller.IsFirstBuffer() || dialogScroller.IsFirstBufferLine()));
+        return true;
     }
 
     public void EndDialog()

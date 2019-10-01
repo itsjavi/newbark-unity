@@ -2,11 +2,9 @@
 
 public class MovementController : InputConsumer
 {
-    private CellMovement movement;
-
     [Header("Movement")] public Animator animator;
     public int speed = 6;
-    public int inputDelay = 8;
+    public int inputDelay = 2;
     public int tilesToMove = 1;
     public float clampAt = 0.5f;
     public float raycastDistance = 1f;
@@ -15,6 +13,17 @@ public class MovementController : InputConsumer
     public GameObject lastCollidedObject;
     public DIRECTION_BUTTON lastCollisionDir = DIRECTION_BUTTON.NONE;
 
+    public Vector3 destPosition;
+    public DIRECTION_BUTTON lastMoveDir = DIRECTION_BUTTON.DOWN;    // hardcode init state
+    public bool mIsMoving = false;                                  // whether the player animation is moving
+    private int changeDirCoolDown = 0;
+
+    private GameObject player;
+    private int LAYER_MASK_INTERACTABLE = 1 << 8;
+    private int LAYER_MASK_DEFAULT = 1 << 0;
+
+    private float lastPlayCollisionSoundTime = 0.0f;
+
     void Start()
     {
         if (!animator)
@@ -22,213 +31,227 @@ public class MovementController : InputConsumer
             animator = GetComponentInChildren<Animator>();
         }
 
+        destPosition = transform.position;
         currentTilesToMove = tilesToMove;
 
-        movement = new CellMovement(inputDelay, clampAt);
-
-        // register to receive input
-        InputConsumerCenter.Instance.Register(this);
+        InputConsumerCenter.Instance.Register(this, 100);
     }
 
-    void FixedUpdate()
-    {
-        // never handle user input in FixedUpdate()
-        // use Update() or OnUpdateHandleInput() instead
-    }
-
-    public DIRECTION_BUTTON GetFaceDirection()
-    {
-        if (animator.GetFloat("LastMoveX") > 0)
-        {
-            return DIRECTION_BUTTON.RIGHT;
-        }
-
-        if (animator.GetFloat("LastMoveX") < 0)
-        {
-            return DIRECTION_BUTTON.LEFT;
-        }
-
-        if (animator.GetFloat("LastMoveY") > 0)
-        {
-            return DIRECTION_BUTTON.UP;
-        }
-
-        if (animator.GetFloat("LastMoveY") < 0)
-        {
-            return DIRECTION_BUTTON.DOWN;
-        }
-
-        return DIRECTION_BUTTON.DOWN;
-    }
-
-    public Vector2 GetFaceDirectionVector()
-    {
-        switch (GetFaceDirection())
-        {
-            case DIRECTION_BUTTON.UP:
-                return Vector2.up;
-            case DIRECTION_BUTTON.DOWN:
-                return Vector2.down;
-            case DIRECTION_BUTTON.LEFT:
-                return Vector2.left;
-            case DIRECTION_BUTTON.RIGHT:
-                return Vector2.right;
-            default:
-                return Vector2.zero;
+    private void FixedUpdate() {
+        // Best practise: update physics in FixedUpdate(), but handle input in Update()
+        if (IsMoving() && transform.position != destPosition) {
+            float delta = Time.fixedDeltaTime * speed;
+            transform.position = Vector3.MoveTowards(transform.position, destPosition, delta);
         }
     }
 
-    public bool CanMove()
-    {
-        // TODO optimize with events
-        return !FindObjectOfType<DialogManager>().InDialog();
-    }
+    void Update() {
+        if (InputConsumerCenter.Instance.GetCurrentConsumer() != this) {
+            // only check auto move stop
+            if (transform.position == destPosition) {
+                StopMoving();
+            }
 
-    public bool CanMoveManually()
-    {
-        return CanMove();
-    }
-
-    private void MovementUpdate(DIRECTION_BUTTON dir)
-    {
-        if (movement != null && !movement.IsMoving)
-        {
-            currentTilesToMove = tilesToMove;
-        }
-
-        Move(dir, currentTilesToMove);
-    }
-
-    private void RaycastUpdate(DIRECTION_BUTTON dir, ACTION_BUTTON action)
-    {
-        Vector3 dirVector = GetFaceDirectionVector();
-
-        if (dirVector == Vector3.zero)
-        {
             return;
         }
 
-        RaycastHit2D hit = CheckRaycast(dirVector);
-        // Debug.DrawRay(transform.position, dirVector, Color.green);
-        if (hit.collider)
+        // handle other logic in OnUpdateHandleInput
+    }
+
+    public override void OnUpdateHandleInput() {
+        DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
+        ACTION_BUTTON action = InputController.GetPressedActionButton();
+        HandleMoveInput(dir);
+
+        if (action != ACTION_BUTTON.NONE) {
+            TryInteract(lastMoveDir, action);
+        }
+    }
+
+    public Vector3 GetMovementVector(DIRECTION_BUTTON dir, int tiles = 1)
+    {
+        switch (dir)
         {
+            case DIRECTION_BUTTON.UP:
+                return Vector3.up * tiles;
+            case DIRECTION_BUTTON.DOWN:
+                return Vector3.down * tiles;
+            case DIRECTION_BUTTON.LEFT:
+                return Vector3.left * tiles;
+            case DIRECTION_BUTTON.RIGHT:
+                return Vector3.right * tiles;
+            default:
+                return Vector3.zero;
+        }
+    }
+
+    private RaycastHit2D CheckInteractableRaycast(Vector2 direction)
+    {
+        Vector2 startingPosition = (Vector2) transform.position;
+
+        // todo: do not check DEFAULT layer, move posts to interactable
+        return Physics2D.Raycast(startingPosition, direction, raycastDistance, LAYER_MASK_INTERACTABLE | LAYER_MASK_DEFAULT);
+    }
+
+    private void StartMove(DIRECTION_BUTTON dir, int tiles = 1) {
+        lastMoveDir = dir;
+        var movementVector = GetMovementVector(dir, tiles);
+
+        bool canMove = CanMove(transform.position, dir, out Collider2D collidedObj);
+        if (canMove) { 
+            destPosition = transform.position + movementVector;
+            StartMovingAnimation(movementVector);
+        } else {
+            StartCollisionMovingAnimation(movementVector);
+            if (collidedObj) {
+                PlayCollisionSound(collidedObj.gameObject);
+            }
+        }
+    }
+
+    private bool CanMove(Vector3 startPos, DIRECTION_BUTTON dir, out Collider2D collidedObj) {
+
+        int mask = LAYER_MASK_DEFAULT;   // only check default layer (all portals are in TransparentFX layer)
+        var dirVector = GetMovementVector(dir);
+        var hit = Physics2D.Raycast(startPos, dirVector, raycastDistance, mask);
+
+        collidedObj = hit.collider;
+        return hit.collider == null;
+    }
+
+    public void HandleMoveInput(DIRECTION_BUTTON dir = DIRECTION_BUTTON.NONE, int tiles = 1) {
+        if (IsMoving()) {
+            // continue moving to destination
+            float delta = Time.deltaTime * speed;
+            if (transform.position == destPosition) {
+                if (dir == DIRECTION_BUTTON.NONE) {
+                    StopMoving();
+                } else {
+                    // another direction is pressed, turn soon
+                    StartMove(dir);
+                }
+            } else if (Vector3.Distance(transform.position, destPosition) <= delta &&
+                       dir == lastMoveDir &&
+                       CanMove(destPosition, dir, out Collider2D collidedObj)) {
+                // destination is close enough, update destination
+                // in order to make it more smooth for long time key press
+                destPosition += GetMovementVector(dir, tiles);
+            }
+
+            return;
+        }
+
+        // change facing and movement from idle state
+        if (dir != DIRECTION_BUTTON.NONE) {
+            if (--changeDirCoolDown > 0)
+                return;
+            changeDirCoolDown = 0;
+
+            if (dir != lastMoveDir) {
+                // face to that dir first
+                lastMoveDir = dir;
+                var movementVector = GetMovementVector(dir, tiles);
+                FaceTo(movementVector);
+
+                // skip 8 frames before player can move
+                changeDirCoolDown = inputDelay;
+            } else {
+                StartMove(dir);
+            }
+        }
+    }
+
+    private bool TryInteract(DIRECTION_BUTTON dir, ACTION_BUTTON action) {
+        if (action == ACTION_BUTTON.NONE)
+            return false;
+
+        Vector3 dirVector = GetMovementVector(dir); // todo: change function name
+        if (dirVector == Vector3.zero)
+            return false;
+
+        RaycastHit2D hit = CheckInteractableRaycast(dirVector);
+        // Debug.DrawRay(transform.position, dirVector, Color.green);
+        if (hit.collider) {
             // Debug.DrawRay(transform.position, dirVector, Color.red);
             // Debug.DrawRay(transform.position, hit.point, Color.blue);
 
-            if (hit.collider.gameObject.HasComponent<Interactable>())
-            {
+            if (hit.collider.gameObject.HasComponent<Interactable>()) {
                 // Debug.Log("[raycast hit] @interactable " + hit.collider.gameObject.name);
-                hit.collider.gameObject.GetComponent<Interactable>().Interact(dir, action);
+                hit.collider.gameObject.GetComponent<Interactable>().Interact(action);
+                return true;
             }
         }
+
+        return false;
     }
 
-    private RaycastHit2D CheckRaycast(Vector2 direction)
-    {
-        Vector2 startingPosition = (Vector2) transform.position;
+    private void StartCollisionMovingAnimation(Vector3 movement) {
+        mIsMoving = true;
 
-        return Physics2D.Raycast(startingPosition, direction, raycastDistance);
+        animator.speed = 0.5f;
+        animator.SetFloat("MoveX", movement.x);
+        animator.SetFloat("MoveY", movement.y);
+        animator.SetFloat("LastMoveX", movement.x);
+        animator.SetFloat("LastMoveY", movement.y);
+        animator.SetBool("Moving", true);
     }
 
-    private RaycastHit2D CheckFutureRaycast(Vector2 direction)
-    {
-        Vector2 startingPosition = (Vector2) transform.position;
+    private void StartMovingAnimation(Vector3 movement) {
+        mIsMoving = true;
 
-        return Physics2D.Raycast(startingPosition, direction, raycastDistance * 2);
+        animator.speed = 1.0f;
+        animator.SetFloat("MoveX", movement.x);
+        animator.SetFloat("MoveY", movement.y);
+        animator.SetFloat("LastMoveX", movement.x);
+        animator.SetFloat("LastMoveY", movement.y);
+        animator.SetBool("Moving", mIsMoving);
+
+        // Debug.Log("current movement: " + movement.x + "," + movement.y);
     }
 
-    public bool MoveTo(DIRECTION_BUTTON dir, Vector3 destinationPosition)
-    {
-        UpdateAnimation();
+    public void FaceToDir(DIRECTION_BUTTON dir) {
+        if (dir == DIRECTION_BUTTON.NONE)
+            dir = DIRECTION_BUTTON.DOWN;
 
-        if (!movement.IsMoving || (destinationPosition == transform.position))
-        {
-            ClampCurrentPosition();
-            return false;
-        }
+        if (lastMoveDir == dir)
+            return;
 
-        if (movement.IsMoving && (dir != DIRECTION_BUTTON.NONE) && (dir == lastCollisionDir))
-        {
-            ClampCurrentPosition();
-            if (!(lastCollidedObject is null))
-            {
-                PlayCollisionSound(lastCollidedObject);
-            }
-
-            return true;
-        }
-        else if (movement.IsMoving)
-        {
-            lastCollidedObject = null;
-            lastCollisionDir = DIRECTION_BUTTON.NONE;
-        }
-
-
-        transform.position = Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * speed);
-        transform.rotation = new Quaternion(0, 0, 0, 0);
-        return true;
+        var movementVector = GetMovementVector(dir);
+        lastMoveDir = dir;
+        FaceTo(movementVector);
     }
 
-    public bool Move(DIRECTION_BUTTON dir, int tiles)
-    {
-        currentTilesToMove = tiles;
+    private void FaceTo(Vector3 movement) {
+        // mIsMoving = false;
+        animator.speed = 1.0f;
 
-        Vector3 destinationPosition = movement.CalculateDestinationPosition(
-            transform.position, dir, tiles
-        );
-
-        return MoveTo(dir, destinationPosition);
+        animator.SetFloat("MoveX", movement.x);
+        animator.SetFloat("MoveY", movement.y);
+        animator.SetFloat("LastMoveX", movement.x);
+        animator.SetFloat("LastMoveY", movement.y);
+        animator.SetBool("Moving", false);
     }
 
-    private void UpdateAnimation()
-    {
-        animator.SetFloat("MoveX", movement.PositionDiff.x);
-        animator.SetFloat("MoveY", movement.PositionDiff.y);
-        animator.SetFloat("LastMoveX", movement.LastPositionDiff.x);
-        animator.SetFloat("LastMoveY", movement.LastPositionDiff.y);
-        animator.SetBool("Moving", movement.IsMoving);
-    }
-
-    public void TriggerButtons(DIRECTION_BUTTON dir, ACTION_BUTTON action)
-    {
-        if (!CanMove() && IsMoving())
-        {
-            StopMoving();
-        }
-
-        if (CanMove())
-        {
-            MovementUpdate(dir);
-        }
-
-        RaycastUpdate(dir, action);
+    private void StopMoving() {
+        mIsMoving = false;
+        animator.SetBool("Moving", mIsMoving);
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         // Debug.Log("Collision ENTER between " + this.name + " and " + col.gameObject.name);
 
-        lastCollidedObject = col.gameObject;
-        lastCollisionDir = movement.LastDirection;
+        //lastCollidedObject = col.gameObject;
+        //lastCollisionDir = lastMoveDir;
 
-        ClampCurrentPosition();
+        //StopMoving();
+        //ClampCurrentPosition();
 
-        PlayCollisionSound(lastCollidedObject);
+        //PlayCollisionSound(lastCollidedObject);
     }
 
     void OnCollisionStay2D(Collision2D col)
     {
-        // Debug.Log("Collision STAY between " + this.name + " and " + col.gameObject.name);
-
-        lastCollidedObject = col.gameObject;
-        lastCollisionDir = movement.LastDirection;
-
-        if (movement.IsMoving)
-        {
-            PlayCollisionSound(lastCollidedObject);
-        }
-
-        StopMoving();
     }
 
     bool HasCollisionSound(GameObject gobj)
@@ -250,10 +273,12 @@ public class MovementController : InputConsumer
     void PlayCollisionSound(GameObject gobj)
     {
         AudioSource audioSource = GetCollisionSound(gobj);
-
         if (audioSource is AudioSource && !audioSource.isPlaying)
         {
-            audioSource.Play();
+            if (Time.time - lastPlayCollisionSoundTime >= 1.0) {
+                audioSource.Play();
+                lastPlayCollisionSoundTime = Time.time;
+            }
         }
     }
 
@@ -262,36 +287,37 @@ public class MovementController : InputConsumer
         ClampPositionTo(transform.position);
     }
 
-    public void StopMoving()
-    {
-        movement.Stop();
-        UpdateAnimation();
-        ClampCurrentPosition();
-    }
-
-    public bool IsMoving()
-    {
-        return movement.IsMoving;
+    public bool IsMoving() {
+        return mIsMoving;
     }
 
     public void ClampPositionTo(Vector3 position)
     {
-        transform.position = movement.ClampPosition(position);
+        transform.position = ClampPosition(position);
 
         // override in case collision physics caused object rotation
         transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 
-    public override void OnUpdateHandleInput()
-    {
-        if (!CanMove() && IsMoving())
+
+    public Vector3 ClampPosition(Vector3 position) {
+        Vector3 fixedPos = new Vector3(ClampPositionAxis(position.x), ClampPositionAxis(position.y), 0);
+        return fixedPos;
+
+    }
+
+    private float ClampPositionAxis(float val) {
+        float mod = val % 1f;
+
+        if (System.Math.Abs(mod - clampAt) < double.Epsilon) // more precise than: if (mod == fraction)
         {
-            StopMoving();
+            return val;
         }
 
-        DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
-        ACTION_BUTTON action = InputController.GetPressedActionButton();
+        if (val < 0f) {
+            return (val - mod) - clampAt;
+        }
 
-        TriggerButtons(dir, action);
+        return (val - mod) + clampAt;
     }
 }

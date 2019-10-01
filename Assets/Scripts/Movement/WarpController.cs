@@ -79,7 +79,14 @@ public class WarpController : InputConsumer
             if (!strongThis)
                 return;
 
-            WarpToDropStart(GetWarpZone(other));
+            var warpZone = GetWarpZone(other);
+            if (warpZone) {
+                WarpToDropStart(warpZone);
+                // may support same scene warping in future. Same scene warping should not call onLeave/onEnter
+                // use hierachy tree to check if src and dst zone in same (logic) scene
+                // if (NotSameScene(warpZone, warpZone.dropZone))
+                warpZone.onLeaveArea?.Invoke();
+            }
         });
         sequence.Append(image.DOFade(0, 0.4f));
         sequence.AppendCallback(() => {
@@ -88,7 +95,15 @@ public class WarpController : InputConsumer
             if (!strongThis)
                 return;
 
-            MoveToDropEnd(GetWarpZone(other));
+            var warpZone = GetWarpZone(other);
+            if (warpZone) {
+                MoveToDropEnd(warpZone);
+                // may support same scene warping in future. Same scene warping should not call onLeave/onEnter
+                // use hierachy tree to check if src and dst zone in same (logic) scene
+                // if (NotSameScene(warpZone, warpZone.dropZone))
+                warpZone.onEnterArea?.Invoke();
+            }
+
             image.enabled = false;
             strongThis._isWarping = false;
             InputConsumerCenter.Instance.UnRegister(strongThis);

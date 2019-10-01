@@ -23606,6 +23606,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 636945717}
+  - {fileID: 1000605340}
   m_Father: {fileID: 549839365}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23932,7 +23933,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1144213629}
   - {fileID: 1161426513}
   - {fileID: 815224713}
   - {fileID: 712203383}
@@ -24038,7 +24038,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352196779}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.633609, y: 21, z: 12}
+  m_LocalPosition: {x: 6.2368116, y: 21, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 490968613}
@@ -24129,7 +24129,7 @@ PrefabInstance:
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -24198,6 +24198,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
+      propertyPath: onEnterArea.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
       propertyPath: dropStartZone
       value: 
       objectReference: {fileID: 1494247185}
@@ -24230,6 +24235,16 @@ PrefabInstance:
         type: 3}
       propertyPath: postDropMove.steps
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: onEnterArea.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: onEnterArea.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81da04f0b0dc34148bcd24007f3b42e2, type: 3}
@@ -24594,7 +24609,7 @@ PrefabInstance:
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -24911,6 +24926,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1000605339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1000605340}
+  m_Layer: 0
+  m_Name: NewBarkTown
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1000605340
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000605339}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1144213629}
+  m_Father: {fileID: 549249781}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1037737269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25001,7 +25047,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 636945717}
+    m_TransformParent: {fileID: 1000605340}
     m_Modifications:
     - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -25206,7 +25252,7 @@ PrefabInstance:
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -43558,7 +43604,7 @@ PrefabInstance:
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -43642,6 +43688,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
+      propertyPath: onLeaveArea.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
       propertyPath: dropStartZone
       value: 
       objectReference: {fileID: 712203383}
@@ -43679,6 +43730,16 @@ PrefabInstance:
         type: 3}
       propertyPath: postDropMove.steps
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: onLeaveArea.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: onLeaveArea.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81da04f0b0dc34148bcd24007f3b42e2, type: 3}
@@ -44658,7 +44719,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131464617}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.633609, y: 21, z: 12}
+  m_LocalPosition: {x: 10.070319, y: 21, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 556146649}

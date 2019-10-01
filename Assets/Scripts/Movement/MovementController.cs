@@ -37,7 +37,8 @@ public class MovementController : InputConsumer
         InputConsumerCenter.Instance.Register(this, 100);
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         // Best practise: update physics in FixedUpdate(), but handle input in Update()
         if (IsMoving() && transform.position != destPosition) {
             float delta = Time.fixedDeltaTime * speed;
@@ -45,7 +46,8 @@ public class MovementController : InputConsumer
         }
     }
 
-    void Update() {
+    void Update()
+    {
         if (InputConsumerCenter.Instance.GetCurrentConsumer() != this) {
             // only check auto move stop
             if (transform.position == destPosition) {
@@ -58,7 +60,8 @@ public class MovementController : InputConsumer
         // handle other logic in OnUpdateHandleInput
     }
 
-    public override void OnUpdateHandleInput() {
+    public override void OnUpdateHandleInput()
+    {
         DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
         ACTION_BUTTON action = InputController.GetPressedActionButton();
         HandleMoveInput(dir);
@@ -93,7 +96,8 @@ public class MovementController : InputConsumer
         return Physics2D.Raycast(startingPosition, direction, raycastDistance, LAYER_MASK_INTERACTABLE | LAYER_MASK_DEFAULT);
     }
 
-    private void StartMove(DIRECTION_BUTTON dir, int tiles = 1) {
+    private void StartMove(DIRECTION_BUTTON dir, int tiles = 1)
+    {
         lastMoveDir = dir;
         var movementVector = GetMovementVector(dir, tiles);
 
@@ -109,8 +113,8 @@ public class MovementController : InputConsumer
         }
     }
 
-    private bool CanMove(Vector3 startPos, DIRECTION_BUTTON dir, out Collider2D collidedObj) {
-
+    private bool CanMove(Vector3 startPos, DIRECTION_BUTTON dir, out Collider2D collidedObj)
+    {
         int mask = LAYER_MASK_DEFAULT;   // only check default layer (all portals are in TransparentFX layer)
         var dirVector = GetMovementVector(dir);
         var hit = Physics2D.Raycast(startPos, dirVector, raycastDistance, mask);
@@ -119,7 +123,8 @@ public class MovementController : InputConsumer
         return hit.collider == null;
     }
 
-    public void HandleMoveInput(DIRECTION_BUTTON dir = DIRECTION_BUTTON.NONE, int tiles = 1) {
+    public void HandleMoveInput(DIRECTION_BUTTON dir = DIRECTION_BUTTON.NONE, int tiles = 1)
+    {
         if (IsMoving()) {
             // continue moving to destination
             float delta = Time.deltaTime * speed;
@@ -161,7 +166,8 @@ public class MovementController : InputConsumer
         }
     }
 
-    private bool TryInteract(DIRECTION_BUTTON dir, ACTION_BUTTON action) {
+    private bool TryInteract(DIRECTION_BUTTON dir, ACTION_BUTTON action)
+    {
         if (action == ACTION_BUTTON.NONE)
             return false;
 
@@ -185,7 +191,8 @@ public class MovementController : InputConsumer
         return false;
     }
 
-    private void StartCollisionMovingAnimation(Vector3 movement) {
+    private void StartCollisionMovingAnimation(Vector3 movement)
+    {
         mIsMoving = true;
 
         animator.speed = 0.5f;
@@ -196,7 +203,8 @@ public class MovementController : InputConsumer
         animator.SetBool("Moving", true);
     }
 
-    private void StartMovingAnimation(Vector3 movement) {
+    private void StartMovingAnimation(Vector3 movement)
+    {
         mIsMoving = true;
 
         animator.speed = 1.0f;
@@ -205,11 +213,10 @@ public class MovementController : InputConsumer
         animator.SetFloat("LastMoveX", movement.x);
         animator.SetFloat("LastMoveY", movement.y);
         animator.SetBool("Moving", mIsMoving);
-
-        // Debug.Log("current movement: " + movement.x + "," + movement.y);
     }
 
-    public void FaceToDir(DIRECTION_BUTTON dir) {
+    public void FaceToDir(DIRECTION_BUTTON dir)
+    {
         if (dir == DIRECTION_BUTTON.NONE)
             dir = DIRECTION_BUTTON.DOWN;
 
@@ -221,7 +228,8 @@ public class MovementController : InputConsumer
         FaceTo(movementVector);
     }
 
-    private void FaceTo(Vector3 movement) {
+    private void FaceTo(Vector3 movement)
+    {
         // mIsMoving = false;
         animator.speed = 1.0f;
 
@@ -232,22 +240,14 @@ public class MovementController : InputConsumer
         animator.SetBool("Moving", false);
     }
 
-    private void StopMoving() {
+    private void StopMoving()
+    {
         mIsMoving = false;
         animator.SetBool("Moving", mIsMoving);
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        // Debug.Log("Collision ENTER between " + this.name + " and " + col.gameObject.name);
-
-        //lastCollidedObject = col.gameObject;
-        //lastCollisionDir = lastMoveDir;
-
-        //StopMoving();
-        //ClampCurrentPosition();
-
-        //PlayCollisionSound(lastCollidedObject);
     }
 
     void OnCollisionStay2D(Collision2D col)
@@ -287,7 +287,8 @@ public class MovementController : InputConsumer
         ClampPositionTo(transform.position);
     }
 
-    public bool IsMoving() {
+    public bool IsMoving()
+    {
         return mIsMoving;
     }
 
@@ -300,13 +301,15 @@ public class MovementController : InputConsumer
     }
 
 
-    public Vector3 ClampPosition(Vector3 position) {
+    public Vector3 ClampPosition(Vector3 position)
+    {
         Vector3 fixedPos = new Vector3(ClampPositionAxis(position.x), ClampPositionAxis(position.y), 0);
         return fixedPos;
 
     }
 
-    private float ClampPositionAxis(float val) {
+    private float ClampPositionAxis(float val)
+    {
         float mod = val % 1f;
 
         if (System.Math.Abs(mod - clampAt) < double.Epsilon) // more precise than: if (mod == fraction)

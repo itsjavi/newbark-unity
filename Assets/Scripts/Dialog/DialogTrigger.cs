@@ -24,4 +24,9 @@ public class DialogTrigger : Interactable
             dm.EndDialog();
         }
     }
+
+    public override void OnUpdateHandleInput()
+    {
+        // todo: handle input
+    }
 }

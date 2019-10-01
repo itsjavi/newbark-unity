@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MovementController : MonoBehaviour
+public class MovementController : InputConsumer
 {
     private CellMovement movement;
 
@@ -25,19 +25,15 @@ public class MovementController : MonoBehaviour
         currentTilesToMove = tilesToMove;
 
         movement = new CellMovement(inputDelay, clampAt);
+
+        // register to receive input
+        InputConsumerCenter.Instance.Register(this);
     }
 
     void FixedUpdate()
     {
-        if (!CanMove() && IsMoving())
-        {
-            StopMoving();
-        }
-
-        DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
-        ACTION_BUTTON action = InputController.GetPressedActionButton();
-
-        TriggerButtons(dir, action);
+        // never handle user input in FixedUpdate()
+        // use Update() or OnUpdateHandleInput() instead
     }
 
     public DIRECTION_BUTTON GetFaceDirection()
@@ -284,5 +280,18 @@ public class MovementController : MonoBehaviour
 
         // override in case collision physics caused object rotation
         transform.rotation = new Quaternion(0, 0, 0, 0);
+    }
+
+    public override void OnUpdateHandleInput()
+    {
+        if (!CanMove() && IsMoving())
+        {
+            StopMoving();
+        }
+
+        DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
+        ACTION_BUTTON action = InputController.GetPressedActionButton();
+
+        TriggerButtons(dir, action);
     }
 }

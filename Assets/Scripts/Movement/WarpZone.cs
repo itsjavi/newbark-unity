@@ -8,7 +8,7 @@ public class WarpZone: MonoBehaviour
     public Vector2 dropZoneOffset;
     public MovementAction postDropMove;
 
-    public UnityEvent onLeaveArea;
+    public UnityEvent onLeave;
 
-    public UnityEvent onEnterArea;
+    public UnityEvent onEnter;
 }

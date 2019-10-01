@@ -13,7 +13,26 @@ public class WarpController : InputConsumer
     public MovementController movementController;
 
     public GameObject fadeMask;
+
+    public class OnEnterAreaEvent : UnityEvent<Transform> {}
+
+    public class OnLeaveAreaEvent : UnityEvent<Transform> {}
+
+    public OnEnterAreaEvent onEnterArea = new OnEnterAreaEvent();
+
+    public OnLeaveAreaEvent onLeaveArea = new OnLeaveAreaEvent();
+
     private bool _isWarping = false;
+
+    void Start()
+    {
+        this.onEnterArea.AddListener((t) => {
+            var zoneInfo = t?.parent?.GetComponent<ZoneInfo>();
+            if (zoneInfo && zoneInfo.popZoneNameOnEnter && zoneInfo.zoneName.Length > 0) {
+                Debug.Log($"Enter zone: {zoneInfo.zoneName}");
+            }
+        });
+    }
 
     private void WarpToDropStart(WarpZone destination)
     {
@@ -80,12 +99,10 @@ public class WarpController : InputConsumer
                 return;
 
             var warpZone = GetWarpZone(other);
-            if (warpZone) {
-                WarpToDropStart(warpZone);
-                // may support same scene warping in future. Same scene warping should not call onLeave/onEnter
-                // use hierachy tree to check if src and dst zone in same (logic) scene
-                // if (NotSameScene(warpZone, warpZone.dropZone))
-                warpZone.onLeaveArea?.Invoke();
+            WarpToDropStart(warpZone);
+            if (!InSameLogicScene(warpZone.transform, warpZone.dropZone)) {
+                onLeaveArea?.Invoke(warpZone.transform);
+                warpZone.onLeave?.Invoke();
             }
         });
         sequence.Append(image.DOFade(0, 0.4f));
@@ -96,18 +113,22 @@ public class WarpController : InputConsumer
                 return;
 
             var warpZone = GetWarpZone(other);
-            if (warpZone) {
-                MoveToDropEnd(warpZone);
-                // may support same scene warping in future. Same scene warping should not call onLeave/onEnter
-                // use hierachy tree to check if src and dst zone in same (logic) scene
-                // if (NotSameScene(warpZone, warpZone.dropZone))
-                warpZone.onEnterArea?.Invoke();
+            MoveToDropEnd(warpZone);
+            if (!InSameLogicScene(warpZone.transform, warpZone.dropZone)) {
+                warpZone.onEnter?.Invoke();
+                onEnterArea?.Invoke(warpZone.dropZone);
             }
 
             image.enabled = false;
             strongThis._isWarping = false;
             InputConsumerCenter.Instance.UnRegister(strongThis);
         });
+    }
+
+    private bool InSameLogicScene(Transform src, Transform dst)
+    {
+        // now the hierachy is quite simpy, warp in same logic scene have same parent
+        return src.parent == dst.parent;
     }
 
     void OnTriggerStay2D(Collider2D other)

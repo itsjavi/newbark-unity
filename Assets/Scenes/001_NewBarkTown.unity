@@ -23756,8 +23756,8 @@ MonoBehaviour:
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
-  m_UnlimitedSoftZone: 1
-  m_SoftZoneWidth: 2
+  m_UnlimitedSoftZone: 0
+  m_SoftZoneWidth: 0
   m_SoftZoneHeight: 0
   m_BiasX: 0
   m_BiasY: 0
@@ -23915,6 +23915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 636945717}
+  - component: {fileID: 636945718}
   m_Layer: 0
   m_Name: PlayerHouse
   m_TagString: Untagged
@@ -23940,6 +23941,20 @@ Transform:
   m_Father: {fileID: 549249781}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &636945718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636945716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e5506c9887eb495c8e3892bd02517f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoneName: GOLD's House
+  popZoneNameOnEnter: 1
 --- !u!1001 &652304842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24038,7 +24053,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352196779}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.2368116, y: 21, z: 12}
+  m_LocalPosition: {x: 8.388206, y: 21, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 490968613}
@@ -24935,6 +24950,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1000605340}
+  - component: {fileID: 1000605341}
   m_Layer: 0
   m_Name: NewBarkTown
   m_TagString: Untagged
@@ -24957,6 +24973,20 @@ Transform:
   m_Father: {fileID: 549249781}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1000605341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000605339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e5506c9887eb495c8e3892bd02517f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoneName: NEWBARK Town
+  popZoneNameOnEnter: 1
 --- !u!1001 &1037737269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44719,7 +44749,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131464617}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.070319, y: 21, z: 12}
+  m_LocalPosition: {x: 9.85518, y: 21, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 556146649}

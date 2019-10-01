@@ -45492,6 +45492,76 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_Text
+      value: 'Lorem Ipsum
+
+        Dolor Sit Amet.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: ab52b803826884382a618d8cc76c5834,
+        type: 3}
+    - target: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_FontData.m_LineSpacing
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_FontData.m_RichText
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759677252288088560, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5cd9259e5112c42b781a498519164c98,
+        type: 3}
+    - target: {fileID: 2759677252288088560, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759677252396651716, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 99f5fc8c6bed2462abd55058ffa4d470,
+        type: 3}
+    - target: {fileID: 2759677252396651716, guid: dbd1a801b1f1f429099bfa9769d82b46,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbd1a801b1f1f429099bfa9769d82b46, type: 3}
 --- !u!1001 &2815725316272326687

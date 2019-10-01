@@ -24,7 +24,8 @@ public class WarpController : InputConsumer
             movementController.FaceToDir(destination.postDropMove.direction);
     }
 
-    public override void OnUpdateHandleInput() {
+    public override void OnUpdateHandleInput()
+    {
         // do nothing to eat input
     }
 
@@ -44,8 +45,8 @@ public class WarpController : InputConsumer
         return other.gameObject.GetComponent<WarpZone>();
     }
 
-    // todo: use generic function
-    private WarpController weakToStrong(WeakReference<WarpController> weakRef) {
+    private WarpController weakToStrong(WeakReference<WarpController> weakRef)
+    {
         bool isAlive = weakRef.TryGetTarget(out WarpController target);
         return target;
     }

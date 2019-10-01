@@ -171,18 +171,13 @@ public class MovementController : InputConsumer
         if (action == ACTION_BUTTON.NONE)
             return false;
 
-        Vector3 dirVector = GetMovementVector(dir); // todo: change function name
+        Vector3 dirVector = GetMovementVector(dir);
         if (dirVector == Vector3.zero)
             return false;
 
         RaycastHit2D hit = CheckInteractableRaycast(dirVector);
-        // Debug.DrawRay(transform.position, dirVector, Color.green);
         if (hit.collider) {
-            // Debug.DrawRay(transform.position, dirVector, Color.red);
-            // Debug.DrawRay(transform.position, hit.point, Color.blue);
-
             if (hit.collider.gameObject.HasComponent<Interactable>()) {
-                // Debug.Log("[raycast hit] @interactable " + hit.collider.gameObject.name);
                 hit.collider.gameObject.GetComponent<Interactable>().Interact(action);
                 return true;
             }

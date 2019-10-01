@@ -24125,7 +24125,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352196779}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.5, y: 21, z: 12}
+  m_LocalPosition: {x: 9.139395, y: 21.003677, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 490968613}
@@ -24138,6 +24138,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: 2F_In
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: destination
@@ -24162,21 +24177,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: 2F_In
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -24512,6 +24512,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: MainDoor_Out
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneStart
@@ -24531,21 +24546,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: MainDoor_Out
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -24976,6 +24976,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: MainDoor_In
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneStart
@@ -24995,21 +25010,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: MainDoor_In
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -25106,6 +25106,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: MainDoor_Out
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneStart
@@ -25125,21 +25140,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: MainDoor_Out
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -25528,8 +25528,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1394979446}
-  - component: {fileID: 1394979447}
-  - component: {fileID: 1394979448}
   m_Layer: 5
   m_Name: ScreenFader
   m_TagString: ScreenFader
@@ -25552,59 +25550,6 @@ Transform:
   m_Father: {fileID: 1542812160}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1394979447
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394979445}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0debc3d6b6d5c465e9ceb6cb547bc16f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1394979448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394979445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 652350531446d45e6b6ffde4742cf7b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1394979447}
-  onFadeStart:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onFadeComplete:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7192301008348172419}
-        m_MethodName: EnableWarping
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1405830667
 GameObject:
   m_ObjectHideFlags: 0
@@ -43491,6 +43436,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: 2F_Out
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneStart
@@ -43510,21 +43470,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: 2F_Out
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -45285,7 +45230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131464617}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.5, y: 21, z: 12}
+  m_LocalPosition: {x: 9.788298, y: 21, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 556146649}
@@ -45697,6 +45642,9 @@ MonoBehaviour:
   raycastDistance: 1
   lastCollidedObject: {fileID: 0}
   lastCollisionDir: 0
+  destPosition: {x: 0, y: 0, z: 0}
+  lastMoveDir: 2
+  mIsMoving: 0
 --- !u!95 &7099427508898048894
 Animator:
   serializedVersion: 3
@@ -45797,64 +45745,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8471fbb4b3bf4040b7ab25d4bd55fa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warperCollider: {fileID: 7137967076378784376}
   movementController: {fileID: 7079746402777195698}
-  onWarpEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1394979448}
-        m_MethodName: FadeOut
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7192301008348172419}
-        m_MethodName: DisableWarping
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onWarpStay:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1394979448}
-        m_MethodName: FadeIn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onWarpFinish:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1394979448}
-        m_MethodName: FadeIn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  fadeMask: {fileID: 1537255376}

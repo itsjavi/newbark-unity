@@ -59,7 +59,7 @@ public class WarpController : InputConsumer
             return;
 
         _isWarping = true;
-        InputConsumerCenter.Instance.Register(this, 0);
+        InputConsumerCenter.Instance.Register(this);
 
         // start warping
         var image = fadeMask.GetComponent<Image>();

@@ -34,7 +34,7 @@ public class MovementController : InputConsumer
         destPosition = transform.position;
         currentTilesToMove = tilesToMove;
 
-        InputConsumerCenter.Instance.Register(this, 100);
+        InputConsumerCenter.Instance.Register(this);
     }
 
     private void FixedUpdate()

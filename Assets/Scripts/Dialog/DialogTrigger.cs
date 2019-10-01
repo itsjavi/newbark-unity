@@ -16,7 +16,7 @@ public class DialogTrigger : Interactable
             dm = FindObjectOfType<DialogManager>();
         }
 
-        InputConsumerCenter.Instance.Register(this, 99);
+        InputConsumerCenter.Instance.Register(this);
 
         dm.StartDialog(dialog);
     }

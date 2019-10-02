@@ -14,7 +14,9 @@ public class WarpController : InputConsumer
 
     public GameObject fadeMask;
 
-    public RectTransform popText;
+    public RectTransform popup;
+
+    public Text popupText;
 
     [System.Serializable]
     public class OnEnterAreaEvent : UnityEvent<Transform> {}
@@ -26,7 +28,7 @@ public class WarpController : InputConsumer
 
     public OnLeaveAreaEvent onLeaveArea = new OnLeaveAreaEvent();
 
-    Sequence _popTextSequence;
+    Sequence _popupSequence;
 
     private bool _isWarping = false;
 
@@ -40,19 +42,20 @@ public class WarpController : InputConsumer
     {
         var zoneInfo = t?.parent?.GetComponent<ZoneInfo>();
         if (zoneInfo && zoneInfo.popZoneNameOnEnter && zoneInfo.zoneName.Length > 0) {
-            _popTextSequence = DOTween.Sequence();
+            popup.anchoredPosition = new Vector2(popup.anchoredPosition.x, 0);
+            popupText.text = zoneInfo.zoneName;
             
-            popText.anchoredPosition = new Vector2(popText.anchoredPosition.x, 0);
-            _popTextSequence.AppendInterval(3.0f);
-            _popTextSequence.Append(popText.DOAnchorPosY(popText.rect.height, 0.3f));
+            _popupSequence = DOTween.Sequence();
+            _popupSequence.AppendInterval(3.0f);
+            _popupSequence.Append(popup.DOAnchorPosY(popup.rect.height, 0.3f));
         }
     }
 
     public void HidePopedZoneName(Transform t)
     {
-        if (_popTextSequence != null && _popTextSequence.IsActive()) {
-            _popTextSequence.Kill();
-            popText.anchoredPosition = new Vector2(popText.anchoredPosition.x, popText.rect.height);
+        if (_popupSequence != null && _popupSequence.IsActive()) {
+            _popupSequence.Kill();
+            popup.anchoredPosition = new Vector2(popup.anchoredPosition.x, popup.rect.height);
         }
     }
 
@@ -127,7 +130,8 @@ public class WarpController : InputConsumer
                 onEnterArea?.Invoke(warpZone.dropZone.transform);
             }
         });
-        sequence.Append(image.DOFade(0, 0.4f));
+        sequence.AppendInterval(0.1f);
+        sequence.Append(image.DOFade(0, 0.3f));
         sequence.AppendCallback(() => {
             // warping terminated
             var strongThis = weakToStrong(weakThis);

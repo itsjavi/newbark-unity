@@ -14,24 +14,46 @@ public class WarpController : InputConsumer
 
     public GameObject fadeMask;
 
+    public RectTransform popText;
+
+    [System.Serializable]
     public class OnEnterAreaEvent : UnityEvent<Transform> {}
 
+    [System.Serializable]
     public class OnLeaveAreaEvent : UnityEvent<Transform> {}
 
     public OnEnterAreaEvent onEnterArea = new OnEnterAreaEvent();
 
     public OnLeaveAreaEvent onLeaveArea = new OnLeaveAreaEvent();
 
+    Sequence _popTextSequence;
+
     private bool _isWarping = false;
 
     void Start()
     {
-        this.onEnterArea.AddListener((t) => {
-            var zoneInfo = t?.parent?.GetComponent<ZoneInfo>();
-            if (zoneInfo && zoneInfo.popZoneNameOnEnter && zoneInfo.zoneName.Length > 0) {
-                Debug.Log($"Enter zone: {zoneInfo.zoneName}");
-            }
-        });
+        this.onEnterArea.AddListener(PopZoneName);
+        this.onLeaveArea.AddListener(HidePopedZoneName);
+    }
+
+    public void PopZoneName(Transform t)
+    {
+        var zoneInfo = t?.parent?.GetComponent<ZoneInfo>();
+        if (zoneInfo && zoneInfo.popZoneNameOnEnter && zoneInfo.zoneName.Length > 0) {
+            _popTextSequence = DOTween.Sequence();
+            
+            popText.anchoredPosition = new Vector2(popText.anchoredPosition.x, 0);
+            _popTextSequence.AppendInterval(3.0f);
+            _popTextSequence.Append(popText.DOAnchorPosY(popText.rect.height, 0.3f));
+        }
+    }
+
+    public void HidePopedZoneName(Transform t)
+    {
+        if (_popTextSequence != null && _popTextSequence.IsActive()) {
+            _popTextSequence.Kill();
+            popText.anchoredPosition = new Vector2(popText.anchoredPosition.x, popText.rect.height);
+        }
     }
 
     private void WarpToDropStart(WarpZone destination)
@@ -102,7 +124,7 @@ public class WarpController : InputConsumer
             WarpToDropStart(warpZone);
             if (!InSameLogicScene(warpZone.transform, warpZone.dropZone)) {
                 onLeaveArea?.Invoke(warpZone.transform);
-                warpZone.onLeave?.Invoke();
+                onEnterArea?.Invoke(warpZone.dropZone.transform);
             }
         });
         sequence.Append(image.DOFade(0, 0.4f));
@@ -114,10 +136,6 @@ public class WarpController : InputConsumer
 
             var warpZone = GetWarpZone(other);
             MoveToDropEnd(warpZone);
-            if (!InSameLogicScene(warpZone.transform, warpZone.dropZone)) {
-                warpZone.onEnter?.Invoke();
-                onEnterArea?.Invoke(warpZone.dropZone);
-            }
 
             image.enabled = false;
             strongThis._isWarping = false;

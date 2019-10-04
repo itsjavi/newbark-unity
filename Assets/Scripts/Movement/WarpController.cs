@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
-using DG.Tweening;
+using System.Collections;
 
 /**
  * Warp Controller. Attach this controller to the object that moves an warps, usually the player.
@@ -28,8 +28,6 @@ public class WarpController : InputConsumer
 
     public OnLeaveAreaEvent onLeaveArea = new OnLeaveAreaEvent();
 
-    Sequence _popupSequence;
-
     private bool _isWarping = false;
 
     void Start()
@@ -44,19 +42,35 @@ public class WarpController : InputConsumer
         if (zoneInfo && zoneInfo.popZoneNameOnEnter && zoneInfo.zoneName.Length > 0) {
             popup.anchoredPosition = new Vector2(popup.anchoredPosition.x, 0);
             popupText.text = zoneInfo.zoneName;
-            
-            _popupSequence = DOTween.Sequence();
-            _popupSequence.AppendInterval(2.5f);
-            _popupSequence.Append(popup.DOAnchorPosY(popup.rect.height, 0.2f));
+            iTween.ValueTo(fadeMask, iTween.Hash(
+                "name", "AnimatePopupAnchoredPosY",
+                "from", 0.0f,
+                "to", popup.rect.height,
+                "time", 0.2f,
+                "delay", 2.5f,
+                "onupdatetarget", this.gameObject,
+                "onupdate", "UpdatePopupAnchoredPosY"
+            ));
         }
+    }
+
+    private void UpdatePopupAnchoredPosY(float y)
+    {
+        popup.anchoredPosition = new Vector2(popup.anchoredPosition.x, y);
     }
 
     public void HidePopedZoneName(Transform t)
     {
-        if (_popupSequence != null && _popupSequence.IsActive()) {
-            _popupSequence.Kill();
-            popup.anchoredPosition = new Vector2(popup.anchoredPosition.x, popup.rect.height);
-        }
+        iTween.StopByName("AnimatePopupAnchoredPosY");
+        popup.anchoredPosition = new Vector2(popup.anchoredPosition.x, popup.rect.height);
+
+        // according to iTween document, WaitForSeconds is required after iTween.Stop() or StopByName()
+        StartCoroutine(WaitInCoroutine(0.01f));
+    }
+
+    IEnumerator WaitInCoroutine(float sec)
+    {
+        yield return new WaitForSeconds(sec);
     }
 
     private void WarpToDropStart(WarpZone destination)
@@ -89,12 +103,6 @@ public class WarpController : InputConsumer
         return other.gameObject.GetComponent<WarpZone>();
     }
 
-    private WarpController weakToStrong(WeakReference<WarpController> weakRef)
-    {
-        bool isAlive = weakRef.TryGetTarget(out WarpController target);
-        return target;
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!IsWarpZone(other))
@@ -114,38 +122,61 @@ public class WarpController : InputConsumer
         image.color = color;
         image.enabled = true;
 
-        var weakThis = new WeakReference<WarpController>(this);
-        var sequence = DOTween.Sequence();
-        sequence.Append(image.DOFade(1, 0.6f));
-        sequence.AppendCallback(() => {
-            // do move player
-            var strongThis = weakToStrong(weakThis);
-            if (!strongThis)
-                return;
+        var warpZone = GetWarpZone(other);
 
-            var warpZone = GetWarpZone(other);
-            WarpToDropStart(warpZone);
-            if (!InSameLogicScene(warpZone.transform, warpZone.dropZone)) {
-                onLeaveArea?.Invoke(warpZone.transform);
-                onEnterArea?.Invoke(warpZone.dropZone.transform);
-            }
-        });
-        sequence.AppendInterval(0.1f);
-        sequence.Append(image.DOFade(0, 0.3f));
-        sequence.AppendCallback(() => {
-            // warping terminated
-            var strongThis = weakToStrong(weakThis);
-            if (!strongThis)
-                return;
-
-            var warpZone = GetWarpZone(other);
-            MoveToDropEnd(warpZone);
-
-            image.enabled = false;
-            strongThis._isWarping = false;
-            InputConsumerCenter.Instance.UnRegister(strongThis);
-        });
+        iTween.ValueTo(fadeMask, iTween.Hash(
+            "from", 0.0f,
+            "to", 1.0f,
+            "time", 0.6f,
+            "onupdatetarget", this.gameObject,
+            "onupdate", "UpdateFadeMaskAlpha",
+            "oncompletetarget", this.gameObject,
+            "oncomplete", "DropStart",
+            "oncompleteparams", warpZone
+        ));
     }
+
+    // warping animation sequence begin
+    private void UpdateFadeMaskAlpha(float alpha)
+    {
+        var image = fadeMask.GetComponent<Image>();
+        Color color = image.color;
+        color.a = alpha;
+        image.color = color;
+    }
+
+    private void DropStart(WarpZone warpZone)
+    {
+        WarpToDropStart(warpZone);
+        if (!InSameLogicScene(warpZone.transform, warpZone.dropZone)) {
+            onLeaveArea?.Invoke(warpZone.transform);
+            onEnterArea?.Invoke(warpZone.dropZone.transform);
+        }
+
+        // fade out
+        iTween.ValueTo(fadeMask, iTween.Hash(
+            "from", 1.0f,
+            "to", 0.3f,
+            "time", 0.6f,
+            "delay", 0.1f,
+            "onupdatetarget", this.gameObject,
+            "onupdate", "UpdateFadeMaskAlpha",
+            "oncompletetarget", this.gameObject,
+            "oncomplete", "DropEnd",
+            "oncompleteparams", warpZone
+        ));
+    }
+
+    private void DropEnd(WarpZone warpZone)
+    {
+        MoveToDropEnd(warpZone);
+
+        var image = fadeMask.GetComponent<Image>();
+        image.enabled = false;
+        this._isWarping = false;
+        InputConsumerCenter.Instance.UnRegister(this);
+    }
+    // warping animation sequence end
 
     private bool InSameLogicScene(Transform src, Transform dst)
     {

@@ -46,8 +46,8 @@ public class WarpController : InputConsumer
             popupText.text = zoneInfo.zoneName;
             
             _popupSequence = DOTween.Sequence();
-            _popupSequence.AppendInterval(3.0f);
-            _popupSequence.Append(popup.DOAnchorPosY(popup.rect.height, 0.3f));
+            _popupSequence.AppendInterval(2.5f);
+            _popupSequence.Append(popup.DOAnchorPosY(popup.rect.height, 0.2f));
         }
     }
 

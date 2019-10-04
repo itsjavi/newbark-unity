@@ -1817,7 +1817,7 @@ PrefabInstance:
     - target: {fileID: 2759677252288088573, guid: dbd1a801b1f1f429099bfa9769d82b46,
         type: 3}
       propertyPath: m_Name
-      value: PopText
+      value: Popup
       objectReference: {fileID: 0}
     - target: {fileID: 2759677252288088573, guid: dbd1a801b1f1f429099bfa9769d82b46,
         type: 3}
@@ -1943,7 +1943,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 17db97c85540f404e8f3037f0a05aecc,
+        type: 3}
     - target: {fileID: 2759677252288088560, guid: dbd1a801b1f1f429099bfa9769d82b46,
         type: 3}
       propertyPath: m_Type
@@ -24136,6 +24137,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneName: GOLD's House
   popZoneNameOnEnter: 1
+  onLeave:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1001 &652304842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24234,7 +24245,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352196779}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.648305, y: 21, z: 12}
+  m_LocalPosition: {x: 9.644178, y: 21, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 490968613}
@@ -25168,6 +25179,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneName: NEW BARK Town
   popZoneNameOnEnter: 1
+  onLeave:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1001 &1037737269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44221,6 +44242,18 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &1580847072 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
+    type: 3}
+  m_PrefabInstance: {fileID: 351266491}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1604917112
 GameObject:
   m_ObjectHideFlags: 0
@@ -44638,7 +44671,7 @@ GameObject:
   - component: {fileID: 2044089759}
   - component: {fileID: 2044089758}
   m_Layer: 5
-  m_Name: PopTextCanvas
+  m_Name: PopupCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45029,7 +45062,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131464617}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.648305, y: 21, z: 12}
+  m_LocalPosition: {x: 9.644178, y: 21, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 556146649}
@@ -45616,7 +45649,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementController: {fileID: 7079746402777195698}
   fadeMask: {fileID: 1537255376}
-  popText: {fileID: 351266492}
+  popup: {fileID: 351266492}
+  popupText: {fileID: 1580847072}
   onEnterArea:
     m_PersistentCalls:
       m_Calls:

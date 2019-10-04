@@ -16,7 +16,7 @@ public class MovementController : InputConsumer
     public Vector3 destPosition;
     public DIRECTION_BUTTON lastMoveDir = DIRECTION_BUTTON.DOWN;    // hardcode init state
     public bool mIsMoving = false;                                  // whether the player animation is moving
-    private int changeDirCoolDown = 0;
+    private float changeDirTime = 0.0f;
 
     private GameObject player;
     private int LAYER_MASK_INTERACTABLE = 1 << 8;
@@ -148,19 +148,15 @@ public class MovementController : InputConsumer
 
         // change facing and movement from idle state
         if (dir != DIRECTION_BUTTON.NONE) {
-            if (--changeDirCoolDown > 0)
-                return;
-            changeDirCoolDown = 0;
-
             if (dir != lastMoveDir) {
                 // face to that dir first
                 lastMoveDir = dir;
                 var movementVector = GetMovementVector(dir, tiles);
                 FaceTo(movementVector);
-
-                // skip 8 frames before player can move
-                changeDirCoolDown = inputDelay;
-            } else {
+                changeDirTime = Time.time;
+            } else if (Time.time - changeDirTime > 0.1f) {
+                // after change dir, stop at least 0.1 second for cooldown
+                // todo: remove the cooldown, and judge the change dir animation terminate
                 StartMove(dir);
             }
         }

@@ -13,7 +13,51 @@ public class WarpController : InputConsumer
     public MovementController movementController;
 
     public GameObject fadeMask;
+
+    public RectTransform popup;
+
+    public Text popupText;
+
+    [System.Serializable]
+    public class OnEnterAreaEvent : UnityEvent<Transform> {}
+
+    [System.Serializable]
+    public class OnLeaveAreaEvent : UnityEvent<Transform> {}
+
+    public OnEnterAreaEvent onEnterArea = new OnEnterAreaEvent();
+
+    public OnLeaveAreaEvent onLeaveArea = new OnLeaveAreaEvent();
+
+    Sequence _popupSequence;
+
     private bool _isWarping = false;
+
+    void Start()
+    {
+        this.onEnterArea.AddListener(PopZoneName);
+        this.onLeaveArea.AddListener(HidePopedZoneName);
+    }
+
+    public void PopZoneName(Transform t)
+    {
+        var zoneInfo = t?.parent?.GetComponent<ZoneInfo>();
+        if (zoneInfo && zoneInfo.popZoneNameOnEnter && zoneInfo.zoneName.Length > 0) {
+            popup.anchoredPosition = new Vector2(popup.anchoredPosition.x, 0);
+            popupText.text = zoneInfo.zoneName;
+            
+            _popupSequence = DOTween.Sequence();
+            _popupSequence.AppendInterval(2.5f);
+            _popupSequence.Append(popup.DOAnchorPosY(popup.rect.height, 0.2f));
+        }
+    }
+
+    public void HidePopedZoneName(Transform t)
+    {
+        if (_popupSequence != null && _popupSequence.IsActive()) {
+            _popupSequence.Kill();
+            popup.anchoredPosition = new Vector2(popup.anchoredPosition.x, popup.rect.height);
+        }
+    }
 
     private void WarpToDropStart(WarpZone destination)
     {
@@ -79,20 +123,34 @@ public class WarpController : InputConsumer
             if (!strongThis)
                 return;
 
-            WarpToDropStart(GetWarpZone(other));
+            var warpZone = GetWarpZone(other);
+            WarpToDropStart(warpZone);
+            if (!InSameLogicScene(warpZone.transform, warpZone.dropZone)) {
+                onLeaveArea?.Invoke(warpZone.transform);
+                onEnterArea?.Invoke(warpZone.dropZone.transform);
+            }
         });
-        sequence.Append(image.DOFade(0, 0.4f));
+        sequence.AppendInterval(0.1f);
+        sequence.Append(image.DOFade(0, 0.3f));
         sequence.AppendCallback(() => {
             // warping terminated
             var strongThis = weakToStrong(weakThis);
             if (!strongThis)
                 return;
 
-            MoveToDropEnd(GetWarpZone(other));
+            var warpZone = GetWarpZone(other);
+            MoveToDropEnd(warpZone);
+
             image.enabled = false;
             strongThis._isWarping = false;
             InputConsumerCenter.Instance.UnRegister(strongThis);
         });
+    }
+
+    private bool InSameLogicScene(Transform src, Transform dst)
+    {
+        // now the hierachy is quite simpy, warp in same logic scene have same parent
+        return src.parent == dst.parent;
     }
 
     void OnTriggerStay2D(Collider2D other)

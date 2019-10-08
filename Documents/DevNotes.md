@@ -20,3 +20,7 @@
 - Sometimes text dialogs are not in the right order, they get mixed and lost
 - Triggering a dialog may not respond to buttons
 - When fading on warp player can still move
+
+
+## Resources
+- [Learning Unity 2D - Video Tutorials](https://www.youtube.com/playlist?list=PL0dOETTrhWWCuWcl2OjB3GfvrlfWEzx18)

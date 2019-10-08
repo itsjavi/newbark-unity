@@ -6,11 +6,7 @@
 
 ## Requirements
 
-- Unity 2019.2.1f1+
-
-
-## Resources
-- [Learning Unity 2D - Video Tutorials](https://www.youtube.com/playlist?list=PL0dOETTrhWWCuWcl2OjB3GfvrlfWEzx18)
+- Unity 2019.2.8f1+
 
 
 ## License

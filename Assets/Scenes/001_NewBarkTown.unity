@@ -1916,13 +1916,9 @@ MonoBehaviour:
   m_CameraCutEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Cinemachine.CinemachineBrain+BrainEvent, Cinemachine, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &490968612
 GameObject:
   m_ObjectHideFlags: 0
@@ -24138,6 +24134,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: 2F_In
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: destination
@@ -24162,21 +24173,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: 2F_In
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -24512,6 +24508,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: MainDoor_Out
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneStart
@@ -24531,21 +24542,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: MainDoor_Out
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -24865,10 +24861,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.5134562, y: 0.53427833}
-      - {x: -1.517307, y: 0.5311619}
-      - {x: -1.5119241, y: -0.568557}
-      - {x: 0.5080738, y: -0.5654407}
+    - - {x: 0.5, y: 0.5}
+      - {x: -1.5, y: 0.5}
+      - {x: -1.5, y: -0.55}
+      - {x: 0.5, y: -0.55}
 --- !u!1 &958664272
 GameObject:
   m_ObjectHideFlags: 0
@@ -24976,6 +24972,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: MainDoor_In
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneStart
@@ -24995,21 +25006,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: MainDoor_In
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -25106,6 +25102,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: MainDoor_Out
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneStart
@@ -25125,21 +25136,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: MainDoor_Out
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -25587,8 +25583,6 @@ MonoBehaviour:
   onFadeStart:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onFadeComplete:
     m_PersistentCalls:
       m_Calls:
@@ -25603,8 +25597,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1405830667
 GameObject:
   m_ObjectHideFlags: 0
@@ -43491,6 +43483,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 636945717}
     m_Modifications:
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Name
+      value: 2F_Out
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: WarpZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7733110439533391716, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneStart
@@ -43510,21 +43517,6 @@ PrefabInstance:
         type: 3}
       propertyPath: warpZoneEnd
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Name
-      value: 2F_Out
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_TagString
-      value: WarpZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
-        type: 3}
-      propertyPath: m_Layer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861655511843610441, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -43744,8 +43736,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -45342,8 +45332,6 @@ MonoBehaviour:
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 556146649}
 --- !u!1 &1756378989914532
@@ -45824,8 +45812,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onWarpStay:
     m_PersistentCalls:
       m_Calls:
@@ -45840,8 +45826,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onWarpFinish:
     m_PersistentCalls:
       m_Calls:
@@ -45856,5 +45840,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null

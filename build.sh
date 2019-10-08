@@ -2,7 +2,7 @@
 
 VERSION=${1:-"dev"}
 UNITY_PROJECT="newbark"
-UNITY_BIN="/Applications/Unity/2019.2.1f1/Unity.app/Contents/MacOS/Unity"
+UNITY_BIN="/Applications/Unity/2019.2.8f1/Unity.app/Contents/MacOS/Unity"
 
 unity_build() {
 	target=$1
@@ -39,5 +39,5 @@ unity_build() {
 	fi
 }
 
-unity_build Windows64 win64 ".exe"
+# unity_build Windows64 win64 ".exe"
 unity_build OSXUniversal osx ".app"

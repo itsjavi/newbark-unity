@@ -8,9 +8,9 @@ public class DialogScroller
     private readonly int MaxColumns;
     private string Text;
     private string[] TextRows;
-    private int TextRowsIndex = 0;
+    private int TextRowsIndex;
     private string[] TextRowsBuffer;
-    private int ScrollIndex = 0;
+    private int ScrollIndex;
 
     public DialogScroller(int maxRows, int maxColumns)
     {

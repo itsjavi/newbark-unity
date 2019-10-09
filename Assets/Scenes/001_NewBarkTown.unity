@@ -43914,6 +43914,7 @@ GameObject:
   - component: {fileID: 1574505836}
   - component: {fileID: 1574505838}
   - component: {fileID: 1574505837}
+  - component: {fileID: 1574505839}
   m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
@@ -43969,6 +43970,22 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &1574505839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574505835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2adf148a19499274795e418631d7db45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TouchSensitivityX: 10
+  TouchSensitivityY: 10
+  TouchXInputMapTo: Mouse X
+  TouchYInputMapTo: Mouse Y
 --- !u!1 &1604917112
 GameObject:
   m_ObjectHideFlags: 0
@@ -45544,7 +45561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fba112e30d147fa9c96831eb9fdf6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animator: {fileID: 7099427508898048894}
+  m_animationController: {fileID: 7192301008348172421}
   m_DialogManager: {fileID: 1973439302}
   m_Speed: 4
   m_InputDelay: 8
@@ -45632,6 +45649,7 @@ GameObject:
   - component: {fileID: 7079746402777195698}
   - component: {fileID: 7192301008348172420}
   - component: {fileID: 7192301008348172419}
+  - component: {fileID: 7192301008348172421}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -45717,6 +45735,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9592d73773f5848f5bff2aab2bae24a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animator: {fileID: 7099427508898048894}
+  m_animationController: {fileID: 7192301008348172421}
+  m_DialogManager: {fileID: 1973439302}
   interactableLayer: 8
   raycastDistance: 1
+--- !u!114 &7192301008348172421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192301008348172418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017091b51d194d43baaa72ad72c9b762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 7099427508898048894}

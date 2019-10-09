@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using RPGKit2D.Movement;
+using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
-    public Animator m_Animator;
+    public AnimationController m_animationController;
     public DialogManager m_DialogManager;
     
     public int m_Speed = 6;
@@ -20,21 +21,6 @@ public class MovementController : MonoBehaviour
     private Vector3 _lastPositionDiff;
     private DirectionButton _lastDirection = DirectionButton.NONE;
     private DirectionButton _lastCollisionDir = DirectionButton.NONE;
-    private static readonly int MoveX = Animator.StringToHash("MoveX");
-    private static readonly int MoveY = Animator.StringToHash("MoveY");
-    private static readonly int LastMoveX = Animator.StringToHash("LastMoveX");
-    private static readonly int LastMoveY = Animator.StringToHash("LastMoveY");
-    private static readonly int Moving = Animator.StringToHash("Moving");
-
-    void Start()
-    {
-        if (!m_Animator)
-        {
-            m_Animator = GetComponentInChildren<Animator>();
-        }
-
-        _currentTilesToMove = m_TilesPerStep;
-    }
 
     void FixedUpdate()
     {
@@ -65,7 +51,7 @@ public class MovementController : MonoBehaviour
 
     private bool MoveTo(DirectionButton dir, Vector3 destPosition)
     {
-        UpdateAnimation();
+        m_animationController.UpdateAnimation(_positionDiff, _lastPositionDiff, _isMoving);
 
         if (!_isMoving || (destPosition == transform.position))
         {
@@ -106,15 +92,6 @@ public class MovementController : MonoBehaviour
         );
 
         return MoveTo(dir, destPosition);
-    }
-
-    private void UpdateAnimation()
-    {
-        m_Animator.SetFloat(MoveX, _positionDiff.x);
-        m_Animator.SetFloat(MoveY, _positionDiff.y);
-        m_Animator.SetFloat(LastMoveX, _lastPositionDiff.x);
-        m_Animator.SetFloat(LastMoveY, _lastPositionDiff.y);
-        m_Animator.SetBool(Moving, _isMoving);
     }
 
     public void TriggerDirectionButton(DirectionButton dir)
@@ -187,7 +164,7 @@ public class MovementController : MonoBehaviour
     private void StopMoving()
     {
         Stop();
-        UpdateAnimation();
+        m_animationController.UpdateAnimation(Vector2.zero, _lastPositionDiff, false);
         ClampCurrentPosition();
     }
 
@@ -272,8 +249,7 @@ public class MovementController : MonoBehaviour
 
     private void Stop()
     {
-        _positionDiff.x = 0;
-        _positionDiff.y = 0;
+        _positionDiff = Vector2.zero;
         _inputDelayCoolDown = 0;
         _isMoving = false;
         _inputEnabled = true;

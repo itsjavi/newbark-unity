@@ -1,32 +1,32 @@
-﻿using UnityEngine;
+﻿using RPGKit2D.Interaction;
+using UnityEngine;
 
 public class DialogTrigger : Interactable
 {
     public Dialog dialog;
 
-    public override void Interact(DirectionButton dir, ActionButton action)
+    public override void Interact(InteractionContext ctx)
     {
-        if (action == ActionButton.NONE)
+        if (!ctx.dialogManager || ctx.action == ActionButton.NONE)
         {
             return;
         }
 
-        DialogManager dm = FindObjectOfType<DialogManager>();
+        DialogManager dm = ctx.dialogManager;
 
         bool shouldEndDialog = dm.InDialog()
                                && (
-                                   ((action == ActionButton.A) && !dm.HasNext())
-                                   || (action == ActionButton.B)
+                                   ((ctx.action == ActionButton.A) && !dm.HasNext())
+                                   || (ctx.action == ActionButton.B)
                                );
 
         if (shouldEndDialog)
         {
             dm.EndDialog();
-            dm = null;
             return;
         }
 
-        if (action != ActionButton.A)
+        if (ctx.action != ActionButton.A)
         {
             return;
         }

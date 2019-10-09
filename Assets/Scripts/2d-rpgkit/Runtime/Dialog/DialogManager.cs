@@ -13,7 +13,7 @@ public class DialogManager : MonoBehaviour
     public AudioClip nextSentenceEffect;
 
     private AudioSource audioSource;
-    private bool inDialog = false;
+    private bool inDialog;
 
     private DialogScroller dialogScroller;
 

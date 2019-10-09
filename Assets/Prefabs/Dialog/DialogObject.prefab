@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3251957178355454438}
   - component: {fileID: 3594488902141925997}
   - component: {fileID: 1650593739014640344}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DialogObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,8 +91,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -439551843
-  m_SortingLayer: -3
-  m_SortingOrder: 0
+  m_SortingLayer: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300104, guid: 235ac397970f84a0985b517461957e3e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -21,7 +21,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Interactable
   - 
   - 
   - 
@@ -46,15 +46,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: S3_UnderPlayer
-    uniqueID: 3855415453
-    locked: 0
-  - name: S2_Characters
-    uniqueID: 1371617319
-    locked: 0
-  - name: S1_OverPlayer
-    uniqueID: 4197844559
-    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Layer_1_Ground
+    uniqueID: 3855415453
+    locked: 0
+  - name: Layer_2_Players
+    uniqueID: 1371617319
+    locked: 0
+  - name: Layer_3_Overlay
+    uniqueID: 4197844559
     locked: 0

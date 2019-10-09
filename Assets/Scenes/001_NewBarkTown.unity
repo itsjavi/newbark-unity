@@ -43914,7 +43914,6 @@ GameObject:
   - component: {fileID: 1574505836}
   - component: {fileID: 1574505838}
   - component: {fileID: 1574505837}
-  - component: {fileID: 1574505839}
   m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
@@ -43970,22 +43969,6 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &1574505839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574505835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2adf148a19499274795e418631d7db45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TouchSensitivityX: 10
-  TouchSensitivityY: 10
-  TouchXInputMapTo: Mouse X
-  TouchYInputMapTo: Mouse Y
 --- !u!1 &1604917112
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class FilterHierarchyEditor : EditorWindow
     bool filterInactive;
     List<int> objectIndex = new List<int>();
 
-    [MenuItem("Helpers/Filter Hierarchy")]
+    [MenuItem("2D RPG Kit/Filter Hierarchy")]
     static void Init()
     {
         FilterHierarchyEditor filter = (FilterHierarchyEditor) EditorWindow.GetWindow(typeof(FilterHierarchyEditor));

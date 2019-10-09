@@ -21,7 +21,7 @@ public class ScreenFaderController : MonoBehaviour
             return;
         }
 
-        var screenFader = GameObject.FindGameObjectWithTag(GameManager.Tag.ScreenFader);
+        var screenFader = GameObject.FindGameObjectWithTag("ScreenFader");
 
         if (!screenFader)
         {

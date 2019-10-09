@@ -103,28 +103,17 @@ public class MovementController : MonoBehaviour
         Move(dir, currentTilesToMove);
     }
 
-    private void RaycastUpdate(DIRECTION_BUTTON dir, ACTION_BUTTON action)
+    private void RaycastUpdate(ACTION_BUTTON action)
     {
         Vector3 dirVector = GetFaceDirectionVector();
-
-        if (dirVector == Vector3.zero)
+        RaycastHit2D hit = CheckRaycast(dirVector);
+        
+        if (!hit.collider || !hit.collider.gameObject.HasComponent<Interactable>())
         {
             return;
         }
-
-        RaycastHit2D hit = CheckRaycast(dirVector);
-        // Debug.DrawRay(transform.position, dirVector, Color.green);
-        if (hit.collider)
-        {
-            // Debug.DrawRay(transform.position, dirVector, Color.red);
-            // Debug.DrawRay(transform.position, hit.point, Color.blue);
-
-            if (hit.collider.gameObject.HasComponent<Interactable>())
-            {
-                // Debug.Log("[raycast hit] @interactable " + hit.collider.gameObject.name);
-                hit.collider.gameObject.GetComponent<Interactable>().Interact(dir, action);
-            }
-        }
+        
+        hit.collider.gameObject.GetComponent<Interactable>().Interact(action);
     }
 
     private RaycastHit2D CheckRaycast(Vector2 direction)
@@ -205,7 +194,7 @@ public class MovementController : MonoBehaviour
             MovementUpdate(dir);
         }
 
-        RaycastUpdate(dir, action);
+        RaycastUpdate(action);
     }
 
     void OnCollisionEnter2D(Collision2D col)

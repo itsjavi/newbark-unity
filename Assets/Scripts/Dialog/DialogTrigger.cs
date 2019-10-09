@@ -4,24 +4,40 @@ public class DialogTrigger : Interactable
 {
     public Dialog dialog;
 
-    public override void Interact(DIRECTION_BUTTON dir, ACTION_BUTTON button)
+    public override void Interact(ACTION_BUTTON action)
     {
+        if (action == ACTION_BUTTON.NONE)
+        {
+            return;
+        }
+
         DialogManager dm = FindObjectOfType<DialogManager>();
 
-        if (button == ACTION_BUTTON.A)
+        bool shouldEndDialog = dm.InDialog() &&
+                               (((action == ACTION_BUTTON.A) && !dm.HasNext()) || (action == ACTION_BUTTON.B));
+
+        if (shouldEndDialog)
         {
-            if (!dm.InDialog())
-            {
-                dm.StartDialog(dialog);
-            }
-            else
-            {
-                dm.PrintNext();
-            }
-        }
-        else if (button == ACTION_BUTTON.B)
-        {
+            Debug.Log("Dialog ended");
             dm.EndDialog();
+            dm = null;
+            return;
+        }
+
+        if (action != ACTION_BUTTON.A)
+        {
+            return;
+        }
+
+        if (!dm.InDialog())
+        {
+            Debug.Log("Start Dialog");
+            dm.StartDialog(dialog);
+        }
+        else
+        {
+            Debug.Log("Next Dialog");
+            dm.PrintNext();
         }
     }
 }

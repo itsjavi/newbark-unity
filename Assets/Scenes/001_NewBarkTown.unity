@@ -25500,9 +25500,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialog:
-    text: "POK\xE9RADIO is ON:\n\n...\n\nThanks for trying out this project!\n\nFind
-      out more at capsumon.com.\n\nFeel free to give any feedback in\nTwitter @virtuamon\n\n--
-      \ Javier."
+    text: "POK\xE9RADIO is ON:\n\n...\n\nThanks for trying out this project!\n\nFeel
+      free to give any feedback in\nTwitter @route1rodent\n\n--  Xavier."
 --- !u!114 &1307903372 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
@@ -44750,9 +44749,8 @@ PrefabInstance:
     - target: {fileID: 6894674271314320106, guid: 6873dcdc74e6440089eeaf021fa826a8,
         type: 3}
       propertyPath: dialog.text
-      value: "POK\xE9RADIO is ON:\n\n...\n\nThanks for trying out this project!\n\nFind
-        out more at capsumon.com.\n\nFeel free to give any feedback in\nTwitter @virtuamon\n\n--
-        \ Javier."
+      value: "POK\xE9RADIO is ON:\n\n...\n\nThanks for trying out this project!\n\nFeel
+        free to give any feedback in\nTwitter @route1rodent\n\n--  Xavier."
       objectReference: {fileID: 0}
     - target: {fileID: 6894674271314320110, guid: 6873dcdc74e6440089eeaf021fa826a8,
         type: 3}

@@ -69,7 +69,6 @@ public class DialogManager : MonoBehaviour
         dialogScroller.Start(dialog.text);
 
         PrintNext();
-
     }
 
     public bool InDialog()
@@ -77,7 +76,7 @@ public class DialogManager : MonoBehaviour
         return inDialog;
     }
 
-    public void PrintNext()
+    public bool PrintNext()
     {
         var showArrow = dialogScroller.IsPaged() && !dialogScroller.IsLastPage();
 
@@ -86,7 +85,7 @@ public class DialogManager : MonoBehaviour
         if (lines == null || lines.Length == 0)
         {
             EndDialog();
-            return;
+            return false;
         }
 
         dialogArrow.gameObject.SetActive(showArrow);
@@ -94,10 +93,17 @@ public class DialogManager : MonoBehaviour
         PlaySound();
 
         StartCoroutine(Print(lines, dialogScroller.IsFirstBuffer() || dialogScroller.IsFirstBufferLine()));
+        return true;
+    }
+
+    public bool HasNext()
+    {
+        return dialogScroller != null && !dialogScroller.IsFinished();
     }
 
     public void EndDialog()
     {
+        StopAllCoroutines();
         Clear();
         HideDialog();
 
@@ -122,6 +128,7 @@ public class DialogManager : MonoBehaviour
                 {
                     lastIndex--;
                 }
+
                 lineNum++;
             }
         }
@@ -151,6 +158,7 @@ public class DialogManager : MonoBehaviour
                     dialogText.text += ch;
                     yield return null; // render frame
                 }
+
                 if (isLastLine)
                 {
                     break;

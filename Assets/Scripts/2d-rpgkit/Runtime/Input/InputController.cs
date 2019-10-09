@@ -1,55 +1,45 @@
 ﻿using UnityEngine;
 
-public enum DIRECTION_BUTTON
-{
-    NONE, UP, DOWN, LEFT, RIGHT
-}
-
-public enum ACTION_BUTTON
-{
-    NONE, A, B, START, SELECT
-}
-
 public static class InputController
 {
-    public static ACTION_BUTTON GetPressedActionButton()
+    public static ActionButton GetPressedActionButton()
     {
         if (Input.GetButtonUp("Button A"))
         {
-            return ACTION_BUTTON.A;
+            return ActionButton.A;
         }
         if (Input.GetButtonUp("Button B"))
         {
-            return ACTION_BUTTON.B;
+            return ActionButton.B;
         }
         if (Input.GetButtonUp("Start"))
         {
-            return ACTION_BUTTON.START;
+            return ActionButton.START;
         }
         if (Input.GetButtonUp("Select"))
         {
-            return ACTION_BUTTON.SELECT;
+            return ActionButton.SELECT;
         }
         return TouchController.GetTouchAction();
     }
 
-    public static DIRECTION_BUTTON GetPressedDirectionButton()
+    public static DirectionButton GetPressedDirectionButton()
     {
         if (Input.GetKey(KeyCode.UpArrow) || (Input.GetAxis("Vertical") >= 0.5f))
         {
-            return DIRECTION_BUTTON.UP;
+            return DirectionButton.UP;
         }
         if (Input.GetKey(KeyCode.DownArrow) || (Input.GetAxis("Vertical") <= -0.5f))
         {
-            return DIRECTION_BUTTON.DOWN;
+            return DirectionButton.DOWN;
         }
         if (Input.GetKey(KeyCode.LeftArrow) || (Input.GetAxis("Horizontal") <= -0.5f))
         {
-            return DIRECTION_BUTTON.LEFT;
+            return DirectionButton.LEFT;
         }
         if (Input.GetKey(KeyCode.RightArrow) || (Input.GetAxis("Horizontal") >= 0.5f))
         {
-            return DIRECTION_BUTTON.RIGHT;
+            return DirectionButton.RIGHT;
         }
         return TouchController.GetSwipeDirection();
     }

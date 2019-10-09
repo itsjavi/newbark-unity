@@ -4,9 +4,9 @@ public class DialogTrigger : Interactable
 {
     public Dialog dialog;
 
-    public override void Interact(ACTION_BUTTON action)
+    public override void Interact(ActionButton action)
     {
-        if (action == ACTION_BUTTON.NONE)
+        if (action == ActionButton.NONE)
         {
             return;
         }
@@ -14,7 +14,7 @@ public class DialogTrigger : Interactable
         DialogManager dm = FindObjectOfType<DialogManager>();
 
         bool shouldEndDialog = dm.InDialog() &&
-                               (((action == ACTION_BUTTON.A) && !dm.HasNext()) || (action == ACTION_BUTTON.B));
+                               (((action == ActionButton.A) && !dm.HasNext()) || (action == ActionButton.B));
 
         if (shouldEndDialog)
         {
@@ -24,7 +24,7 @@ public class DialogTrigger : Interactable
             return;
         }
 
-        if (action != ACTION_BUTTON.A)
+        if (action != ActionButton.A)
         {
             return;
         }

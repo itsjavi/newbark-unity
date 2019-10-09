@@ -2,5 +2,5 @@
 
 public abstract class Interactable : MonoBehaviour
 {
-    public abstract void Interact(ACTION_BUTTON action);
+    public abstract void Interact(ActionButton action);
 }

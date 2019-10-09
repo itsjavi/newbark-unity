@@ -7,8 +7,8 @@ public class MovementController : MonoBehaviour
 
     private bool isMoving = false;
 
-    private DIRECTION_BUTTON lastDirection = DIRECTION_BUTTON.NONE;
-    public DIRECTION_BUTTON LastDirection => lastDirection;
+    private DirectionButton lastDirection = DirectionButton.NONE;
+    public DirectionButton LastDirection => lastDirection;
 
     private Vector3 destinationPosition;
     private Vector3 positionDiff;
@@ -26,7 +26,7 @@ public class MovementController : MonoBehaviour
 
     [Header("Debug")] private int currentTilesToMove = 1;
     public GameObject lastCollidedObject;
-    public DIRECTION_BUTTON lastCollisionDir = DIRECTION_BUTTON.NONE;
+    public DirectionButton lastCollisionDir = DirectionButton.NONE;
 
     void Start()
     {
@@ -45,48 +45,48 @@ public class MovementController : MonoBehaviour
             StopMoving();
         }
 
-        DIRECTION_BUTTON dir = InputController.GetPressedDirectionButton();
-        ACTION_BUTTON action = InputController.GetPressedActionButton();
+        DirectionButton dir = InputController.GetPressedDirectionButton();
+        ActionButton action = InputController.GetPressedActionButton();
 
         TriggerButtons(dir, action);
     }
 
-    public DIRECTION_BUTTON GetFaceDirection()
+    public DirectionButton GetFaceDirection()
     {
         if (animator.GetFloat("LastMoveX") > 0)
         {
-            return DIRECTION_BUTTON.RIGHT;
+            return DirectionButton.RIGHT;
         }
 
         if (animator.GetFloat("LastMoveX") < 0)
         {
-            return DIRECTION_BUTTON.LEFT;
+            return DirectionButton.LEFT;
         }
 
         if (animator.GetFloat("LastMoveY") > 0)
         {
-            return DIRECTION_BUTTON.UP;
+            return DirectionButton.UP;
         }
 
         if (animator.GetFloat("LastMoveY") < 0)
         {
-            return DIRECTION_BUTTON.DOWN;
+            return DirectionButton.DOWN;
         }
 
-        return DIRECTION_BUTTON.DOWN;
+        return DirectionButton.DOWN;
     }
 
     public Vector2 GetFaceDirectionVector()
     {
         switch (GetFaceDirection())
         {
-            case DIRECTION_BUTTON.UP:
+            case DirectionButton.UP:
                 return Vector2.up;
-            case DIRECTION_BUTTON.DOWN:
+            case DirectionButton.DOWN:
                 return Vector2.down;
-            case DIRECTION_BUTTON.LEFT:
+            case DirectionButton.LEFT:
                 return Vector2.left;
-            case DIRECTION_BUTTON.RIGHT:
+            case DirectionButton.RIGHT:
                 return Vector2.right;
             default:
                 return Vector2.zero;
@@ -99,12 +99,7 @@ public class MovementController : MonoBehaviour
         return !FindObjectOfType<DialogManager>().InDialog();
     }
 
-    public bool CanMoveManually()
-    {
-        return CanMove();
-    }
-
-    private void MovementUpdate(DIRECTION_BUTTON dir)
+    private void MovementUpdate(DirectionButton dir)
     {
         if (!isMoving)
         {
@@ -114,7 +109,7 @@ public class MovementController : MonoBehaviour
         Move(dir, currentTilesToMove);
     }
 
-    private void RaycastUpdate(ACTION_BUTTON action)
+    private void RaycastUpdate(ActionButton action)
     {
         Vector3 dirVector = GetFaceDirectionVector();
         RaycastHit2D hit = CheckRaycast(dirVector);
@@ -127,31 +122,31 @@ public class MovementController : MonoBehaviour
         hit.collider.gameObject.GetComponent<Interactable>().Interact(action);
     }
 
+    private RaycastHit2D CheckRaycast(Vector2 direction, float distance)
+    {
+        Vector2 startingPosition = (Vector2) transform.position;
+
+        return Physics2D.Raycast(startingPosition, direction, distance);
+    }
+
     private RaycastHit2D CheckRaycast(Vector2 direction)
     {
         Vector2 startingPosition = (Vector2) transform.position;
 
-        return Physics2D.Raycast(startingPosition, direction, raycastDistance);
+        return CheckRaycast(direction, raycastDistance);
     }
 
-    private RaycastHit2D CheckFutureRaycast(Vector2 direction)
-    {
-        Vector2 startingPosition = (Vector2) transform.position;
-
-        return Physics2D.Raycast(startingPosition, direction, raycastDistance * 2);
-    }
-
-    public bool MoveTo(DIRECTION_BUTTON dir, Vector3 destinationPosition)
+    public bool MoveTo(DirectionButton dir, Vector3 destPosition)
     {
         UpdateAnimation();
 
-        if (!isMoving || (destinationPosition == transform.position))
+        if (!isMoving || (destPosition == transform.position))
         {
             ClampCurrentPosition();
             return false;
         }
 
-        if (isMoving && (dir != DIRECTION_BUTTON.NONE) && (dir == lastCollisionDir))
+        if (isMoving && (dir != DirectionButton.NONE) && (dir == lastCollisionDir))
         {
             ClampCurrentPosition();
             if (!(lastCollidedObject is null))
@@ -164,24 +159,24 @@ public class MovementController : MonoBehaviour
         else if (isMoving)
         {
             lastCollidedObject = null;
-            lastCollisionDir = DIRECTION_BUTTON.NONE;
+            lastCollisionDir = DirectionButton.NONE;
         }
 
 
-        transform.position = Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * speed);
+        transform.position = Vector3.MoveTowards(transform.position, destPosition, Time.deltaTime * speed);
         transform.rotation = new Quaternion(0, 0, 0, 0);
         return true;
     }
 
-    public bool Move(DIRECTION_BUTTON dir, int tiles)
+    public bool Move(DirectionButton dir, int tiles)
     {
         currentTilesToMove = tiles;
 
-        Vector3 destinationPosition = CalculateDestinationPosition(
+        Vector3 destPosition = CalculateDestinationPosition(
             transform.position, dir, tiles
         );
 
-        return MoveTo(dir, destinationPosition);
+        return MoveTo(dir, destPosition);
     }
 
     private void UpdateAnimation()
@@ -193,7 +188,7 @@ public class MovementController : MonoBehaviour
         animator.SetBool("Moving", isMoving);
     }
 
-    public void TriggerButtons(DIRECTION_BUTTON dir, ACTION_BUTTON action)
+    public void TriggerButtons(DirectionButton dir, ActionButton action)
     {
         if (!CanMove() && IsMoving())
         {
@@ -277,6 +272,8 @@ public class MovementController : MonoBehaviour
     {
         return isMoving;
     }
+        
+    // ---------------------------------------------------
 
     public void ClampPositionTo(Vector3 position)
     {
@@ -287,7 +284,7 @@ public class MovementController : MonoBehaviour
     }
 
 
-    public Vector3 CalculateDestinationPosition(Vector3 origin, DIRECTION_BUTTON dir, int tilesToMove = 1)
+    public Vector3 CalculateDestinationPosition(Vector3 origin, DirectionButton dir, int tiles = 1)
     {
         if (coolDown > 0)
         {
@@ -297,7 +294,7 @@ public class MovementController : MonoBehaviour
         if (canReadInput)
         {
             destinationPosition = origin;
-            CalculateMovement(dir, tilesToMove);
+            CalculateMovement(dir, tiles);
         }
 
         if (isMoving)
@@ -307,7 +304,7 @@ public class MovementController : MonoBehaviour
                 // done moving in a tile
                 isMoving = false;
                 canReadInput = true;
-                CalculateMovement(dir, tilesToMove);
+                CalculateMovement(dir, tiles);
             }
 
             if (origin == destinationPosition)
@@ -317,12 +314,10 @@ public class MovementController : MonoBehaviour
 
             return destinationPosition;
         }
-        else
-        {
-            positionDiff.x = 0;
-            positionDiff.y = 0;
-            positionDiff.z = 0;
-        }
+
+        positionDiff.x = 0;
+        positionDiff.y = 0;
+        positionDiff.z = 0;
 
         return ClampPosition(origin);
     }
@@ -360,14 +355,14 @@ public class MovementController : MonoBehaviour
     }
 
     // Returns the calculated final destination vector
-    private void CalculateMovement(DIRECTION_BUTTON dir, int tilesToMove = 1)
+    private void CalculateMovement(DirectionButton dir, int tiles = 1)
     {
         if (coolDown > 0)
         {
             return;
         }
 
-        if (dir == DIRECTION_BUTTON.NONE)
+        if (dir == DirectionButton.NONE)
         {
             return;
         }
@@ -376,27 +371,25 @@ public class MovementController : MonoBehaviour
 
         switch (dir)
         {
-            case DIRECTION_BUTTON.UP:
+            case DirectionButton.UP:
             {
-                y = tilesToMove;
+                y = tiles;
             }
                 break;
-            case DIRECTION_BUTTON.RIGHT:
+            case DirectionButton.RIGHT:
             {
-                x = tilesToMove;
+                x = tiles;
             }
                 break;
-            case DIRECTION_BUTTON.DOWN:
+            case DirectionButton.DOWN:
             {
-                y = tilesToMove * -1;
+                y = tiles * -1;
             }
                 break;
-            case DIRECTION_BUTTON.LEFT:
+            case DirectionButton.LEFT:
             {
-                x = tilesToMove * -1;
+                x = tiles * -1;
             }
-                break;
-            default:
                 break;
         }
 

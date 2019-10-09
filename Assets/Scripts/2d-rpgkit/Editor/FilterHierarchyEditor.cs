@@ -2,13 +2,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-enum FilterOptions
-{
-    Tag,
-    Layer,
-    Both
-}
-
 public class FilterHierarchyEditor : EditorWindow
 {
     FilterOptions filterOptions = FilterOptions.Tag;

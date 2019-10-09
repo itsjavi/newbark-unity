@@ -1,14 +1,8 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
-/**
- * Warp Controller. Attach this controller to the object that moves an warps, usually the player.
- */
 public class WarpController : MonoBehaviour
 {
-    public BoxCollider2D warperCollider;
     public MovementController movementController;
     public UnityEvent onWarpEnter;
     public UnityEvent onWarpStay;
@@ -55,9 +49,9 @@ public class WarpController : MonoBehaviour
     {
         if (destination.postDropMove.steps == 0)
         {
-            if (destination.postDropMove.direction != DIRECTION_BUTTON.NONE)
+            if (destination.postDropMove.direction != DirectionButton.NONE)
             {
-                movementController.TriggerButtons(destination.postDropMove.direction, ACTION_BUTTON.NONE);
+                movementController.TriggerButtons(destination.postDropMove.direction, ActionButton.NONE);
             }
 
             return;

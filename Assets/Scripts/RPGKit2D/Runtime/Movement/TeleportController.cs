@@ -61,10 +61,7 @@ namespace RPGKit2D.Movement
                 return;
             }
 
-            if (!movementController.Move(destination.moveDirection, destination.moveSteps))
-            {
-                Debug.LogWarning("!!! WARPER CANNOT BE MOVED");
-            }
+            movementController.Move(destination.moveDirection, destination.moveSteps);
         }
 
         private bool IsWarpZone(Collider2D other)
@@ -84,7 +81,6 @@ namespace RPGKit2D.Movement
                 return;
             }
 
-            Debug.Log("OnTriggerEnter2D");
             onWarpEnter.Invoke();
         }
 
@@ -108,7 +104,6 @@ namespace RPGKit2D.Movement
                 return;
             }
 
-            Debug.Log("OnTriggerExit2D");
             MoveToDropEnd(GetWarpZone(other));
             onWarpFinish.Invoke();
         }

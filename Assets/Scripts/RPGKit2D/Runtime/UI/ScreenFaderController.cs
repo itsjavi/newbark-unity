@@ -89,7 +89,6 @@ namespace RPGKit2D.UI
 
         public void OnFadeComplete()
         {
-            Debug.Log("OnFadeComplete");
             _fading = false;
             onFadeComplete.Invoke();
         }

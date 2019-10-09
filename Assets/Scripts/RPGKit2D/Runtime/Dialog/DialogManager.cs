@@ -142,7 +142,6 @@ namespace RPGKit2D.Dialog
                 var isLastLine = (lineNum >= lastIndex);
                 if (line == null)
                 {
-                    Debug.LogError("Found a null line at #" + lineNum);
                     continue;
                 }
 

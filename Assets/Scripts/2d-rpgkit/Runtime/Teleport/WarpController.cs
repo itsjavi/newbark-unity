@@ -47,17 +47,17 @@ public class WarpController : MonoBehaviour
 
     private void MoveToDropEnd(WarpZone destination)
     {
-        if (destination.postDropMove.steps == 0)
+        if (destination.moveSteps == 0)
         {
-            if (destination.postDropMove.direction != DirectionButton.NONE)
+            if (destination.moveDirection != DirectionButton.NONE)
             {
-                movementController.TriggerButtons(destination.postDropMove.direction, ActionButton.NONE);
+                movementController.TriggerDirectionButton(destination.moveDirection);
             }
 
             return;
         }
 
-        if (!movementController.Move(destination.postDropMove.direction, destination.postDropMove.steps))
+        if (!movementController.Move(destination.moveDirection, destination.moveSteps))
         {
             Debug.LogWarning("!!! WARPER CANNOT BE MOVED");
         }

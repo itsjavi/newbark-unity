@@ -4,5 +4,6 @@ public class WarpZone: MonoBehaviour
 {
     public Transform dropZone;
     public Vector2 dropZoneOffset;
-    public MovementAction postDropMove;
+    public DirectionButton moveDirection = DirectionButton.NONE;
+    public int moveSteps;
 }

@@ -24323,6 +24323,11 @@ PrefabInstance:
       propertyPath: postDropMove.direction
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: moveDirection
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81da04f0b0dc34148bcd24007f3b42e2, type: 3}
 --- !u!4 &712203383 stripped
@@ -43779,6 +43784,11 @@ PrefabInstance:
       propertyPath: postDropMove.direction
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: moveDirection
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81da04f0b0dc34148bcd24007f3b42e2, type: 3}
 --- !u!4 &1494247185 stripped
@@ -45534,14 +45544,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fba112e30d147fa9c96831eb9fdf6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  speed: 4
-  inputDelay: 6
-  tilesToMove: 1
-  clampAt: 0.5
-  raycastDistance: 1
-  lastCollidedObject: {fileID: 0}
-  lastCollisionDir: 0
+  m_Animator: {fileID: 7099427508898048894}
+  m_DialogManager: {fileID: 1973439302}
+  m_Speed: 4
+  m_InputDelay: 8
+  m_TilesPerStep: 1
+  m_ClampOffset: 0.5
 --- !u!95 &7099427508898048894
 Animator:
   serializedVersion: 3
@@ -45622,8 +45630,9 @@ GameObject:
   - component: {fileID: 7137967076378784376}
   - component: {fileID: 7162885171325729384}
   - component: {fileID: 7079746402777195698}
+  - component: {fileID: 7192301008348172420}
   - component: {fileID: 7192301008348172419}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -45696,3 +45705,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7192301008348172420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192301008348172418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9592d73773f5848f5bff2aab2bae24a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 7099427508898048894}
+  interactableLayer: 8
+  raycastDistance: 1

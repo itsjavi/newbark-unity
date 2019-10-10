@@ -2,7 +2,7 @@
 
 namespace RPGKit2D.Input
 {
-    public static class InputHandler
+    public static class LegacyInputManager
     {
         public static ActionButton GetPressedActionButton()
         {
@@ -26,7 +26,7 @@ namespace RPGKit2D.Input
                 return ActionButton.SELECT;
             }
 
-            return TouchInputHandler.GetTouchAction();
+            return TouchInputManager.GetTouchAction();
         }
 
         public static DirectionButton GetPressedDirectionButton()
@@ -51,7 +51,7 @@ namespace RPGKit2D.Input
                 return DirectionButton.RIGHT;
             }
 
-            return TouchInputHandler.GetSwipeDirection();
+            return TouchInputManager.GetSwipeDirection();
         }
 
         public static Vector2 GetDirectionButtonVector(DirectionButton dir)
@@ -69,6 +69,31 @@ namespace RPGKit2D.Input
                 default:
                     return Vector2.zero;
             }
+        }
+
+        public static DirectionButton GetDirectionButtonFromVector(Vector2 pos)
+        {
+            if (pos == Vector2.up)
+            {
+                return DirectionButton.UP;
+            }
+
+            if (pos == Vector2.down)
+            {
+                return DirectionButton.DOWN;
+            }
+
+            if (pos == Vector2.left)
+            {
+                return DirectionButton.LEFT;
+            }
+
+            if (pos == Vector2.right)
+            {
+                return DirectionButton.RIGHT;
+            }
+
+            return DirectionButton.NONE;
         }
 
         public static Vector2 GetDirectionButtonVector()

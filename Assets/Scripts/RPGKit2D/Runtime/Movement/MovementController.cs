@@ -33,7 +33,7 @@ namespace RPGKit2D.Movement
                 StopMoving();
             }
 
-            DirectionButton dir = InputHandler.GetPressedDirectionButton();
+            DirectionButton dir = LegacyInputManager.GetPressedDirectionButton();
 
             TriggerDirectionButton(dir);
         }

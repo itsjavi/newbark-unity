@@ -17,9 +17,9 @@ namespace RPGKit2D.Interaction
 
         void Update()
         {
-            ActionButton action = InputHandler.GetPressedActionButton();
+            ActionButton action = LegacyInputManager.GetPressedActionButton();
             DirectionButton dir = m_animationController.GetLastAnimationDirection();
-            Vector3 dirVector = InputHandler.GetDirectionButtonVector(dir);
+            Vector3 dirVector = LegacyInputManager.GetDirectionButtonVector(dir);
             RaycastHit2D hit = CheckInteractableRaycast(dirVector);
 
             if (!hit || !hit.collider || !hit.collider.gameObject.HasComponent<Interactable>())

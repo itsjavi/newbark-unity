@@ -2,7 +2,7 @@
 
 namespace RPGKit2D.Input
 {
-    public static class TouchInputHandler
+    public static class TouchInputManager
     {
         private const float MinSwipeDist = 1.0f;
         private static bool _isSwiping;

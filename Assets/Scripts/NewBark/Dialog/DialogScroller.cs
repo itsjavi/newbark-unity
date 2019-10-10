@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RPGKit2D.Dialog
+namespace NewBark.Dialog
 {
     public class DialogScroller
     {

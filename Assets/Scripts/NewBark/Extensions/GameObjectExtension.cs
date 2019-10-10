@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RPGKit2D.Extensions
+namespace NewBark.Extensions
 {
     public static class GameObjectExtension
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RPGKit2D.Interaction
+namespace NewBark.Interaction
 {
     public abstract class Interactable : MonoBehaviour
     {

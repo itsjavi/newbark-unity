@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RPGKit2D.Input
+namespace NewBark.Input
 {
     public static class TouchInputManager
     {

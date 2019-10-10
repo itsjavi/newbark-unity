@@ -1,7 +1,7 @@
-using RPGKit2D.Dialog;
-using RPGKit2D.Input;
+using NewBark.Dialog;
+using NewBark.Input;
 
-namespace RPGKit2D.Interaction
+namespace NewBark.Interaction
 {
     public class InteractionContext
     {

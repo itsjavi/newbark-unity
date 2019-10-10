@@ -1,11 +1,11 @@
-using RPGKit2D.Attributes;
-using RPGKit2D.Dialog;
-using RPGKit2D.Extensions;
-using RPGKit2D.Input;
-using RPGKit2D.Movement;
+using NewBark.Attributes;
+using NewBark.Dialog;
+using NewBark.Input;
+using NewBark.Movement;
+using NewBark.Extensions;
 using UnityEngine;
 
-namespace RPGKit2D.Interaction
+namespace NewBark.Interaction
 {
     public class InteractionController : MonoBehaviour
     {

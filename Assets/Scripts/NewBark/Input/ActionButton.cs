@@ -1,4 +1,4 @@
-namespace RPGKit2D.Input
+namespace NewBark.Input
 {
     public enum ActionButton
     {

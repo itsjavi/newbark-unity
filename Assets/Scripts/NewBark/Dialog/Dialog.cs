@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RPGKit2D.Dialog
+namespace NewBark.Dialog
 {
     [System.Serializable]
     public class Dialog

@@ -1,9 +1,9 @@
-using RPGKit2D.Extensions;
-using RPGKit2D.Input;
+using NewBark.Input;
+using NewBark.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace RPGKit2D.Movement
+namespace NewBark.Movement
 {
     public class TeleportController : MonoBehaviour
     {

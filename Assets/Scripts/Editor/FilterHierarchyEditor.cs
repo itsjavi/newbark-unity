@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace RPGKit2D.Editor
+namespace NewBark.Editor
 {
     public class FilterHierarchyEditor : EditorWindow
     {

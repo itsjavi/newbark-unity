@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace RPGKit2D.UI
+namespace NewBark.UI
 {
     public class ScreenFaderController : MonoBehaviour
     {

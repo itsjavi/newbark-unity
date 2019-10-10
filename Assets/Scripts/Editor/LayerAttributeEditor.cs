@@ -1,8 +1,8 @@
-using RPGKit2D.Attributes;
+using NewBark.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace RPGKit2D.Editor
+namespace NewBark.Editor
 {
     [CustomPropertyDrawer(typeof(LayerAttribute))]
     public class LayerAttributeDrawer : PropertyDrawer

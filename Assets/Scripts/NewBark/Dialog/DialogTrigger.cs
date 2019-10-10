@@ -1,11 +1,11 @@
-﻿using RPGKit2D.Input;
-using RPGKit2D.Interaction;
+﻿using NewBark.Input;
+using NewBark.Interaction;
 
-namespace RPGKit2D.Dialog
+namespace NewBark.Dialog
 {
     public class DialogTrigger : Interactable
     {
-        public global::RPGKit2D.Dialog.Dialog dialog;
+        public global::NewBark.Dialog.Dialog dialog;
 
         public override void Interact(InteractionContext ctx)
         {

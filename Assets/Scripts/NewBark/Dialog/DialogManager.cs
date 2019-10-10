@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace RPGKit2D.Dialog
+namespace NewBark.Dialog
 {
     public class DialogManager : MonoBehaviour
     {
@@ -62,7 +62,7 @@ namespace RPGKit2D.Dialog
             audioSource.Play();
         }
 
-        public void StartDialog(global::RPGKit2D.Dialog.Dialog dialog)
+        public void StartDialog(global::NewBark.Dialog.Dialog dialog)
         {
             Clear();
             ShowDialog();

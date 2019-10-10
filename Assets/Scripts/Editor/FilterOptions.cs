@@ -1,4 +1,4 @@
-namespace RPGKit2D.Editor
+namespace NewBark.Editor
 {
     enum FilterOptions
     {

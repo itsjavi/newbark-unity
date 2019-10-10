@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace RPGKit2D.Attributes
+namespace NewBark.Attributes
 {
     [AttributeUsage(AttributeTargets.Field)]
     public class LayerAttribute : PropertyAttribute

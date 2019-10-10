@@ -1,7 +1,7 @@
-using RPGKit2D.Input;
+using NewBark.Input;
 using UnityEngine;
 
-namespace RPGKit2D.Movement
+namespace NewBark.Movement
 {
     public class AnimationController : MonoBehaviour
     {

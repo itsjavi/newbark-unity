@@ -1,9 +1,9 @@
-﻿using RPGKit2D.Dialog;
-using RPGKit2D.Extensions;
-using RPGKit2D.Input;
+﻿using NewBark.Dialog;
+using NewBark.Input;
+using NewBark.Extensions;
 using UnityEngine;
 
-namespace RPGKit2D.Movement
+namespace NewBark.Movement
 {
     public class MovementController : MonoBehaviour
     {

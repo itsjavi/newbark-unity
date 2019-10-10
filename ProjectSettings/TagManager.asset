@@ -49,12 +49,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Layer_1_Ground
+  - name: Background_Sorting
     uniqueID: 3855415453
     locked: 0
-  - name: Layer_2_Players
+  - name: Player_Sorting
     uniqueID: 1371617319
     locked: 0
-  - name: Layer_3_Overlay
+  - name: Foreground_Sorting
     uniqueID: 4197844559
     locked: 0

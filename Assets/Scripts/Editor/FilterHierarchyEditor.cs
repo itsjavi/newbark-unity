@@ -12,7 +12,7 @@ namespace NewBark.Editor
         bool filterInactive;
         List<int> objectIndex = new List<int>();
 
-        [MenuItem("2D RPG Kit/Filter Hierarchy")]
+        [MenuItem("NewBark/Filter Hierarchy")]
         static void Init()
         {
             FilterHierarchyEditor filter = (FilterHierarchyEditor) EditorWindow.GetWindow(typeof(FilterHierarchyEditor));

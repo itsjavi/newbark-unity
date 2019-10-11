@@ -73450,6 +73450,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1604917113}
+  - component: {fileID: 1604917114}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -73475,6 +73476,25 @@ Transform:
   m_Father: {fileID: 549839365}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1604917114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604917112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39bb1f2ab603d49498972bc35c584259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Title: Test
+  m_FromHour: 5
+  m_ToHour: 9
+  m_RestoreOnFinish: 1
+  m_Swaps:
+  - changeTile: {fileID: 11400000, guid: 534c33f89ad2d4a359e92556e0f20dff, type: 2}
+    newTile: {fileID: 11400000, guid: fc351f9e1364c41789a0d1a8bd482c88, type: 2}
 --- !u!4 &1648564539
 Transform:
   m_ObjectHideFlags: 0

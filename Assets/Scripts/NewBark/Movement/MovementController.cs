@@ -1,7 +1,10 @@
 ﻿using NewBark.Dialog;
 using NewBark.Input;
 using NewBark.Extensions;
+using NewBark.Physics;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace NewBark.Movement
 {
@@ -9,24 +12,25 @@ namespace NewBark.Movement
     {
         public AnimationController m_animationController;
         public DialogManager m_DialogManager;
-    
+
         public int m_Speed = 6;
         public int m_InputDelay = 8;
         public int m_TilesPerStep = 1;
         public float m_ClampOffset = 0.5f;
-    
+        public CollisionEvent2D onCollision;
+
         private bool _inputEnabled = true;
         private int _inputDelayCoolDown;
         private bool _isMoving;
         private int _currentTilesToMove = 1;
-        private GameObject _lastCollidedObject;
+        private Collision2D _lastCollidedObject;
         private Vector3 _destinationPosition;
         private Vector3 _positionDiff;
         private Vector3 _lastPositionDiff;
         private DirectionButton _lastDirection = DirectionButton.NONE;
         private DirectionButton _lastCollisionDir = DirectionButton.NONE;
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             if (!CanMove() && IsMoving())
             {
@@ -53,14 +57,14 @@ namespace NewBark.Movement
             Move(dir, _currentTilesToMove);
         }
 
-        private bool MoveTo(DirectionButton dir, Vector3 destPosition)
+        private void MoveTo(DirectionButton dir, Vector3 destPosition)
         {
             m_animationController.UpdateAnimation(_positionDiff, _lastPositionDiff, _isMoving);
 
             if (!_isMoving || (destPosition == transform.position))
             {
                 ClampCurrentPosition();
-                return false;
+                return;
             }
 
             if (_isMoving && (dir != DirectionButton.NONE) && (dir == _lastCollisionDir))
@@ -68,10 +72,10 @@ namespace NewBark.Movement
                 ClampCurrentPosition();
                 if (!(_lastCollidedObject is null))
                 {
-                    PlayCollisionSound(_lastCollidedObject);
+                    onCollision.Invoke(_lastCollidedObject);
                 }
 
-                return true;
+                return;
             }
 
             if (_isMoving)
@@ -81,13 +85,12 @@ namespace NewBark.Movement
             }
 
             var tr = transform;
-        
+
             tr.position = Vector3.MoveTowards(tr.position, destPosition, Time.deltaTime * m_Speed);
             tr.rotation = new Quaternion(0, 0, 0, 0);
-            return true;
         }
 
-        public bool Move(DirectionButton dir, int tiles)
+        public void Move(DirectionButton dir, int tiles)
         {
             _currentTilesToMove = tiles;
 
@@ -95,7 +98,7 @@ namespace NewBark.Movement
                 transform.position, dir, tiles
             );
 
-            return MoveTo(dir, destPosition);
+            MoveTo(dir, destPosition);
         }
 
         public void TriggerDirectionButton(DirectionButton dir)
@@ -113,51 +116,25 @@ namespace NewBark.Movement
 
         void OnCollisionEnter2D(Collision2D col)
         {
-            _lastCollidedObject = col.gameObject;
+            _lastCollidedObject = col;
             _lastCollisionDir = _lastDirection;
 
             ClampCurrentPosition();
 
-            PlayCollisionSound(_lastCollidedObject);
+            onCollision.Invoke(col);
         }
 
         void OnCollisionStay2D(Collision2D col)
         {
-            _lastCollidedObject = col.gameObject;
+            _lastCollidedObject = col;
             _lastCollisionDir = _lastDirection;
 
             if (_isMoving)
             {
-                PlayCollisionSound(_lastCollidedObject);
+                onCollision.Invoke(col);
             }
 
             StopMoving();
-        }
-
-        private bool HasCollisionSound(GameObject gameObj)
-        {
-            return gameObj.HasComponent<AudioSource>();
-        }
-
-        private AudioSource GetCollisionSound(GameObject gameObj)
-        {
-            if (!HasCollisionSound(gameObj))
-            {
-                return null;
-            }
-
-            gameObj.TryGetComponent(typeof(AudioSource), out Component aud);
-            return (AudioSource) aud;
-        }
-
-        private void PlayCollisionSound(GameObject gameObj)
-        {
-            AudioSource audioSource = GetCollisionSound(gameObj);
-
-            if (!(audioSource is null) && !audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
         }
 
         private void ClampCurrentPosition()
@@ -176,19 +153,18 @@ namespace NewBark.Movement
         {
             return _isMoving;
         }
-        
+
         // ---------------------------------------------------
 
         public void ClampPositionTo(Vector3 position)
         {
             var tr = transform;
-        
+
             tr.position = ClampPosition(position);
 
             // override in case collision physics caused object rotation
             tr.rotation = new Quaternion(0, 0, 0, 0);
         }
-
 
         private Vector3 CalculateDestinationPosition(Vector3 origin, DirectionButton dir, int tiles = 1)
         {

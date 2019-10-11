@@ -10,7 +10,7 @@ namespace NewBark.Audio
 
         public void SwitchClip(AudioClip newClip)
         {
-            if (newClip == m_AudioSource.clip)
+            if (newClip == m_AudioSource.clip && m_AudioSource.isPlaying)
             {
                 return;
             }
@@ -22,6 +22,16 @@ namespace NewBark.Audio
             }
 
             StartCoroutine(SwitchClipCoroutine(newClip, m_SwitchFadeOutTime));
+        }
+
+        public void PlayClipIfStopped(AudioClip newClip)
+        {
+            if (m_AudioSource.isPlaying)
+            {
+                return;
+            }
+            m_AudioSource.clip = newClip;
+            m_AudioSource.Play();
         }
 
         public void PlayClip(AudioClip newClip)

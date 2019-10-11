@@ -43795,6 +43795,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1212527980}
+  - component: {fileID: 1212527981}
   m_Layer: 1
   m_Name: AudioChannels
   m_TagString: Untagged
@@ -43818,6 +43819,14 @@ Transform:
   m_Father: {fileID: 969265082}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &1212527981
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212527979}
+  m_Enabled: 1
 --- !u!1 &1277699177
 GameObject:
   m_ObjectHideFlags: 0
@@ -44032,8 +44041,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialog:
-    text: "POK\xE9RADIO is ON:\n\n...\n\nThanks for trying out this project!\n\nFeel
-      free to give any feedback in\nTwitter @route1rodent\n\n--  Xavier."
+    text: "POK\xE9RADIO is ON:\n\n...\n\nThanks for trying out this project!\n\nUpdates
+      and suggestions:\n@route1rodent (Twitter)"
 --- !u!114 &1307903372 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2759677251020856132, guid: dbd1a801b1f1f429099bfa9769d82b46,
@@ -73858,7 +73867,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1744992514}
-  - component: {fileID: 1744992513}
   - component: {fileID: 1744992512}
   - component: {fileID: 1744992515}
   m_Layer: 1
@@ -73964,14 +73972,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!81 &1744992513
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1744992511}
-  m_Enabled: 1
 --- !u!4 &1744992514
 Transform:
   m_ObjectHideFlags: 0
@@ -74573,7 +74573,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1975802335}
-  - component: {fileID: 1975802338}
   - component: {fileID: 1975802337}
   - component: {fileID: 1975802336}
   m_Layer: 1
@@ -74707,14 +74706,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!81 &1975802338
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1975802334}
-  m_Enabled: 1
 --- !u!4 &2022546124
 Transform:
   m_ObjectHideFlags: 0

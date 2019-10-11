@@ -5,22 +5,20 @@ namespace NewBark.Dialog
 {
     public class DialogTrigger : Interactable
     {
-        public global::NewBark.Dialog.Dialog dialog;
+        public Dialog dialog;
 
         public override void Interact(InteractionContext ctx)
         {
-            if (!ctx.dialogManager || ctx.action == ActionButton.NONE)
+            var isAb = ctx.action == ActionButton.A || ctx.action == ActionButton.B;
+
+            if (!ctx.dialogManager || ctx.action == ActionButton.NONE || !isAb)
             {
                 return;
             }
 
             DialogManager dm = ctx.dialogManager;
 
-            bool shouldEndDialog = dm.InDialog()
-                                   && (
-                                       ((ctx.action == ActionButton.A) && !dm.HasNext())
-                                       || (ctx.action == ActionButton.B)
-                                   );
+            var shouldEndDialog = dm.InDialog() && !dm.HasNext();
 
             if (shouldEndDialog)
             {
@@ -28,14 +26,9 @@ namespace NewBark.Dialog
                 return;
             }
 
-            if (ctx.action != ActionButton.A)
-            {
-                return;
-            }
-
             if (!dm.InDialog())
             {
-                dm.StartDialog(dialog);
+                if (ctx.action == ActionButton.A) dm.StartDialog(dialog);
                 return;
             }
 

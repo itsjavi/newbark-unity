@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using NewBark.Input;
 using NewBark.Physics;
 
@@ -15,7 +14,7 @@ namespace NewBark.State
         public DateTime saveDate = DateTime.Now;
         public float playTime;
 
-        public Hashtable areaTitle;
+        public string areaTitleTrigger;
         public SerializableVector2 playerPosition;
         public DirectionButton playerDirection;
     }

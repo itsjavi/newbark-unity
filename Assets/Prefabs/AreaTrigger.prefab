@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1872218593816675670}
   - component: {fileID: 7695262888865887930}
   - component: {fileID: 7642423886212629021}
-  - component: {fileID: 7642423886212629020}
+  - component: {fileID: 633117654516938336}
   m_Layer: 1
   m_Name: AreaEnter
   m_TagString: Untagged
@@ -108,7 +108,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7642423886212629020
+--- !u!114 &633117654516938336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,27 +117,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2516506545015051058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
+  m_Script: {fileID: 11500000, guid: 363196879af6452b985df7de7066298c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SwitchClip
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 0cad64e6f0971409992d5fb61b56c8d6,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onExit:
+  areaTitle: {fileID: 11400000, guid: 5fc16755056224707b02caebcd1b02b1, type: 2}
+  tagFilter: Player
+  onAreaEnter:
     m_PersistentCalls:
       m_Calls: []

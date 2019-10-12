@@ -10,7 +10,6 @@ namespace NewBark
     public class Player : MonoBehaviour
     {
         public AnimationController m_AnimationController;
-        public AreaTitleController m_AreaTitleController;
 
         public bool autoSave;
         public UnityEvent onLoadState;
@@ -19,7 +18,7 @@ namespace NewBark
         public UnityEvent onSaveState;
         public GameData Data { get; private set; } = new GameData();
 
-        private void Awake()
+        private void Start()
         {
             LoadState();
         }
@@ -52,7 +51,7 @@ namespace NewBark
             //
             transform.position = Data.playerPosition;
             m_AnimationController.UpdateAnimation(Data.playerDirection);
-            m_AreaTitleController.SwitchArea(AreaTitle.FromHashtable(Data.areaTitle));
+            AreaTitleTrigger.SwitchTo(Data.areaTitleTrigger);
             //
             onLoadState.Invoke();
         }
@@ -67,7 +66,7 @@ namespace NewBark
             onBeforeSaveState.Invoke();
             Data.saveDate = DateTime.Now;
             //
-            Data.areaTitle = m_AreaTitleController.areaTitle.ToHashtable();
+            Data.areaTitleTrigger = AreaTitleTrigger.LastTrigger ? AreaTitleTrigger.LastTrigger.name : null;
             Data.playerPosition = transform.position;
             Data.playerDirection = m_AnimationController.GetLastAnimationDirection();
             //

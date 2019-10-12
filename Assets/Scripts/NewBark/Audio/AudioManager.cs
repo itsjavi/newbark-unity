@@ -1,59 +1,44 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace NewBark.Audio
 {
     public class AudioManager : MonoBehaviour
     {
-        public AudioSource m_AudioSource;
-        public float m_SwitchFadeOutTime;
+        private Dictionary<string, AudioChannel> _channels;
 
-        public void SwitchClip(AudioClip newClip)
+        public AudioManager()
         {
-            if (newClip == m_AudioSource.clip && m_AudioSource.isPlaying)
-            {
-                return;
-            }
-
-            if (!m_AudioSource.isPlaying || m_SwitchFadeOutTime == 0)
-            {
-                PlayClip(newClip);
-                return;
-            }
-
-            StartCoroutine(SwitchClipCoroutine(newClip, m_SwitchFadeOutTime));
+            _channels = new Dictionary<string, AudioChannel>();
         }
 
-        public void PlayClipIfStopped(AudioClip newClip)
+        private void Awake()
         {
-            if (m_AudioSource.isPlaying)
+            foreach (var channel in GetComponentsInChildren<AudioChannel>())
             {
-                return;
+                _channels.Add(channel.name.ToLower(), channel);
             }
-            m_AudioSource.clip = newClip;
-            m_AudioSource.Play();
         }
 
-        public void PlayClip(AudioClip newClip)
+        public AudioChannel GetBgmChannel()
         {
-            m_AudioSource.clip = newClip;
-            m_AudioSource.Play();
+            return GetChannel("bgm");
         }
 
-        private IEnumerator SwitchClipCoroutine(AudioClip newClip, float fadeOutTime)
+        public AudioChannel GetSfxChannel()
         {
-            float startVolume = m_AudioSource.volume;
+            return GetChannel("sfx");
+        }
 
-            while (m_AudioSource.volume > 0)
-            {
-                m_AudioSource.volume -= startVolume * Time.deltaTime / fadeOutTime;
+        public AudioChannel GetChannel(string channelName)
+        {
+            channelName = channelName.ToLower();
+            return !HasChannel(channelName) ? null : _channels[channelName];
+        }
 
-                yield return null;
-            }
-
-            m_AudioSource.Stop();
-            m_AudioSource.volume = startVolume;
-            PlayClip(newClip);
+        public bool HasChannel(string channelName)
+        {
+            return _channels.ContainsKey(channelName);
         }
     }
 }

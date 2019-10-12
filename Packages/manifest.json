@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.pixelplacement.itween": "https://github.com/route1rodent/iTween.git#1.0.0",
     "com.unity.2d.pixel-perfect": "1.0.1-preview",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
@@ -46,6 +47,10 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
+    "com.pixelplacement.itween": {
+      "hash": "cf61e349beae88dbe4031fa161c560b8abf093a1",
+      "revision": "1.0.0"
+    },
     "com.unity.2d.tilemap.extras": {
       "hash": "cc25c1f146525e35f7f23f786193a8a05d5f33f6",
       "revision": "master"

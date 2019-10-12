@@ -39,6 +39,11 @@ namespace NewBark.Movement
 
             DirectionButton dir = LegacyInputManager.GetPressedDirectionButton();
 
+            if (!IsMoving() && dir == DirectionButton.NONE)
+            {
+                return;
+            }
+
             TriggerDirectionButton(dir);
         }
 

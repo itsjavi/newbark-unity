@@ -6,14 +6,13 @@ namespace NewBark.Audio
 {
     public class AudioChannelManager : MonoBehaviour
     {
-        public float bgmInitialVolume = 0.075f;
-        public float sfxInitialVolume = 0.35f;
+        public float bgmVolume = 0.075f;
+        public float sfxVolume = 0.35f;
 
         [Tooltip("Fade-out transition time when switching BGM audio clip.")]
         public float bgmTransitionTime = 1.2f;
 
-        public bool keepInitialVolume;
-        private bool inBgmTransition;
+        private bool _loaded;
 
         private Dictionary<AudioChannel, AudioSource> _channels;
         public static AudioChannelManager Instance { get; private set; }
@@ -24,6 +23,18 @@ namespace NewBark.Audio
         AudioChannelManager()
         {
             Instance = this;
+        }
+
+        private void OnValidate()
+        {
+            if (!_loaded)
+            {
+                return;
+            }
+
+            // update when changed in editor
+            BgmChannel.volume = bgmVolume;
+            SfxChannel.volume = sfxVolume;
         }
 
         private void Awake()
@@ -42,26 +53,13 @@ namespace NewBark.Audio
         {
             BgmChannel.loop = true;
             BgmChannel.playOnAwake = false;
-            BgmChannel.volume = bgmInitialVolume;
+            BgmChannel.volume = bgmVolume;
 
             SfxChannel.loop = false;
             SfxChannel.playOnAwake = false;
-            SfxChannel.volume = sfxInitialVolume;
-        }
+            SfxChannel.volume = sfxVolume;
 
-        private void Update()
-        {
-            if (!keepInitialVolume)
-            {
-                return;
-            }
-
-            if (!inBgmTransition)
-            {
-                BgmChannel.volume = bgmInitialVolume;
-            }
-
-            SfxChannel.volume = sfxInitialVolume;
+            _loaded = true;
         }
 
         public void PlayBgmTransition(AudioClip newClip)
@@ -123,7 +121,6 @@ namespace NewBark.Audio
                 source.clip = newClip;
             }
 
-            Debug.Log(source.volume);
             source.Play();
         }
 
@@ -139,7 +136,6 @@ namespace NewBark.Audio
 
         private IEnumerator PlayBgmTransitionCoroutine(AudioSource source, AudioClip newClip, float fadeOutTime)
         {
-            inBgmTransition = true;
             float startVolume = source.volume;
 
             while (source.volume > 0)
@@ -152,7 +148,6 @@ namespace NewBark.Audio
             source.Stop();
             source.volume = startVolume;
             Play(source, newClip);
-            inBgmTransition = false;
         }
     }
 }

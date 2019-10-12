@@ -19,13 +19,9 @@ namespace NewBark
         public UnityEvent onSaveState;
         public GameData Data { get; private set; } = new GameData();
 
+#if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            if (!Application.isEditor)
-            {
-                return;
-            }
-
             var position = transform.position;
             Handles.Label(
                 position + new Vector3(-4, 3),
@@ -33,6 +29,7 @@ namespace NewBark
                 new GUIStyle {fontSize = 8, normal = {textColor = Color.blue}}
             );
         }
+#endif
 
         private void Start()
         {

@@ -2,6 +2,7 @@ using System;
 using NewBark.Movement;
 using NewBark.State;
 using NewBark.Tilemap;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,6 +18,21 @@ namespace NewBark
         public UnityEvent onBeforeSaveState;
         public UnityEvent onSaveState;
         public GameData Data { get; private set; } = new GameData();
+
+        void OnDrawGizmos()
+        {
+            if (!Application.isEditor)
+            {
+                return;
+            }
+
+            var position = transform.position;
+            Handles.Label(
+                position + new Vector3(-4, 3),
+                position.x + ", " + position.y + ", " + AreaTitleTrigger.LastTriggerTitle,
+                new GUIStyle {fontSize = 8, normal = {textColor = Color.blue}}
+            );
+        }
 
         private void Start()
         {
@@ -66,7 +82,7 @@ namespace NewBark
             onBeforeSaveState.Invoke();
             Data.saveDate = DateTime.Now;
             //
-            Data.areaTitleTrigger = AreaTitleTrigger.LastTrigger ? AreaTitleTrigger.LastTrigger.name : null;
+            Data.areaTitleTrigger = AreaTitleTrigger.LastTriggerName;
             Data.playerPosition = transform.position;
             Data.playerDirection = m_AnimationController.GetLastAnimationDirection();
             //

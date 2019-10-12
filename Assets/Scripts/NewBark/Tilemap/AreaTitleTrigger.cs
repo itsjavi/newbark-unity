@@ -10,6 +10,8 @@ namespace NewBark.Tilemap
     public class AreaTitleTrigger : MonoBehaviour
     {
         public static AreaTitleTrigger LastTrigger { get; private set; }
+        public static string LastTriggerName => LastTrigger ? LastTrigger.name : null;
+        public static string LastTriggerTitle => LastTrigger ? LastTrigger.areaTitle.title : null;
 
         public AreaTitle areaTitle;
         [Tag] public string tagFilter;
@@ -51,8 +53,6 @@ namespace NewBark.Tilemap
             {
                 AudioChannelManager.Instance.PlayBgmTransition(areaTitle.music);
             }
-
-            Debug.Log("Area Title: " + areaTitle.title + " // " + areaTitle.subtitle);
         }
 
         void OnTriggerEnter2D(Collider2D other)

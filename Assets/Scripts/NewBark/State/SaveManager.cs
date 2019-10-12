@@ -62,7 +62,7 @@ namespace NewBark.State
             var data = formatter.Deserialize(stream) as GameData;
             stream.Close();
 
-            Debug.Log("Game LOADED. " + GetPlayTime(data));
+            Debug.Log("Game LOADED. ");
             return data;
         }
 

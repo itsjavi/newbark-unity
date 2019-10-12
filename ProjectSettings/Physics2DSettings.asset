@@ -43,14 +43,14 @@ Physics2DSettings:
   m_QueriesStartInColliders: 1
   m_CallbacksOnDisable: 1
   m_ReuseCollisionCallbacks: 0
-  m_AutoSyncTransforms: 1
+  m_AutoSyncTransforms: 0
   m_AlwaysShowColliders: 0
-  m_ShowColliderSleep: 0
+  m_ShowColliderSleep: 1
   m_ShowColliderContacts: 0
   m_ShowColliderAABB: 0
-  m_ContactArrowScale: 0.322
-  m_ColliderAwakeColor: {r: 0, g: 1, b: 0.20307422, a: 1}
-  m_ColliderAsleepColor: {r: 0.11439747, g: 0.5647059, b: 0.019607836, a: 1}
+  m_ContactArrowScale: 0.2
+  m_ColliderAwakeColor: {r: 0.5686275, g: 0.95686275, b: 0.54509807, a: 0.7529412}
+  m_ColliderAsleepColor: {r: 0.5686275, g: 0.95686275, b: 0.54509807, a: 0.36078432}
   m_ColliderContactColor: {r: 1, g: 0, b: 1, a: 0.6862745}
-  m_ColliderAABBColor: {r: 1, g: 1, b: 0, a: 1}
-  m_LayerCollisionMatrix: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  m_ColliderAABBColor: {r: 1, g: 1, b: 0, a: 0.2509804}
+  m_LayerCollisionMatrix: fffdfffffffdfffffffdfffffffffffffffdfffffffdfffffffffffffffffffffffdffffc8fcffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff

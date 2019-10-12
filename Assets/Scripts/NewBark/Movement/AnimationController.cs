@@ -22,6 +22,31 @@ namespace NewBark.Movement
             m_Animator.SetBool(Moving, isMoving);
         }
 
+        public void UpdateAnimation(Vector2 position)
+        {
+            m_Animator.SetFloat(MoveX, position.x);
+            m_Animator.SetFloat(MoveY, position.y);
+        }
+
+        public void UpdateAnimation(Vector2 position, Vector2 lastPosition)
+        {
+            m_Animator.SetFloat(MoveX, position.x);
+            m_Animator.SetFloat(MoveY, position.y);
+            m_Animator.SetFloat(LastMoveX, lastPosition.x);
+            m_Animator.SetFloat(LastMoveY, lastPosition.y);
+        }
+
+        public void UpdateAnimation(bool isMoving)
+        {
+            m_Animator.SetBool(Moving, isMoving);
+        }
+
+        public void UpdateAnimation(DirectionButton dir)
+        {
+            var pos = LegacyInputManager.GetDirectionButtonVector(dir);
+            UpdateAnimation(pos, pos);
+        }
+
         public DirectionButton GetAnimationDirection()
         {
             if (m_Animator.GetFloat(MoveX) > 0)

@@ -2011,39 +2011,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &395414934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252100234827979952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1744992515}
-        m_MethodName: SwitchClip
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 34530ca1152a0447e9a1007af511acb5,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &419050279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2136,7 +2103,8 @@ PrefabInstance:
       propertyPath: onEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8300000, guid: 8720331172c3f417aa2d686d32bb6c07, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7642423886212629020, guid: d964a765c1122490b89587103bdb442c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d964a765c1122490b89587103bdb442c, type: 3}
 --- !u!4 &419050280 stripped
 Transform:
@@ -2170,39 +2138,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &485954891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252100234981164133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1744992515}
-        m_MethodName: SwitchClip
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 0cad64e6f0971409992d5fb61b56c8d6,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &490968612
 GameObject:
   m_ObjectHideFlags: 0
@@ -42491,7 +42426,8 @@ PrefabInstance:
       propertyPath: onEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8300000, guid: 0cad64e6f0971409992d5fb61b56c8d6, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7642423886212629020, guid: d964a765c1122490b89587103bdb442c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d964a765c1122490b89587103bdb442c, type: 3}
 --- !u!4 &637636179 stripped
 Transform:
@@ -42499,6 +42435,47 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 637636178}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &658049030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2516506545015051058, guid: d964a765c1122490b89587103bdb442c,
+    type: 3}
+  m_PrefabInstance: {fileID: 637636178}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &658049031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658049030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagFilter:
+  - Player
+  onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7192301008348172423}
+        m_MethodName: SwitchArea
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 5fc16755056224707b02caebcd1b02b1,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: NewBark.Tilemap.AreaTitle, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &681089990
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42525,39 +42502,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &681089991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252100234106096353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1744992515}
-        m_MethodName: SwitchClip
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 8aadd26b1614d4563a02f4391fd2325d,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &709541731
 Transform:
   m_ObjectHideFlags: 0
@@ -43289,6 +43233,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &984461246 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2516506545015051058, guid: d964a765c1122490b89587103bdb442c,
+    type: 3}
+  m_PrefabInstance: {fileID: 419050279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &984461247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984461246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagFilter:
+  - Player
+  onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7192301008348172423}
+        m_MethodName: SwitchArea
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: af24f5ba7c6f34af0ba17a47fa114593,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: NewBark.Tilemap.AreaTitle, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1029645250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45791,7 +45776,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!19719996 &1405830671
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -73535,39 +73520,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1664212814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252100235018800744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1744992515}
-        m_MethodName: SwitchClip
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 34530ca1152a0447e9a1007af511acb5,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onStay:
-    m_PersistentCalls:
-      m_Calls: []
-  onExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1703834550
 Transform:
   m_ObjectHideFlags: 0
@@ -73906,8 +73858,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0cad64e6f0971409992d5fb61b56c8d6, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 0.15
   m_Pitch: 1
   Loop: 1
@@ -74640,7 +74592,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e7aa1061682754e5f919394e893de652, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.35
   m_Pitch: 1
@@ -75883,7 +75835,7 @@ GameObject:
   - component: {fileID: 8355352604735282309}
   - component: {fileID: 55249201544195945}
   - component: {fileID: 681089990}
-  - component: {fileID: 681089991}
+  - component: {fileID: 5252100234106096354}
   m_Layer: 1
   m_Name: AreaEnter_CherryGrove
   m_TagString: Untagged
@@ -75891,6 +75843,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5252100234106096354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252100234106096353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagFilter:
+  - Player
+  onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7192301008348172423}
+        m_MethodName: SwitchArea
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: da50f915734e54848bf4876884de84a2,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: NewBark.Tilemap.AreaTitle, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5252100234827979952
 GameObject:
   m_ObjectHideFlags: 0
@@ -75902,7 +75889,7 @@ GameObject:
   - component: {fileID: 8355352604383414996}
   - component: {fileID: 55249201258527032}
   - component: {fileID: 395414933}
-  - component: {fileID: 395414934}
+  - component: {fileID: 5252100234827979953}
   m_Layer: 1
   m_Name: AreaEnter_Route29
   m_TagString: Untagged
@@ -75910,6 +75897,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5252100234827979953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252100234827979952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagFilter:
+  - Player
+  onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7192301008348172423}
+        m_MethodName: SwitchArea
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: d3d230ab890dd46d78deabd387fc54e2,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: NewBark.Tilemap.AreaTitle, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5252100234981164133
 GameObject:
   m_ObjectHideFlags: 0
@@ -75921,7 +75943,7 @@ GameObject:
   - component: {fileID: 8355352604528480769}
   - component: {fileID: 55249201344668141}
   - component: {fileID: 485954890}
-  - component: {fileID: 485954891}
+  - component: {fileID: 5252100234981164134}
   m_Layer: 1
   m_Name: AreaEnter_NewBark
   m_TagString: Untagged
@@ -75929,6 +75951,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5252100234981164134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252100234981164133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagFilter:
+  - Player
+  onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7192301008348172423}
+        m_MethodName: SwitchArea
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 5fc16755056224707b02caebcd1b02b1,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: NewBark.Tilemap.AreaTitle, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5252100235018800744
 GameObject:
   m_ObjectHideFlags: 0
@@ -75940,7 +75997,7 @@ GameObject:
   - component: {fileID: 8355352603517310988}
   - component: {fileID: 55249202539867104}
   - component: {fileID: 1664212813}
-  - component: {fileID: 1664212814}
+  - component: {fileID: 5252100235018800745}
   m_Layer: 1
   m_Name: AreaEnter_Route29
   m_TagString: Untagged
@@ -75948,6 +76005,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5252100235018800745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252100235018800744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagFilter:
+  - Player
+  onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7192301008348172423}
+        m_MethodName: SwitchArea
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: d3d230ab890dd46d78deabd387fc54e2,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: NewBark.Tilemap.AreaTitle, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &5384777126591065078
 Transform:
   m_ObjectHideFlags: 0
@@ -76236,11 +76328,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ccd6a316686b94c969501bac8d9a5cef, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!1 &7192301008348172418
 GameObject:
   m_ObjectHideFlags: 0
@@ -76259,6 +76351,7 @@ GameObject:
   - component: {fileID: 7192301008348172419}
   - component: {fileID: 7192301008348172421}
   - component: {fileID: 7192301008348172422}
+  - component: {fileID: 7192301008348172423}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -76373,6 +76466,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe8a06eb057e46d5a7dcb5e26b6f58c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_AnimationController: {fileID: 7192301008348172421}
+  m_AreaTitleController: {fileID: 7192301008348172423}
+  autoSave: 1
+  onLoadState:
+    m_PersistentCalls:
+      m_Calls: []
+  onBeforeLoadState:
+    m_PersistentCalls:
+      m_Calls: []
+  onBeforeSaveState:
+    m_PersistentCalls:
+      m_Calls: []
+  onSaveState:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7192301008348172423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192301008348172418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 178ed9686263443590a7269fa4685fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaTitle: {fileID: 0}
+  audioChannel: {fileID: 1744992515}
 --- !u!212 &7281219702549517835
 SpriteRenderer:
   m_ObjectHideFlags: 0

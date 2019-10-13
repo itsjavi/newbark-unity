@@ -1,6 +1,6 @@
 ﻿using NewBark.Dialog;
 using NewBark.Input;
-using NewBark.Physics;
+using NewBark.Support.Physics;
 using UnityEngine;
 
 namespace NewBark.Movement

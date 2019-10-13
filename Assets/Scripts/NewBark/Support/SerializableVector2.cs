@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace NewBark.Physics
+namespace NewBark.Support
 {
     [Serializable]
     public struct SerializableVector2 : IEquatable<Vector2>, IEquatable<Vector3>

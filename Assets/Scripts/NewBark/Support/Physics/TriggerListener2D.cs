@@ -2,7 +2,7 @@ using NewBark.Attributes;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace NewBark.Physics
+namespace NewBark.Support.Physics
 {
     public class TriggerListener2D : MonoBehaviour
     {

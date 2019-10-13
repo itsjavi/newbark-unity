@@ -16143,8 +16143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags:
-  - Player
+  tagFilter: 
   onEnter:
     m_PersistentCalls:
       m_Calls:
@@ -25156,8 +25155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags:
-  - Player
+  tagFilter: 
   onEnter:
     m_PersistentCalls:
       m_Calls:
@@ -29193,7 +29191,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1265960126}
-  - component: {fileID: 1265960127}
   m_Layer: 0
   m_Name: Tilemaps
   m_TagString: Untagged
@@ -29219,25 +29216,6 @@ Transform:
   m_Father: {fileID: 468910830}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1265960127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1265960125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39bb1f2ab603d49498972bc35c584259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Title: Test
-  m_FromHour: 5
-  m_ToHour: 9
-  m_RestoreOnFinish: 1
-  m_Swaps:
-  - changeTile: {fileID: 11400000, guid: 534c33f89ad2d4a359e92556e0f20dff, type: 2}
-    newTile: {fileID: 11400000, guid: fc351f9e1364c41789a0d1a8bd482c88, type: 2}
 --- !u!1 &1304285299
 GameObject:
   m_ObjectHideFlags: 0
@@ -55099,8 +55077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags:
-  - Player
+  tagFilter: 
   onEnter:
     m_PersistentCalls:
       m_Calls:
@@ -64635,7 +64612,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1583876784}
-  - component: {fileID: 1583876785}
   m_Layer: 0
   m_Name: Tilemaps
   m_TagString: Untagged
@@ -64661,25 +64637,6 @@ Transform:
   m_Father: {fileID: 2039246666}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1583876785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1583876783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39bb1f2ab603d49498972bc35c584259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Title: Test
-  m_FromHour: 5
-  m_ToHour: 9
-  m_RestoreOnFinish: 1
-  m_Swaps:
-  - changeTile: {fileID: 11400000, guid: 534c33f89ad2d4a359e92556e0f20dff, type: 2}
-    newTile: {fileID: 11400000, guid: fc351f9e1364c41789a0d1a8bd482c88, type: 2}
 --- !u!1 &1604917112
 GameObject:
   m_ObjectHideFlags: 0
@@ -64689,7 +64646,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1604917113}
-  - component: {fileID: 1604917114}
   m_Layer: 0
   m_Name: Tilemaps
   m_TagString: Untagged
@@ -64714,25 +64670,6 @@ Transform:
   m_Father: {fileID: 1055475387}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1604917114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604917112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39bb1f2ab603d49498972bc35c584259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Title: Test
-  m_FromHour: 5
-  m_ToHour: 9
-  m_RestoreOnFinish: 1
-  m_Swaps:
-  - changeTile: {fileID: 11400000, guid: 534c33f89ad2d4a359e92556e0f20dff, type: 2}
-    newTile: {fileID: 11400000, guid: fc351f9e1364c41789a0d1a8bd482c88, type: 2}
 --- !u!1 &1633233004
 GameObject:
   m_ObjectHideFlags: 0
@@ -65232,8 +65169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8cc35cca73c41babb3324c5d425d8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AudioSource: {fileID: 1744992512}
-  m_SwitchFadeOutTime: 1.2
 --- !u!1001 &1752786112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65388,7 +65323,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1753870349}
-  - component: {fileID: 1753870350}
   m_Layer: 0
   m_Name: Tilemaps
   m_TagString: Untagged
@@ -65413,25 +65347,6 @@ Transform:
   m_Father: {fileID: 1934935646}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1753870350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753870348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39bb1f2ab603d49498972bc35c584259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Title: Test
-  m_FromHour: 5
-  m_ToHour: 9
-  m_RestoreOnFinish: 1
-  m_Swaps:
-  - changeTile: {fileID: 11400000, guid: 534c33f89ad2d4a359e92556e0f20dff, type: 2}
-    newTile: {fileID: 11400000, guid: fc351f9e1364c41789a0d1a8bd482c88, type: 2}
 --- !u!1 &1805808058
 GameObject:
   m_ObjectHideFlags: 0
@@ -78258,8 +78173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882fa9ff2daf4c0b914197524e29a790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags:
-  - Player
+  tagFilter: 
   onEnter:
     m_PersistentCalls:
       m_Calls:
@@ -78435,8 +78349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8cc35cca73c41babb3324c5d425d8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AudioSource: {fileID: 1975802337}
-  m_SwitchFadeOutTime: 0
 --- !u!82 &1975802337
 AudioSource:
   m_ObjectHideFlags: 0
@@ -80512,7 +80424,6 @@ GameObject:
   - component: {fileID: 7192301008348172420}
   - component: {fileID: 7192301008348172419}
   - component: {fileID: 7192301008348172421}
-  - component: {fileID: 7192301008348172422}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -80614,34 +80525,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017091b51d194d43baaa72ad72c9b762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animator: {fileID: 7099427508898048894}
---- !u!114 &7192301008348172422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192301008348172418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe8a06eb057e46d5a7dcb5e26b6f58c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AudioManager: {fileID: 1212527982}
-  m_AnimationController: {fileID: 7192301008348172421}
-  autoSave: 0
-  onLoadState:
-    m_PersistentCalls:
-      m_Calls: []
-  onBeforeLoadState:
-    m_PersistentCalls:
-      m_Calls: []
-  onBeforeSaveState:
-    m_PersistentCalls:
-      m_Calls: []
-  onSaveState:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!212 &7281219702549517835
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,5 +1,5 @@
 using NewBark.Input;
-using NewBark.Extensions;
+using NewBark.Support.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
 

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
 
-namespace NewBark.Extensions
+namespace NewBark.Support.Extensions
 {
     public static class GameObjectExtension
     {

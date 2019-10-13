@@ -2,7 +2,7 @@ using NewBark.Attributes;
 using NewBark.Dialog;
 using NewBark.Input;
 using NewBark.Movement;
-using NewBark.Extensions;
+using NewBark.Support.Extensions;
 using UnityEngine;
 
 namespace NewBark.Interaction

@@ -1,10 +1,7 @@
 ﻿using NewBark.Dialog;
 using NewBark.Input;
-using NewBark.Extensions;
 using NewBark.Physics;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace NewBark.Movement
 {

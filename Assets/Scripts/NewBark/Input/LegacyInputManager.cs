@@ -26,7 +26,7 @@ namespace NewBark.Input
                 return ActionButton.SELECT;
             }
 
-            return TouchInputManager.GetTouchAction();
+            return ActionButton.NONE;
         }
 
         public static DirectionButton GetPressedDirectionButton()
@@ -51,7 +51,7 @@ namespace NewBark.Input
                 return DirectionButton.RIGHT;
             }
 
-            return TouchInputManager.GetSwipeDirection();
+            return DirectionButton.NONE;
         }
 
         public static Vector2 GetDirectionButtonVector(DirectionButton dir)

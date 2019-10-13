@@ -1,65 +1,53 @@
 ﻿using System;
-using NewBark.Tilemap;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-public class TileSwapScheduler : MonoBehaviour
+namespace NewBark.Tilemap
 {
-    public string m_Title;
-    public int m_FromHour;
-    public int m_ToHour;
-    public bool m_RestoreOnFinish;
-    public TileSwap[] m_Swaps;
-
-    private bool _swapped = false;
-    private Tilemap[] _tileMaps;
-
-    void Awake()
+    public class TileSwapScheduler : MonoBehaviour
     {
-        _tileMaps = GetComponentsInChildren<Tilemap>();
-    }
+        public TileSwapSchedule[] schedules;
+        private UnityEngine.Tilemaps.Tilemap[] _tileMaps;
 
-    void Update()
-    {
-        if (!_swapped && InSchedule())
+        void Awake()
         {
-            SwapTiles();
-            Debug.Log("Tiles changed to " + m_Title);
-            return;
+            _tileMaps = GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>();
         }
 
-        if (m_RestoreOnFinish && _swapped && !InSchedule())
+        void Update()
         {
-            SwapTilesBack();
-        }
-    }
-
-    bool InSchedule()
-    {
-        return DateTime.Now.Hour >= m_FromHour && DateTime.Now.Hour <= m_ToHour;
-    }
-
-    void SwapTilesBack()
-    {
-        foreach (var tm in _tileMaps)
-        {
-            foreach (var sw in m_Swaps)
+            foreach (var schedule in schedules)
             {
-                tm.SwapTile(sw.newTile, sw.changeTile);
+                if (schedule.CanSwap())
+                {
+                    SwapTiles(schedule);
+                    schedule.swapped = true;
+                    return;
+                }
+
+                schedule.swapped = false;
             }
         }
-        _swapped = false;
-    }
 
-    void SwapTiles()
-    {
-        foreach (var tm in _tileMaps)
+        private void OnValidate()
         {
-            foreach (var sw in m_Swaps)
+            // reset on editor changes
+            foreach (var schedule in schedules)
             {
-                tm.SwapTile(sw.changeTile, sw.newTile);
+                schedule.swapped = false;
             }
         }
-        _swapped = true;
+
+        void SwapTiles(TileSwapSchedule schedule)
+        {
+            foreach (var tm in _tileMaps)
+            {
+                tm.color = schedule.color;
+
+                foreach (var sw in schedule.m_TileSwaps)
+                {
+                    tm.SwapTile(sw.changeTile, sw.newTile);
+                }
+            }
+        }
     }
 }

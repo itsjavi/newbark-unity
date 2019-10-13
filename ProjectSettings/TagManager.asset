@@ -4,14 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Invisible
-  - Warp
-  - Item
-  - NPC
   - ScreenFader
-  - Audio
-  - WarpDropZone
-  - WarpZone
   layers:
   - Default
   - TransparentFX
@@ -21,8 +14,8 @@ TagManager:
   - UI
   - 
   - 
-  - Interactable
-  - System
+  - Colliders
+  - 
   - 
   - 
   - 

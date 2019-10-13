@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NewBark.Audio
 {
-    public class AudioChannelManager : MonoBehaviour
+    public class AudioController : MonoBehaviour
     {
         public float bgmVolume = 0.075f;
         public float sfxVolume = 0.35f;
@@ -15,15 +15,8 @@ namespace NewBark.Audio
         private bool _loaded;
 
         private Dictionary<AudioChannel, AudioSource> _channels;
-        public static AudioChannelManager Instance { get; private set; }
         public AudioSource BgmChannel => _channels[AudioChannel.BGM];
         public AudioSource SfxChannel => _channels[AudioChannel.SFX];
-
-        // private AudioSource channels;
-        AudioChannelManager()
-        {
-            Instance = this;
-        }
 
         private void OnValidate()
         {

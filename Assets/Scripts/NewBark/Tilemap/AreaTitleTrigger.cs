@@ -1,7 +1,6 @@
 using System;
 using NewBark.Attributes;
-using NewBark.Audio;
-using NewBark.Extensions;
+using NewBark.Support.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -51,7 +50,7 @@ namespace NewBark.Tilemap
 
             if (areaTitle.music != null)
             {
-                AudioChannelManager.Instance.PlayBgmTransition(areaTitle.music);
+                GameManager.Audio.PlayBgmTransition(areaTitle.music);
             }
         }
 

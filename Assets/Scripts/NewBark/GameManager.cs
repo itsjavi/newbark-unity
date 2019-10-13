@@ -1,44 +1,31 @@
 using System;
-using NewBark.Movement;
+using NewBark.Audio;
+using NewBark.Input;
 using NewBark.State;
+using NewBark.Support;
 using NewBark.Tilemap;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace NewBark
 {
-    public class Player : MonoBehaviour
+    public class GameManager : MonoBehaviour
     {
-        public AnimationController m_AnimationController;
+        public static GameData Data { get; set; }
+        public static PlayerController Player => Singleton<PlayerController>.Instance;
+        public static InputController Input => Singleton<InputController>.Instance;
+        public static AudioController Audio => Singleton<AudioController>.Instance;
 
+        public bool autoLoad;
         public bool autoSave;
         public UnityEvent onLoadState;
         public UnityEvent onBeforeLoadState;
         public UnityEvent onBeforeSaveState;
         public UnityEvent onSaveState;
-        public GameData Data { get; private set; } = new GameData();
-
-#if UNITY_EDITOR
-        void OnDrawGizmos()
-        {
-            var position = transform.position;
-            Handles.Label(
-                position + new Vector3(-4, 3),
-                position.x + ", " + position.y + ", " + AreaTitleTrigger.LastTriggerTitle,
-                new GUIStyle {fontSize = 8, normal = {textColor = Color.blue}}
-            );
-        }
-#endif
 
         private void Start()
         {
             LoadState();
-        }
-
-        private void OnApplicationQuit()
-        {
-            SaveState();
         }
 
         private void Update()
@@ -46,9 +33,14 @@ namespace NewBark
             Data.playTime += Time.deltaTime;
         }
 
-        public void LoadState()
+        private void OnApplicationQuit()
         {
-            if (!autoSave)
+            SaveState();
+        }
+
+        private void LoadState()
+        {
+            if (!autoLoad)
             {
                 return;
             }
@@ -62,14 +54,14 @@ namespace NewBark
             }
 
             //
-            transform.position = Data.playerPosition;
-            m_AnimationController.UpdateAnimation(Data.playerDirection);
+            Player.transform.position = Data.playerPosition;
+            Player.AnimationController.UpdateAnimation(Data.playerDirection);
             AreaTitleTrigger.SwitchTo(Data.areaTitleTrigger);
             //
             onLoadState.Invoke();
         }
 
-        public void SaveState()
+        private void SaveState()
         {
             if (!autoSave)
             {
@@ -80,8 +72,8 @@ namespace NewBark
             Data.saveDate = DateTime.Now;
             //
             Data.areaTitleTrigger = AreaTitleTrigger.LastTriggerName;
-            Data.playerPosition = transform.position;
-            Data.playerDirection = m_AnimationController.GetLastAnimationDirection();
+            Data.playerPosition = Player.transform.position;
+            Data.playerDirection = Player.AnimationController.GetLastAnimationDirection();
             //
             SaveManager.Save(Data);
             onSaveState.Invoke();

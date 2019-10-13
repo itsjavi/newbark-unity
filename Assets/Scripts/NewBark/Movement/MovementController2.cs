@@ -19,6 +19,8 @@ namespace NewBark.Movement
         [Tooltip("Time to turn around to a different position, in milliseconds.")]
         public float turnAroundWaitTime = 125;
 
+        public float clampOffset = 0.5f;
+
         private float _turnAroundWaitTimeCounter;
         private bool _stopCurrentMovementOnTurnAround = true;
 
@@ -84,6 +86,8 @@ namespace NewBark.Movement
 
             if (HasArrived(tr.position, dest))
             {
+                // fix possible wrong decimals
+                tr.position = GetClampedPosition(tr.position);
                 // Debug.Log("Arrived to destination.");
                 Stop();
                 return;
@@ -106,9 +110,25 @@ namespace NewBark.Movement
             Move(btn.Value.ReadValue<Vector2>(), tilesPerStep);
         }
 
+        public void OnMultipleButtonsHold(Dictionary<InputButton, InputAction> buttons)
+        {
+            if (IsRunMode(buttons))
+            {
+                StartRunMode();
+            }
+        }
+
+        public void OnButtonBPerformed(InputAction.CallbackContext ctx)
+        {
+            if (IsRunMode())
+            {
+                StopRunMode();
+            }
+        }
+
         public void OnButtonDirectionalCanceled(InputAction.CallbackContext ctx)
         {
-            // This causes the turn around movement to not have animation or a very short one:
+            // Without this check, turn-around movement wouldn't have animation or a very short one:
             if (IsTurningAround())
             {
                 return;
@@ -132,7 +152,7 @@ namespace NewBark.Movement
         {
             if (!CanMove())
             {
-                Debug.Log("Cant move " + _turnAroundWaitTimeCounter);
+                // Debug.Log("Cant move ");
                 return false;
             }
 
@@ -172,6 +192,48 @@ namespace NewBark.Movement
             return (_currentDestination != null);
         }
 
+        public void StartRunMode()
+        {
+            speed = _initialSpeed * 2;
+        }
+
+        public void StopRunMode()
+        {
+            speed = _initialSpeed;
+        }
+
+        public bool IsRunMode()
+        {
+            return speed > _initialSpeed;
+        }
+
+        public bool IsRunMode(Dictionary<InputButton, InputAction> buttons)
+        {
+            var btnB = false;
+            var btnDir = false;
+
+            foreach (var keyValue in buttons)
+            {
+                if (keyValue.Key == InputButton.B)
+                {
+                    btnB = true;
+                    continue;
+                }
+
+                if (GameManager.Input.IsDirectional(keyValue.Key))
+                {
+                    btnDir = true;
+                }
+
+                if (btnDir && btnB)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void Stop()
         {
             _previousDestination = _currentDestination;
@@ -190,6 +252,32 @@ namespace NewBark.Movement
         public bool CanMove(Vector2 towards)
         {
             return CanMove() && !WillCollide(towards);
+        }
+
+        private Vector3 GetClampedPosition(Vector3 position)
+        {
+            return new Vector3(
+                GetClampedPositionAxis(position.x, clampOffset), 
+                GetClampedPositionAxis(position.y, clampOffset), 
+                0
+                );
+        }
+
+        private float GetClampedPositionAxis(float val, float offset)
+        {
+            float mod = val % 1f;
+
+            if (System.Math.Abs(mod - clampOffset) < double.Epsilon) // more precise than: if (mod == fraction)
+            {
+                return val;
+            }
+
+            if (val < 0f)
+            {
+                return (val - mod) - clampOffset;
+            }
+
+            return (val - mod) + clampOffset;
         }
 
         // =============================================================================================

@@ -11,4 +11,4 @@ ScriptedImporter:
   generateWrapperCode: 1
   wrapperCodePath: 
   wrapperClassName: 
-  wrapperCodeNamespace: RPGKit2D.Input
+  wrapperCodeNamespace: NewBark.Input

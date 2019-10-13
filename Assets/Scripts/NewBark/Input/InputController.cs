@@ -7,7 +7,7 @@ namespace NewBark.Input
     public class InputController : MonoBehaviour
     {
         [Tooltip("Distance in milliseconds between each triggered hold-button message.")]
-        public int holdButtonThrottle = 0;
+        public int holdButtonThrottle = 2;
 
         [Tooltip("GameObject that has the focus of the input and will receive the messages.")]
         public GameObject target;
@@ -85,12 +85,12 @@ namespace NewBark.Input
             {
                 target.SendMessage("On" + keyValuePair.Value.name + "Hold", keyValuePair,
                     SendMessageOptions.DontRequireReceiver);
-                //Debug.Log(keyValuePair.Value.name + " (" + keyValuePair.Key + ") is being hold.");
+                // Debug.Log(keyValuePair.Value.name + " (" + keyValuePair.Key + ") is being held.");
             }
 
             if (holdButtons.Count > 1)
             {
-                target.SendMessage("OnMultipleActionsHold", holdButtons, SendMessageOptions.DontRequireReceiver);
+                target.SendMessage("OnMultipleButtonsHold", holdButtons, SendMessageOptions.DontRequireReceiver);
             }
         }
 
@@ -98,20 +98,21 @@ namespace NewBark.Input
         {
             Dictionary<InputButton, InputAction> holdButtons = new Dictionary<InputButton, InputAction>();
 
-            if (Actions.ButtonA.phase == InputActionPhase.Started)
-            {
-                holdButtons.Add(InputButton.A, Actions.ButtonA);
-            }
-
             foreach (var action in GetActions())
             {
-                if (action.phase == InputActionPhase.Started)
+                if (action.phase == InputActionPhase.Started || action.phase == InputActionPhase.Performed)
                 {
                     holdButtons.Add(ActionToButton(action), action);
                 }
             }
 
             return holdButtons;
+        }
+
+        public bool IsDirectional(InputButton btn)
+        {
+            return btn == InputButton.Up || btn == InputButton.Right || btn == InputButton.Down ||
+                   btn == InputButton.Left;
         }
 
         public InputButton ActionToButton(InputAction action)

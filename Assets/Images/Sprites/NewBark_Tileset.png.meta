@@ -1349,9 +1349,9 @@ TextureImporter:
       name: NewBark_Tileset_43
       rect:
         serializedVersion: 2
-        x: 160
+        x: 128
         y: 320
-        width: 32
+        width: 64
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

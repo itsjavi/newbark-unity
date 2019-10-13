@@ -44039,7 +44039,7 @@ MonoBehaviour:
   onFadeComplete:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7192301008348172419}
+      - m_Target: {fileID: 0}
         m_MethodName: EnableWarping
         m_Mode: 1
         m_Arguments:
@@ -73846,7 +73846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a01f9a54f8e472eac6ff58912a445de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdButtonThrottle: 50
+  holdButtonThrottle: 0
   target: {fileID: 7192301008348172418}
 --- !u!114 &1817178227
 MonoBehaviour:
@@ -73861,7 +73861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoLoad: 1
-  autoSave: 0
+  autoSave: 1
   onLoadState:
     m_PersistentCalls:
       m_Calls: []
@@ -75765,39 +75765,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7079746402777195698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192301008348172418}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99fba112e30d147fa9c96831eb9fdf6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_animationController: {fileID: 0}
-  m_DialogManager: {fileID: 1973439302}
-  m_Speed: 4
-  m_InputDelay: 7
-  m_TilesPerStep: 1
-  m_ClampOffset: 0.5
-  onCollision:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1212527982}
-        m_MethodName: PlaySfxWhenIdle
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: e7aa1061682754e5f919394e893de652,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!95 &7099427508898048894
 Animator:
   serializedVersion: 3
@@ -75827,7 +75794,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: ccd6a316686b94c969501bac8d9a5cef, type: 2}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -75877,9 +75844,6 @@ GameObject:
   - component: {fileID: 7099427508898048894}
   - component: {fileID: 7137967076378784376}
   - component: {fileID: 7162885171325729384}
-  - component: {fileID: 7079746402777195698}
-  - component: {fileID: 7192301008348172420}
-  - component: {fileID: 7192301008348172419}
   - component: {fileID: 7192301008348172422}
   - component: {fileID: 7192301008348172424}
   - component: {fileID: 7192301008348172423}
@@ -75890,88 +75854,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &7192301008348172419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192301008348172418}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8471fbb4b3bf4040b7ab25d4bd55fa7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementController: {fileID: 7079746402777195698}
-  onWarpEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1394979448}
-        m_MethodName: FadeOut
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7192301008348172419}
-        m_MethodName: DisableWarping
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onWarpStay:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1394979448}
-        m_MethodName: FadeIn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onWarpFinish:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1394979448}
-        m_MethodName: FadeIn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7192301008348172420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192301008348172418}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9592d73773f5848f5bff2aab2bae24a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_animationController: {fileID: 0}
-  m_DialogManager: {fileID: 1973439302}
-  interactableLayer: 8
-  raycastDistance: 1
 --- !u!114 &7192301008348172422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75997,10 +75879,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionSound: {fileID: 8300000, guid: e7aa1061682754e5f919394e893de652, type: 3}
-  tilesPerStep: 1
-  speed: 4
-  clampOffset: 0.5
-  rb: {fileID: 7162885171325729384}
+  speed: 5
+  turnAroundWaitTime: 125
 --- !u!114 &7192301008348172424
 MonoBehaviour:
   m_ObjectHideFlags: 0

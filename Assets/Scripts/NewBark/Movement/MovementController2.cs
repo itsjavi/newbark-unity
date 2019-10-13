@@ -10,116 +10,190 @@ namespace NewBark.Movement
     public class MovementController2 : MonoBehaviour
     {
         public AudioClip collisionSound;
-        public int tilesPerStep = 1;
-        public int speed = 4;
-        public float clampOffset = 0.5f;
+        public float speed = 5;
+        private float _initialSpeed = 5;
+        private float AnimationSpeed => (speed * 10) / 60;
 
+        private int tilesPerStep = 1; // TODO: make raycast detect collisions properly if > 1
+
+        [Tooltip("Time to turn around to a different position, in milliseconds.")]
+        public float turnAroundWaitTime = 125;
+
+        private float _turnAroundWaitTimeCounter;
+        private bool _stopCurrentMovementOnTurnAround = true;
+
+        private Vector2? _previousDestination;
+        private Vector2? _previousDirection;
         private Vector2? _currentDestination;
         private Vector2? _currentDirection;
+
+
+        public Vector2? PreviousDestination => _previousDestination;
+        public Vector2? PreviousDirection => _previousDirection;
+        public Vector2? CurrentDestination => _currentDestination;
+        public Vector2? CurrentDirection => _currentDirection;
+
         public AnimationController2 AnimationController => GetComponent<AnimationController2>();
 
+        private void Start()
+        {
+            _initialSpeed = speed;
+        }
 
         void Update()
         {
             DrawHit(AnimationController.GetLastAnimationDirection());
         }
 
+        private bool IsTurningAround()
+        {
+            if (_turnAroundWaitTimeCounter > 0)
+            {
+                _turnAroundWaitTimeCounter -= Time.deltaTime * 1000;
+                return true;
+            }
+
+            if (_turnAroundWaitTimeCounter < 0)
+            {
+                _turnAroundWaitTimeCounter = 0;
+                if (_stopCurrentMovementOnTurnAround)
+                {
+                    Stop();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         private void FixedUpdate()
         {
+            if (IsTurningAround())
+            {
+                return;
+            }
+
             if (_currentDestination == null)
             {
                 return;
             }
 
-            if (_currentDirection == null)
-            {
-                return;
-            }
-
-
             var tr = transform;
             var dest = _currentDestination.Value;
-            var dir = _currentDirection.Value;
 
             if (HasArrived(tr.position, dest))
             {
-                Debug.Log("Arrived to dest.");
-                _currentDestination = null;
-                _currentDirection = null;
+                // Debug.Log("Arrived to destination.");
+                Stop();
                 return;
             }
 
             tr.position = Vector3.MoveTowards(tr.position, dest, Time.fixedDeltaTime * speed);
-            tr.rotation = new Quaternion(0, 0, 0, 0);
-            Debug.Log("Updated position = " + tr.position);
+            //Debug.Log("Updated position = " + tr.position);
+
+            // Lock rotation, just in case
+            // tr.rotation = new Quaternion(0, 0, 0, 0);
         }
 
         public bool HasArrived(Vector2 current, Vector2 destination)
         {
-            return destination == current || destination.x > current.x || destination.y > current.y;
+            return destination == current;
         }
 
         public void OnButtonDirectionalHold(KeyValuePair<InputButton, InputAction> btn)
         {
-            if (!CanMove())
+            Move(btn.Value.ReadValue<Vector2>(), tilesPerStep);
+        }
+
+        public void OnButtonDirectionalCanceled(InputAction.CallbackContext ctx)
+        {
+            // This causes the turn around movement to not have animation or a very short one:
+            if (IsTurningAround())
             {
-                Debug.Log("Cant move");
                 return;
             }
 
-            var direction = btn.Value.ReadValue<Vector2>();
+            AnimationController.StopAnimation();
+        }
 
-            AnimationController.UpdateAnimation(direction, direction);
+        private Vector2 LockDiagonal(Vector2 direction)
+        {
+            if (Math.Abs(direction.x) > 0 && Math.Abs(direction.y) > 0)
+            {
+                // LOCK DIAGONAL MOVEMENT
+                direction.y = 0;
+            }
+
+            return direction;
+        }
+
+        private bool Move(Vector2 destination, Vector2 direction)
+        {
+            if (!CanMove())
+            {
+                Debug.Log("Cant move " + _turnAroundWaitTimeCounter);
+                return false;
+            }
+
+            AnimationController.UpdateAnimation(direction, direction, AnimationSpeed);
+
+            if (direction != _previousDirection)
+            {
+                // Should have turn around without moving
+                _previousDirection = direction;
+                _turnAroundWaitTimeCounter = turnAroundWaitTime;
+                return true;
+            }
 
             var col = CheckCollision(direction);
 
             if (col)
             {
-                Debug.Log("Will collide with " + col.gameObject.name);
-                GameManager.Audio.PlaySfx(collisionSound);
-                return;
+                Debug.Log("Detected collision with " + col.gameObject.name);
+                GameManager.Audio.PlaySfxWhenIdle(collisionSound);
+                return false;
             }
 
-            AnimationController.UpdateAnimation(speed);
-            //transform.position += (Vector3) direction;
-            // todo: track current destination and do not move until finished
             _currentDirection = direction;
-            _currentDestination = transform.position + (Vector3) direction;
-            Debug.Log("_currentDirection set: " + _currentDirection);
-            Debug.Log("_currentDestination set: " + _currentDestination);
+            _currentDestination = destination;
 
-            //iTween.MoveBy(gameObject, direction, 0.24F);
-            //Debug.Log("Moving");
+            return true;
         }
 
-        public void OnButtonDirectionalCanceled(InputAction.CallbackContext ctx)
+        public bool Move(Vector2 direction, int tiles = 1)
         {
-            AnimationController.UpdateAnimation(0f);
+            direction = LockDiagonal(direction) * tiles;
+            return Move(transform.position + (Vector3) direction, direction);
         }
 
         public bool IsMoving()
         {
-            return _currentDestination != null;
+            return (_currentDestination != null);
         }
 
         public void Stop()
         {
+            _previousDestination = _currentDestination;
+            _previousDirection = _currentDirection;
             _currentDestination = null;
             _currentDirection = null;
-            AnimationController.UpdateAnimation(0f);
+            AnimationController.StopAnimation();
         }
 
         public bool CanMove()
         {
-            if (GameManager.Input.target == gameObject) return !IsMoving();
-            Debug.Log("Input target is not " + name);
-            return false;
+            return !IsMoving() && (GameManager.Input.target == gameObject);
+            // Debug.Log("Input target is not " + name);
         }
 
-        public bool CanMove(Vector2 direction)
+        public bool CanMove(Vector2 towards)
         {
-            return CanMove() && !WillCollide(direction);
+            return CanMove() && !WillCollide(towards);
         }
+
+        // =============================================================================================
+        // TODO: refactor following methods into CollisionController:
 
         public bool WillCollide(Vector2 direction)
         {
@@ -140,7 +214,7 @@ namespace NewBark.Movement
 
         public RaycastHit2D CheckHit(Vector2 direction, int layerIndex = GameManager.CollisionsLayer)
         {
-            return CheckHit(direction, layerIndex, 1);
+            return CheckHit(direction, layerIndex, tilesPerStep);
         }
 
         void DrawHit(Vector2 dir)

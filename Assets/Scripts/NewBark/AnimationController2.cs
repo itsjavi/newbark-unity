@@ -20,7 +20,7 @@ namespace NewBark
             Animator.SetFloat(MoveY, position.y);
             Animator.SetFloat(LastMoveX, lastPosition.x);
             Animator.SetFloat(LastMoveY, lastPosition.y);
-            Animator.SetFloat(Speed, speed);
+            UpdateAnimation(speed);
         }
 
         public void UpdateAnimation(Vector2 position)
@@ -39,6 +39,7 @@ namespace NewBark
 
         public void UpdateAnimation(float speed)
         {
+            Animator.speed = speed;
             Animator.SetFloat(Speed, speed);
         }
 

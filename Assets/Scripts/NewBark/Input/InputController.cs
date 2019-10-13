@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NewBark.Support;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,15 +6,13 @@ namespace NewBark.Input
 {
     public class InputController : MonoBehaviour
     {
-        public Singleton<InputController> singleton;
+        [Tooltip("Interval in milliseconds to trigger each hold button message.")]
+        public int holdButtonThrottle = 50;
 
-        [Tooltip("Hold button speed in milliseconds.")]
-        public int holdButtonSpeed;
+        [Tooltip("GameObject that has the focus of the input and will receive the messages.")]
+        public GameObject target;
 
-        [Tooltip("Component that has the focus of the input and will receive the messages.")]
-        public Component target;
-
-        private float _holdButtonSpeedTracker;
+        private float _holdButtonThrottleCounter;
 
         private InputActionsMaster _controls;
         public InputActionsMaster.PlayerActions Actions => _controls.Player;
@@ -56,31 +53,31 @@ namespace NewBark.Input
         {
             action.started += ctx =>
                 target.SendMessage("On" + action.name + "Started", ctx, SendMessageOptions.DontRequireReceiver);
-            action.started += ctx => Debug.Log(action.name + " action started.");
-            
+            //action.started += ctx => Debug.Log(action.name + " action started.");
+
             action.performed += ctx =>
                 target.SendMessage("On" + action.name + "Performed", ctx, SendMessageOptions.DontRequireReceiver);
-            action.performed += ctx => Debug.Log(action.name + " action performed.");
-            
+            //action.performed += ctx => Debug.Log(action.name + " action performed.");
+
             action.canceled += ctx =>
                 target.SendMessage("On" + action.name + "Canceled", ctx, SendMessageOptions.DontRequireReceiver);
-            action.canceled += ctx => Debug.Log(action.name + " action canceled.");
+            //action.canceled += ctx => Debug.Log(action.name + " action canceled.");
         }
 
         private void Update()
         {
-            if (holdButtonSpeed == 0)
+            if (holdButtonThrottle == 0)
             {
                 return;
             }
 
-            if (_holdButtonSpeedTracker < holdButtonSpeed)
+            if (_holdButtonThrottleCounter < holdButtonThrottle)
             {
-                _holdButtonSpeedTracker += Time.deltaTime * 1000;
+                _holdButtonThrottleCounter += Time.deltaTime * 1000;
                 return;
             }
 
-            _holdButtonSpeedTracker = 0;
+            _holdButtonThrottleCounter = 0;
 
             var holdButtons = GetHoldButtons();
 
@@ -93,7 +90,7 @@ namespace NewBark.Input
             {
                 target.SendMessage("On" + keyValuePair.Value.name + "Hold", keyValuePair,
                     SendMessageOptions.DontRequireReceiver);
-                Debug.Log(keyValuePair.Value.name + " (" + keyValuePair.Key + ") is being hold.");
+                //Debug.Log(keyValuePair.Value.name + " (" + keyValuePair.Key + ") is being hold.");
             }
 
             if (holdButtons.Count > 1)
@@ -197,6 +194,23 @@ namespace NewBark.Input
                     return Actions.ButtonSelect;
                 default:
                     return null;
+            }
+        }
+
+        public Vector2 ButtonToVector2(InputButton button)
+        {
+            switch (button)
+            {
+                case InputButton.Up:
+                    return Vector2.up;
+                case InputButton.Down:
+                    return Vector2.down;
+                case InputButton.Left:
+                    return Vector2.left;
+                case InputButton.Right:
+                    return Vector2.right;
+                default:
+                    return Vector2.zero;
             }
         }
     }

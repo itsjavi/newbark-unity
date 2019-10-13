@@ -11,6 +11,10 @@ namespace NewBark
 {
     public class GameManager : MonoBehaviour
     {
+        public const int DefaultLayer = 0;
+        public const int TransparentFxLayer = 1;
+        public const int IgnoreRaycastLayer = 2;
+        public const int CollisionsLayer = 8;
         public static GameData Data { get; set; }
         public static PlayerController Player => Singleton<PlayerController>.Instance;
         public static InputController Input => Singleton<InputController>.Instance;

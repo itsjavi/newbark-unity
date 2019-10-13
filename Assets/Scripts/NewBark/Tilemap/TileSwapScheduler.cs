@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace NewBark.Tilemap
 {
@@ -25,6 +24,15 @@ namespace NewBark.Tilemap
                     return;
                 }
 
+                schedule.swapped = false;
+            }
+        }
+
+        private void OnValidate()
+        {
+            // reset on editor changes
+            foreach (var schedule in schedules)
+            {
                 schedule.swapped = false;
             }
         }

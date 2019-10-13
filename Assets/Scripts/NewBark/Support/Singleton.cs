@@ -36,7 +36,7 @@ namespace NewBark.Support
                         // Create new instance if one doesn't already exist.
                         if (_instance != null)
                         {
-                            Debug.Log(typeof(T) + " object instance found for Singleton.");
+                            //Debug.Log(typeof(T) + " object instance found for Singleton.");
                             return _instance;
                         }
 
@@ -45,7 +45,7 @@ namespace NewBark.Support
                         _instance = singletonObject.AddComponent<T>();
                         singletonObject.name = typeof(T) + " (Singleton)";
 
-                        Debug.Log(singletonObject.name + " instance NEWLY CREATED.");
+                        //Debug.Log(singletonObject.name + " instance NEWLY CREATED.");
 
                         // Make instance persistent.
                         DontDestroyOnLoad(singletonObject);

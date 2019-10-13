@@ -1,13 +1,13 @@
-using NewBark.Movement;
 using NewBark.Tilemap;
 using UnityEditor;
 using UnityEngine;
 
 namespace NewBark
 {
+    [RequireComponent(typeof(AnimationController2))]
     public class PlayerController : MonoBehaviour
     {
-        public AnimationController AnimationController => GetComponent<AnimationController>();
+        public AnimationController2 AnimationController => GetComponent<AnimationController2>();
 
 #if UNITY_EDITOR
         void OnDrawGizmos()

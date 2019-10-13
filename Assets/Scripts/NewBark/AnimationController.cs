@@ -1,11 +1,12 @@
 using NewBark.Input;
 using UnityEngine;
 
-namespace NewBark.Movement
+namespace NewBark
 {
+    [RequireComponent(typeof(Animator))]
     public class AnimationController : MonoBehaviour
     {
-        public Animator m_Animator;
+        public Animator Animator => GetComponent<Animator>();
 
         private static readonly int MoveX = Animator.StringToHash("MoveX");
         private static readonly int MoveY = Animator.StringToHash("MoveY");
@@ -15,30 +16,30 @@ namespace NewBark.Movement
 
         public void UpdateAnimation(Vector2 position, Vector2 lastPosition, bool isMoving)
         {
-            m_Animator.SetFloat(MoveX, position.x);
-            m_Animator.SetFloat(MoveY, position.y);
-            m_Animator.SetFloat(LastMoveX, lastPosition.x);
-            m_Animator.SetFloat(LastMoveY, lastPosition.y);
-            m_Animator.SetBool(Moving, isMoving);
+            Animator.SetFloat(MoveX, position.x);
+            Animator.SetFloat(MoveY, position.y);
+            Animator.SetFloat(LastMoveX, lastPosition.x);
+            Animator.SetFloat(LastMoveY, lastPosition.y);
+            Animator.SetBool(Moving, isMoving);
         }
 
         public void UpdateAnimation(Vector2 position)
         {
-            m_Animator.SetFloat(MoveX, position.x);
-            m_Animator.SetFloat(MoveY, position.y);
+            Animator.SetFloat(MoveX, position.x);
+            Animator.SetFloat(MoveY, position.y);
         }
 
         public void UpdateAnimation(Vector2 position, Vector2 lastPosition)
         {
-            m_Animator.SetFloat(MoveX, position.x);
-            m_Animator.SetFloat(MoveY, position.y);
-            m_Animator.SetFloat(LastMoveX, lastPosition.x);
-            m_Animator.SetFloat(LastMoveY, lastPosition.y);
+            Animator.SetFloat(MoveX, position.x);
+            Animator.SetFloat(MoveY, position.y);
+            Animator.SetFloat(LastMoveX, lastPosition.x);
+            Animator.SetFloat(LastMoveY, lastPosition.y);
         }
 
         public void UpdateAnimation(bool isMoving)
         {
-            m_Animator.SetBool(Moving, isMoving);
+            Animator.SetBool(Moving, isMoving);
         }
 
         public void UpdateAnimation(DirectionButton dir)
@@ -49,22 +50,22 @@ namespace NewBark.Movement
 
         public DirectionButton GetAnimationDirection()
         {
-            if (m_Animator.GetFloat(MoveX) > 0)
+            if (Animator.GetFloat(MoveX) > 0)
             {
                 return DirectionButton.RIGHT;
             }
 
-            if (m_Animator.GetFloat(MoveX) < 0)
+            if (Animator.GetFloat(MoveX) < 0)
             {
                 return DirectionButton.LEFT;
             }
 
-            if (m_Animator.GetFloat(MoveY) > 0)
+            if (Animator.GetFloat(MoveY) > 0)
             {
                 return DirectionButton.UP;
             }
 
-            if (m_Animator.GetFloat(MoveY) < 0)
+            if (Animator.GetFloat(MoveY) < 0)
             {
                 return DirectionButton.DOWN;
             }
@@ -74,22 +75,22 @@ namespace NewBark.Movement
 
         public DirectionButton GetLastAnimationDirection()
         {
-            if (m_Animator.GetFloat(LastMoveX) > 0)
+            if (Animator.GetFloat(LastMoveX) > 0)
             {
                 return DirectionButton.RIGHT;
             }
 
-            if (m_Animator.GetFloat(LastMoveX) < 0)
+            if (Animator.GetFloat(LastMoveX) < 0)
             {
                 return DirectionButton.LEFT;
             }
 
-            if (m_Animator.GetFloat(LastMoveY) > 0)
+            if (Animator.GetFloat(LastMoveY) > 0)
             {
                 return DirectionButton.UP;
             }
 
-            if (m_Animator.GetFloat(LastMoveY) < 0)
+            if (Animator.GetFloat(LastMoveY) < 0)
             {
                 return DirectionButton.DOWN;
             }

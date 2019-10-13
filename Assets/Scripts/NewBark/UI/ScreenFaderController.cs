@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 namespace NewBark.UI
 {
+    [RequireComponent(typeof(Animator))]
     public class ScreenFaderController : MonoBehaviour
     {
         public Animator animator;

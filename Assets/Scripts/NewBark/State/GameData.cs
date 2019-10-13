@@ -1,5 +1,4 @@
 using System;
-using NewBark.Input;
 using NewBark.Support;
 
 namespace NewBark.State
@@ -16,6 +15,6 @@ namespace NewBark.State
 
         public string areaTitleTrigger;
         public SerializableVector2 playerPosition;
-        public DirectionButton playerDirection;
+        public SerializableVector2 playerDirection;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NewBark.Support.Extensions;
 using UnityEngine;
 
 namespace NewBark.Audio
@@ -37,9 +38,14 @@ namespace NewBark.Audio
             // This is the only way to create a dictionary with a Component:
             _channels = new Dictionary<AudioChannel, AudioSource>
             {
-                {AudioChannel.BGM, new GameObject().AddComponent<AudioSource>()},
-                {AudioChannel.SFX, new GameObject().AddComponent<AudioSource>()}
+                {AudioChannel.BGM, CreateAudioSource("BGM_Channel")},
+                {AudioChannel.SFX, CreateAudioSource("SFX_Channel")}
             };
+        }
+
+        private AudioSource CreateAudioSource(string gameObjectName)
+        {
+            return new GameObject(gameObjectName).SetParent(this).AddComponent<AudioSource>();
         }
 
         private void Start()

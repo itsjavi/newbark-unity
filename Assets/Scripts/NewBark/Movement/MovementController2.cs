@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace NewBark.Movement
 {
-    [RequireComponent(typeof(AnimationController2))]
+    [RequireComponent(typeof(PlayerController))]
     public class MovementController2 : MonoBehaviour
     {
         public AudioClip collisionSound;
@@ -23,6 +23,7 @@ namespace NewBark.Movement
 
         private float _turnAroundWaitTimeCounter;
         private bool _stopCurrentMovementOnTurnAround = true;
+        private bool _inputCaptureEnabled = true;
 
         private Vector2? _previousDestination;
         private Vector2? _previousDirection;
@@ -35,19 +36,29 @@ namespace NewBark.Movement
         public Vector2? CurrentDestination => _currentDestination;
         public Vector2? CurrentDirection => _currentDirection;
 
-        public AnimationController2 AnimationController => GetComponent<AnimationController2>();
+        public PlayerController PlayerController => GetComponent<PlayerController>();
 
         private void Start()
         {
             _initialSpeed = speed;
         }
 
-        void Update()
+        public bool IsInputCaptureEnabled()
         {
-            DrawHit(AnimationController.GetLastAnimationDirection());
+            return _inputCaptureEnabled;
         }
 
-        private bool IsTurningAround()
+        public void DisableInputCapture()
+        {
+            _inputCaptureEnabled = false;
+        }
+
+        public void EnableInputCapture()
+        {
+            _inputCaptureEnabled = true;
+        }
+
+        public bool IsTurningAround()
         {
             if (_turnAroundWaitTimeCounter > 0)
             {
@@ -107,11 +118,21 @@ namespace NewBark.Movement
 
         public void OnButtonDirectionalHold(KeyValuePair<InputButton, InputAction> btn)
         {
+            if (!_inputCaptureEnabled)
+            {
+                return;
+            }
+
             Move(btn.Value.ReadValue<Vector2>(), tilesPerStep);
         }
 
         public void OnMultipleButtonsHold(Dictionary<InputButton, InputAction> buttons)
         {
+            if (!_inputCaptureEnabled)
+            {
+                return;
+            }
+
             if (IsRunMode(buttons))
             {
                 StartRunMode();
@@ -120,6 +141,11 @@ namespace NewBark.Movement
 
         public void OnButtonBPerformed(InputAction.CallbackContext ctx)
         {
+            if (!_inputCaptureEnabled)
+            {
+                return;
+            }
+
             if (IsRunMode())
             {
                 StopRunMode();
@@ -128,13 +154,18 @@ namespace NewBark.Movement
 
         public void OnButtonDirectionalCanceled(InputAction.CallbackContext ctx)
         {
+            if (!_inputCaptureEnabled)
+            {
+                return;
+            }
+
             // Without this check, turn-around movement wouldn't have animation or a very short one:
             if (IsTurningAround())
             {
                 return;
             }
 
-            AnimationController.StopAnimation();
+            PlayerController.playerAnimationController.StopAnimation();
         }
 
         private Vector2 LockDiagonal(Vector2 direction)
@@ -148,7 +179,7 @@ namespace NewBark.Movement
             return direction;
         }
 
-        private bool Move(Vector2 destination, Vector2 direction)
+        public bool Move(Vector2 destination, Vector2 direction)
         {
             if (!CanMove())
             {
@@ -156,7 +187,8 @@ namespace NewBark.Movement
                 return false;
             }
 
-            AnimationController.UpdateAnimation(direction, direction, AnimationSpeed);
+            PlayerController.playerAnimationController.UpdateAnimation(direction, direction, AnimationSpeed);
+            PlayerController.grassAnimationController.Animator.speed = AnimationSpeed;
 
             if (direction != _previousDirection)
             {
@@ -166,11 +198,11 @@ namespace NewBark.Movement
                 return true;
             }
 
-            var col = CheckCollision(direction);
+            var col = PlayerController.CheckCollision(direction);
 
             if (col)
             {
-                Debug.Log("Detected collision with " + col.gameObject.name);
+                //Debug.Log("Detected collision with " + col.gameObject.name);
                 GameManager.Audio.PlaySfxWhenIdle(collisionSound);
                 return false;
             }
@@ -185,6 +217,23 @@ namespace NewBark.Movement
         {
             direction = LockDiagonal(direction) * tiles;
             return Move(transform.position + (Vector3) direction, direction);
+        }
+
+        public bool MoveImmediate(Vector2 absolutePosition, Vector2 lookingDirection)
+        {
+            if (!Move(absolutePosition, lookingDirection)) return false;
+            transform.position = absolutePosition;
+            return true;
+        }
+
+        public bool LookAt(Vector2 direction, float thenWait = 0)
+        {
+            _previousDestination = null;
+            _previousDirection = null;
+            
+            if (!Move(direction)) return false;
+            _turnAroundWaitTimeCounter = thenWait;
+            return true;
         }
 
         public bool IsMoving()
@@ -240,7 +289,7 @@ namespace NewBark.Movement
             _previousDirection = _currentDirection;
             _currentDestination = null;
             _currentDirection = null;
-            AnimationController.StopAnimation();
+            PlayerController.playerAnimationController.StopAnimation();
         }
 
         public bool CanMove()
@@ -251,16 +300,16 @@ namespace NewBark.Movement
 
         public bool CanMove(Vector2 towards)
         {
-            return CanMove() && !WillCollide(towards);
+            return CanMove() && !PlayerController.WillCollide(towards);
         }
 
         private Vector3 GetClampedPosition(Vector3 position)
         {
             return new Vector3(
-                GetClampedPositionAxis(position.x, clampOffset), 
-                GetClampedPositionAxis(position.y, clampOffset), 
+                GetClampedPositionAxis(position.x, clampOffset),
+                GetClampedPositionAxis(position.y, clampOffset),
                 0
-                );
+            );
         }
 
         private float GetClampedPositionAxis(float val, float offset)
@@ -278,45 +327,6 @@ namespace NewBark.Movement
             }
 
             return (val - mod) + clampOffset;
-        }
-
-        // =============================================================================================
-        // TODO: refactor following methods into CollisionController:
-
-        public bool WillCollide(Vector2 direction)
-        {
-            return CheckCollision(direction) != null;
-        }
-
-        public Collider2D CheckCollision(Vector2 direction)
-        {
-            return CheckHit(direction).collider;
-        }
-
-        public RaycastHit2D CheckHit(Vector2 direction, int layerIndex, int distance)
-        {
-            return Physics2D.Raycast(
-                transform.position, direction, distance, 1 << layerIndex
-            );
-        }
-
-        public RaycastHit2D CheckHit(Vector2 direction, int layerIndex = GameManager.CollisionsLayer)
-        {
-            return CheckHit(direction, layerIndex, tilesPerStep);
-        }
-
-        void DrawHit(Vector2 dir)
-        {
-            var hit = CheckHit(dir);
-            if (!hit || !hit.collider)
-            {
-                Debug.DrawRay(transform.position, dir, Color.green);
-                Debug.DrawRay(transform.position, hit.point, Color.blue);
-                return;
-            }
-
-            Debug.DrawRay(transform.position, dir, Color.red);
-            Debug.DrawRay(transform.position, hit.point, Color.blue);
         }
     }
 }

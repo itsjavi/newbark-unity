@@ -59,7 +59,7 @@ namespace NewBark
 
             //
             Player.transform.position = Data.playerPosition;
-            Player.AnimationController.UpdateAnimation(Data.playerDirection);
+            Player.playerAnimationController.UpdateAnimation(Data.playerDirection);
             AreaTitleTrigger.SwitchTo(Data.areaTitleTrigger);
             //
             onLoadState.Invoke();
@@ -77,7 +77,7 @@ namespace NewBark
             //
             Data.areaTitleTrigger = AreaTitleTrigger.LastTriggerName;
             Data.playerPosition = Player.transform.position;
-            Data.playerDirection = Player.AnimationController.GetLastAnimationDirection();
+            Data.playerDirection = Player.playerAnimationController.GetLastAnimationDirection();
             //
             SaveManager.Save(Data);
             onSaveState.Invoke();

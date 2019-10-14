@@ -14,7 +14,7 @@ namespace NewBark.Movement
         private bool _teleporting;
         private int _stairsWaitTime = 500;
 
-        //private bool _paused;
+        private bool _paused;
         private TeleportPortal _pendingTeleport;
 
         public UnityEvent onTeleportStart;
@@ -25,6 +25,8 @@ namespace NewBark.Movement
 
         private void FixedUpdate()
         {
+            // TODO: refactor with internal events
+
             if (_pendingTeleport && !IsPaused())
             {
                 Resume();
@@ -51,17 +53,17 @@ namespace NewBark.Movement
 
         public bool IsPaused()
         {
-            return !Collider.enabled;
+            return _paused;
         }
 
         public void Pause()
         {
-            Collider.enabled = false;
+            _paused = true;
         }
 
         public void Unpause()
         {
-            Collider.enabled = true;
+            _paused = false;
         }
 
         public void Resume()
@@ -71,6 +73,7 @@ namespace NewBark.Movement
             if (!_pendingTeleport) return;
 
             Teleport(_pendingTeleport, true);
+            
             _pendingTeleport = null;
         }
 
@@ -94,7 +97,7 @@ namespace NewBark.Movement
         public void Unlock()
         {
             //Debug.Log("Unlocked");
-            Collider.enabled = true;
+            Unpause();
             _teleporting = false;
             Movement.EnableInputCapture();
         }
@@ -105,22 +108,9 @@ namespace NewBark.Movement
             Lock();
 
             if (!Movement.Move(absolutePosition, lookingDirection)) return false;
-            transform.position = absolutePosition; // move immediatelly
-            // Debug.Log("Teleported immediately");
+            transform.position = absolutePosition;
+            //Debug.Log("Teleported"); // move immediatelly
             Movement.Stop();
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="destination">Calculated destination</param>
-        /// <returns></returns>
-        public bool CanTeleport(TeleportPortal destination)
-        {
-            //Movement.Stop();
-            if (!Movement.Move(destination.calculatedDropZone, destination.calculatedDropZoneLookAt)) return false;
-            //Movement.Stop();
             return true;
         }
 
@@ -181,7 +171,6 @@ namespace NewBark.Movement
             }
 
             // move the necessary steps in that direction
-            //Debug.Log("Moving dropzone steps...");
             if (!Movement.Move(destination.calculatedDropZoneLookAt, destination.dropZoneSteps))
             {
                 Debug.LogWarning("Moving dropzone steps FAILED...");
@@ -212,8 +201,9 @@ namespace NewBark.Movement
             return true;
         }
 
-        void OnTriggerStay2D(Collider2D other)
+        void OnTriggerEnter2D(Collider2D other)
         {
+//            Debug.Log("OnTriggerEnter2D");
             // For the OnTriggerStay2D event to be fired while the object is in contact, the Rigid2D body Sleep Mode
             // has to be on "Never Sleep", otherwise this is only triggered once
 
@@ -224,8 +214,16 @@ namespace NewBark.Movement
 //
 //            if (IsTeleporting())
 //            {
-//                Debug.Log("Is Teleporting...");
+//                Debug.Log("Is teleporting...");
 //            }
+//
+//            if (!IsPortal(other))
+//            {
+//                Debug.Log("Is not portal...");
+//                return;
+//            }
+//
+//            Debug.Log("Is OK, scheduling teleport...");
 
             if (!IsPortal(other) || IsTeleporting() || IsPaused())
             {
@@ -234,13 +232,12 @@ namespace NewBark.Movement
 
             var calculatedPortal = CalculatePortal(GetPortal(other));
 
-            if (!CanTeleport(calculatedPortal))
-            {
-                return;
-            }
-
             onTeleportStart.Invoke();
             _pendingTeleport = calculatedPortal;
+            if (_pendingTeleport.soundEffect)
+            {
+                GameManager.Audio.PlaySfx(_pendingTeleport.soundEffect);
+            }
         }
     }
 }

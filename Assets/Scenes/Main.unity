@@ -42581,6 +42581,11 @@ PrefabInstance:
       propertyPath: dropZoneSteps
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b20b2775e9ac45efb2dceb2b089a13c, type: 3}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -43066,6 +43071,11 @@ PrefabInstance:
       propertyPath: dropZoneOffset.x
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 33c3c614c27c14c0fa484cf5e8b51dae, type: 3}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -43244,6 +43254,11 @@ PrefabInstance:
       propertyPath: dropZoneOffset.x
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 33c3c614c27c14c0fa484cf5e8b51dae, type: 3}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -43404,12 +43419,27 @@ PrefabInstance:
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneOffset.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneOffset.x
       value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 33c3c614c27c14c0fa484cf5e8b51dae, type: 3}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneSteps
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneLookAt
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -43584,12 +43614,27 @@ PrefabInstance:
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneOffset.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneOffset.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b20b2775e9ac45efb2dceb2b089a13c, type: 3}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneSteps
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneLookAt
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -43661,8 +43706,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 642f0a34f362442f909cffbb84eb2fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmVolume: 0.075
-  sfxVolume: 0.35
+  bgmVolume: 0.1
+  sfxVolume: 0.2
   bgmTransitionTime: 1.2
 --- !u!1 &1261866284
 GameObject:
@@ -44091,6 +44136,11 @@ PrefabInstance:
       propertyPath: dropZoneOffset.y
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b20b2775e9ac45efb2dceb2b089a13c, type: 3}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -73254,6 +73304,11 @@ PrefabInstance:
       propertyPath: dropZoneSteps
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b20b2775e9ac45efb2dceb2b089a13c, type: 3}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -73668,6 +73723,11 @@ PrefabInstance:
       propertyPath: dropZoneOffset.y
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b20b2775e9ac45efb2dceb2b089a13c, type: 3}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -73922,6 +73982,11 @@ PrefabInstance:
       propertyPath: dropZoneOffset.x
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 33c3c614c27c14c0fa484cf5e8b51dae, type: 3}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -74344,6 +74409,11 @@ PrefabInstance:
       propertyPath: dropZone
       value: 
       objectReference: {fileID: 1872218594387069700}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b20b2775e9ac45efb2dceb2b089a13c, type: 3}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material

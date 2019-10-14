@@ -179,11 +179,18 @@ namespace NewBark.Movement
             return direction;
         }
 
+        public void SetCurrent(Vector2 destination, Vector2 direction)
+        {
+            _currentDirection = direction;
+            _currentDestination = destination;
+            //Debug.Log("Move destination=" + destination);
+        }
+
         public bool Move(Vector2 destination, Vector2 direction)
         {
             if (!CanMove())
             {
-                //Debug.Log("Cant move");
+                //Debug.Log("Cannot move");
                 return false;
             }
 
@@ -208,9 +215,7 @@ namespace NewBark.Movement
                 return false;
             }
 
-            _currentDirection = direction;
-            _currentDestination = destination;
-            //Debug.Log("Move destination=" + destination);
+            SetCurrent(destination, direction);
 
             return true;
         }
@@ -219,7 +224,7 @@ namespace NewBark.Movement
         {
             var dir = direction;
             var dest = LockDiagonal(direction) * tiles;
-            
+
             return Move(transform.position + (Vector3) dest, dir);
         }
 

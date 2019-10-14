@@ -1,3 +1,4 @@
+using System.Collections;
 using NewBark.Input;
 using NewBark.Support.Extensions;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace NewBark.Movement
     [RequireComponent(typeof(MovementController2))]
     public class TeleportController2 : MonoBehaviour
     {
-        public bool manualUnlock;
+        public bool externalUnlock;
 
         private bool _teleporting;
         private int _stairsWaitTime = 500;
@@ -42,12 +43,13 @@ namespace NewBark.Movement
             // this is necessary to detect if the teleport has finished
             if (IsTeleporting() && !Movement.IsMoving() && !Movement.IsTurningAround())
             {
-                if (!manualUnlock)
+                if (!externalUnlock)
                 {
                     Unlock();
                 }
 
                 onTeleportFinish.Invoke();
+                Debug.Log("onTeleportFinish.Invoke");
             }
         }
 
@@ -73,7 +75,7 @@ namespace NewBark.Movement
             if (!_pendingTeleport) return;
 
             Teleport(_pendingTeleport, true);
-            
+
             _pendingTeleport = null;
         }
 
@@ -146,8 +148,7 @@ namespace NewBark.Movement
             // first, move to the drop zone immediately, without animation
             if (!Teleport(destination.calculatedDropZone, destination.calculatedDropZoneLookAt))
             {
-                Unlock();
-                Debug.LogWarning("Teleport not possible...");
+                Debug.LogError("Teleport not possible...");
                 return false;
             }
 
@@ -171,6 +172,8 @@ namespace NewBark.Movement
             }
 
             // move the necessary steps in that direction
+            
+            // TODO: refactor into a separate function to be able to delay it too (door enter animation cannot be seen on fade in)
             if (!Movement.Move(destination.calculatedDropZoneLookAt, destination.dropZoneSteps))
             {
                 Debug.LogWarning("Moving dropzone steps FAILED...");
@@ -179,11 +182,15 @@ namespace NewBark.Movement
             return true;
         }
 
-        public Vector2 CalculateFinalDestination(Vector2 origin, TeleportPortal destination)
+        public void DelayedResume(float seconds)
         {
-            var dir = GameManager.Input.ButtonToVector2(destination.dropZoneLookAt);
-            return (origin + (Vector2) destination.dropZone.position + destination.dropZoneOffset +
-                    (dir * destination.dropZoneSteps));
+            StartCoroutine(DelayedResumeCoroutine(seconds));
+        }
+
+        IEnumerator DelayedResumeCoroutine(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            Resume();
         }
 
         private bool IsTeleporting()

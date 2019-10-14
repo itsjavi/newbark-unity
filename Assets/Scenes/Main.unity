@@ -43076,6 +43076,16 @@ PrefabInstance:
       propertyPath: soundEffect
       value: 
       objectReference: {fileID: 8300000, guid: 33c3c614c27c14c0fa484cf5e8b51dae, type: 3}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneSteps
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneLookAt
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -43247,7 +43257,7 @@ PrefabInstance:
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneOffset.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -43259,6 +43269,16 @@ PrefabInstance:
       propertyPath: soundEffect
       value: 
       objectReference: {fileID: 8300000, guid: 33c3c614c27c14c0fa484cf5e8b51dae, type: 3}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneSteps
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneLookAt
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -44134,13 +44154,23 @@ PrefabInstance:
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneOffset.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: soundEffect
       value: 
       objectReference: {fileID: 8300000, guid: 2b20b2775e9ac45efb2dceb2b089a13c, type: 3}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneSteps
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneLookAt
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -44260,18 +44290,7 @@ MonoBehaviour:
       m_Calls: []
   onFadeInStart:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7192301008348172419}
-        m_MethodName: Resume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onFadeOutStart:
     m_PersistentCalls:
       m_Calls: []
@@ -73721,13 +73740,23 @@ PrefabInstance:
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneOffset.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: soundEffect
       value: 
       objectReference: {fileID: 8300000, guid: 2b20b2775e9ac45efb2dceb2b089a13c, type: 3}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneSteps
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneLookAt
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -73975,7 +74004,7 @@ PrefabInstance:
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneOffset.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
@@ -73987,6 +74016,16 @@ PrefabInstance:
       propertyPath: soundEffect
       value: 
       objectReference: {fileID: 8300000, guid: 33c3c614c27c14c0fa484cf5e8b51dae, type: 3}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneSteps
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneLookAt
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -74414,6 +74453,16 @@ PrefabInstance:
       propertyPath: soundEffect
       value: 
       objectReference: {fileID: 8300000, guid: 2b20b2775e9ac45efb2dceb2b089a13c, type: 3}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneSteps
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
+        type: 3}
+      propertyPath: dropZoneLookAt
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2922873770776026850, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: m_Material
@@ -76362,13 +76411,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e722a9508ffa4f44a834c3a1f8f92d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manualUnlock: 0
+  externalUnlock: 1
   onTeleportStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1394979448}
+        m_MethodName: FadeOut
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7192301008348172419}
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7192301008348172419}
+        m_MethodName: DelayedResume
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.75
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTeleportFinish:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7192301008348172419}
+        m_MethodName: Unlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7192301008348172422
 MonoBehaviour:
   m_ObjectHideFlags: 0

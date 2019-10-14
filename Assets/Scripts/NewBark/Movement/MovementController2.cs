@@ -25,6 +25,7 @@ namespace NewBark.Movement
         private bool _stopCurrentMovementOnTurnAround = true;
         private bool _inputCaptureEnabled = true;
 
+        // TODO refactor using MovementInstruction
         private Vector2? _previousDestination;
         private Vector2? _previousDirection;
         private Vector2? _currentDestination;

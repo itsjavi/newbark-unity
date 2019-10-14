@@ -99,7 +99,7 @@ namespace NewBark.Movement
             {
                 // fix possible wrong decimals
                 tr.position = GetClampedPosition(tr.position);
-                // Debug.Log("Arrived to destination.");
+                //Debug.Log("Arrived to destination.");
                 Stop();
                 return;
             }
@@ -183,7 +183,7 @@ namespace NewBark.Movement
         {
             if (!CanMove())
             {
-                // Debug.Log("Cant move ");
+                //Debug.Log("Cant move");
                 return false;
             }
 
@@ -195,6 +195,7 @@ namespace NewBark.Movement
                 // Should have turn around without moving
                 _previousDirection = direction;
                 _turnAroundWaitTimeCounter = turnAroundWaitTime;
+                //Debug.Log("Turning around ");
                 return true;
             }
 
@@ -209,28 +210,24 @@ namespace NewBark.Movement
 
             _currentDirection = direction;
             _currentDestination = destination;
+            //Debug.Log("Move destination=" + destination);
 
             return true;
         }
 
         public bool Move(Vector2 direction, int tiles = 1)
         {
-            direction = LockDiagonal(direction) * tiles;
-            return Move(transform.position + (Vector3) direction, direction);
-        }
-
-        public bool MoveImmediate(Vector2 absolutePosition, Vector2 lookingDirection)
-        {
-            if (!Move(absolutePosition, lookingDirection)) return false;
-            transform.position = absolutePosition;
-            return true;
+            var dir = direction;
+            var dest = LockDiagonal(direction) * tiles;
+            
+            return Move(transform.position + (Vector3) dest, dir);
         }
 
         public bool LookAt(Vector2 direction, float thenWait = 0)
         {
             _previousDestination = null;
             _previousDirection = null;
-            
+
             if (!Move(direction)) return false;
             _turnAroundWaitTimeCounter = thenWait;
             return true;
@@ -285,6 +282,7 @@ namespace NewBark.Movement
 
         public void Stop()
         {
+            //Debug.Log("Stopped.");
             _previousDestination = _currentDestination;
             _previousDirection = _currentDirection;
             _currentDestination = null;

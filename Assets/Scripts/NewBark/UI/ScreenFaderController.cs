@@ -6,92 +6,69 @@ namespace NewBark.UI
     [RequireComponent(typeof(Animator))]
     public class ScreenFaderController : MonoBehaviour
     {
-        public Animator animator;
-        private bool _fading;
+        public Animator Animator => GetComponent<Animator>();
         public UnityEvent onFadeStart;
-        public UnityEvent onFadeComplete;
-    
+        public UnityEvent onFadeInStart;
+        public UnityEvent onFadeOutStart;
+        public UnityEvent onFadeFinish;
+        public UnityEvent onFadeInFinish;
+        public UnityEvent onFadeOutFinish;
 
-        void Awake()
+        public bool IsFadedIn()
         {
-            LoadAnimator();
+            return Animator.GetCurrentAnimatorStateInfo(0).IsName("FadedIn");
         }
 
-        private void LoadAnimator()
+        public bool IsFadedOut()
         {
-            if (animator)
-            {
-                return;
-            }
-
-            var screenFader = GameObject.FindGameObjectWithTag("ScreenFader");
-
-            if (!screenFader)
-            {
-                throw new MissingComponentException("There is no game object tagged as 'ScreenFader' in this scene.");
-            }
-
-            animator = screenFader.GetComponent<Animator>();
-
-            if (!animator)
-            {
-                throw new MissingComponentException("The ScreenFader object has no 'Animator' attached.");
-            }
-        }
-    
-        public bool IsFading()
-        {
-            return _fading;
+            return Animator.GetCurrentAnimatorStateInfo(0).IsName("FadedOut");
         }
 
-        public bool IsTotallyFadedOut()
+        private string GetCurrentClipName()
         {
-            return !IsFading() && animator.GetCurrentAnimatorStateInfo(0).IsName("FadeOut");
-        }
-    
-        public bool IsFadeOut()
-        {
-            return animator.GetCurrentAnimatorStateInfo(0).IsName("FadeOut");
-        }
-    
-        public bool IsFadeIn()
-        {
-            return animator.GetCurrentAnimatorStateInfo(0).IsName("FadeIn");
-        }
-    
-        public bool IsNoFade()
-        {
-            return animator.GetCurrentAnimatorStateInfo(0).IsName("NoFade");
+            return Animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
         }
 
         public void FadeIn()
         {
-            if (!IsTotallyFadedOut())
+            if (!IsFadedOut())
             {
+                Debug.Log("cannot fade in: " + GetCurrentClipName());
                 return;
             }
 
-            _fading = true;
+            onFadeInStart.Invoke();
             onFadeStart.Invoke();
-            animator.SetTrigger("FadeInTrigger");
+            Animator.SetTrigger("FadeInTrigger");
+            Debug.Log("FadeIn");
         }
 
         public void FadeOut()
         {
-            if (IsTotallyFadedOut())
+            if (!IsFadedIn())
             {
+                Debug.Log("cannot fade out: " + GetCurrentClipName());
                 return;
             }
 
-            _fading = true;
+            onFadeOutStart.Invoke();
             onFadeStart.Invoke();
-            animator.SetTrigger("FadeOutTrigger");
+            Animator.SetTrigger("FadeOutTrigger");
+            Debug.Log("FadeOut");
         }
 
-        public void OnFadeComplete()
+        public void OnFadeInAnimationComplete()
         {
-            _fading = false;
-            onFadeComplete.Invoke();
+            onFadeInFinish.Invoke();
+            onFadeFinish.Invoke();
+            Debug.Log("OnFadeInAnimationComplete");
+        }
+
+        public void OnFadeOutAnimationComplete()
+        {
+            onFadeOutFinish.Invoke();
+            onFadeFinish.Invoke();
+            Debug.Log("OnFadeOutAnimationComplete");
         }
     }
 }

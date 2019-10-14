@@ -1,5 +1,6 @@
 using NewBark.Input;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace NewBark.Movement
 {
@@ -7,7 +8,9 @@ namespace NewBark.Movement
     {
         public Transform dropZone;
         public Vector2 dropZoneOffset;
-        public DirectionButton moveDirection = DirectionButton.NONE;
-        public int moveSteps;
+        [FormerlySerializedAs("moveSteps")] public int dropZoneSteps;
+        public InputButton dropZoneLookAt = InputButton.None;
+        [HideInInspector] public Vector2 calculatedDropZone;
+        [HideInInspector] public Vector2 calculatedDropZoneLookAt;
     }
 }

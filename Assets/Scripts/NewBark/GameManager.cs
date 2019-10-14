@@ -46,6 +46,7 @@ namespace NewBark
         {
             if (!autoLoad)
             {
+                Data = new GameData();
                 return;
             }
 

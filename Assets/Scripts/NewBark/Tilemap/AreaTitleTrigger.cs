@@ -13,7 +13,7 @@ namespace NewBark.Tilemap
         public static string LastTriggerTitle => LastTrigger ? LastTrigger.areaTitle.title : null;
 
         public AreaTitle areaTitle;
-        [Tag] public string tagFilter;
+        [Tag] public string tagFilter = "Player";
         public UnityEvent onAreaEnter;
 
         public static void SwitchTo(string triggerName)

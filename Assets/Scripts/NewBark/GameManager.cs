@@ -60,7 +60,7 @@ namespace NewBark
 
             //
             Player.transform.position = Data.playerPosition;
-            Player.playerAnimationController.UpdateAnimation(Data.playerDirection);
+            Player.playerAnimationController.UpdateAnimation(Data.playerDirection, Data.playerDirection);
             AreaTitleTrigger.SwitchTo(Data.areaTitleTrigger);
             //
             onLoadState.Invoke();

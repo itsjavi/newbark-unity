@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: WaterRock-ani
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 21300064, guid: 235ac397970f84a0985b517461957e3e, type: 3}
-  - {fileID: 21300066, guid: 235ac397970f84a0985b517461957e3e, type: 3}
-  - {fileID: 21300068, guid: 235ac397970f84a0985b517461957e3e, type: 3}
-  - {fileID: 21300066, guid: 235ac397970f84a0985b517461957e3e, type: 3}
+  - {fileID: 8673077753581324705, guid: 9b3ee642c9e4f4cf193fde641b581bc5, type: 3}
+  - {fileID: 4776292034514738480, guid: 9b3ee642c9e4f4cf193fde641b581bc5, type: 3}
+  - {fileID: -7052931397261103344, guid: 9b3ee642c9e4f4cf193fde641b581bc5, type: 3}
+  - {fileID: 4776292034514738480, guid: 9b3ee642c9e4f4cf193fde641b581bc5, type: 3}
   m_MinSpeed: 2
   m_MaxSpeed: 2
   m_AnimationStartTime: 0

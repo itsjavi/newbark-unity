@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FlowerTop-ani
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 21300040, guid: 235ac397970f84a0985b517461957e3e, type: 3}
-  - {fileID: 21300042, guid: 235ac397970f84a0985b517461957e3e, type: 3}
+  - {fileID: 8420718934679655178, guid: 9b3ee642c9e4f4cf193fde641b581bc5, type: 3}
+  - {fileID: 3850978801820407014, guid: 9b3ee642c9e4f4cf193fde641b581bc5, type: 3}
   m_MinSpeed: 1
   m_MaxSpeed: 1
   m_AnimationStartTime: 0

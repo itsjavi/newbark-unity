@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FlowerBottom-ani
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 21300078, guid: 235ac397970f84a0985b517461957e3e, type: 3}
-  - {fileID: 21300132, guid: 235ac397970f84a0985b517461957e3e, type: 3}
+  - {fileID: 2418869950254967616, guid: 9b3ee642c9e4f4cf193fde641b581bc5, type: 3}
+  - {fileID: 1869304696127499464, guid: 9b3ee642c9e4f4cf193fde641b581bc5, type: 3}
   m_MinSpeed: 1
   m_MaxSpeed: 1
   m_AnimationStartTime: 0

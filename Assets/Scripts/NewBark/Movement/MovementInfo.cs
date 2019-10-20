@@ -43,17 +43,17 @@ namespace NewBark.Movement
             return MovementDirection.None;
         }
 
-        public static MovementDirection ButtonToDirection(InputButton button)
+        public static MovementDirection ButtonToDirection(GameButton button)
         {
             switch (button)
             {
-                case InputButton.Up:
+                case GameButton.Up:
                     return MovementDirection.Up;
-                case InputButton.Right:
+                case GameButton.Right:
                     return MovementDirection.Right;
-                case InputButton.Down:
+                case GameButton.Down:
                     return MovementDirection.Down;
-                case InputButton.Left:
+                case GameButton.Left:
                     return MovementDirection.Left;
                 default:
                     return MovementDirection.None;

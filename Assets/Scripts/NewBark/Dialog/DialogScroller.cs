@@ -94,7 +94,7 @@ namespace NewBark.Dialog
         {
             if (!IsStarted())
             {
-                throw new Exception("Scroller is not yet started or it finished.");
+                throw new Exception("Scroller is not yet started or it is already finished.");
             }
 
             if (IsFinished())

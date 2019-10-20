@@ -1,5 +1,6 @@
 using System;
 using NewBark.Audio;
+using NewBark.Dialog;
 using NewBark.Input;
 using NewBark.State;
 using NewBark.Support;
@@ -19,6 +20,7 @@ namespace NewBark
         public static PlayerController Player => Singleton<PlayerController>.Instance;
         public static InputController Input => Singleton<InputController>.Instance;
         public static AudioController Audio => Singleton<AudioController>.Instance;
+        public static DialogController Dialog => Singleton<DialogController>.Instance;
 
         public bool autoLoad;
         public bool autoSave;

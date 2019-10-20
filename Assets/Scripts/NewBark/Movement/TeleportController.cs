@@ -7,8 +7,8 @@ using UnityEngine.Events;
 namespace NewBark.Movement
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    [RequireComponent(typeof(MovementController2))]
-    public class TeleportController2 : MonoBehaviour
+    [RequireComponent(typeof(MovementController))]
+    public class TeleportController : MonoBehaviour
     {
         public bool externalUnlock;
 
@@ -22,7 +22,7 @@ namespace NewBark.Movement
         public UnityEvent onTeleportFinish;
 
         public BoxCollider2D Collider => GetComponent<BoxCollider2D>();
-        public MovementController2 Movement => GetComponent<MovementController2>();
+        public MovementController Movement => GetComponent<MovementController>();
 
         private void FixedUpdate()
         {
@@ -109,7 +109,7 @@ namespace NewBark.Movement
             Movement.Stop();
             Lock();
 
-            if (!Movement.Move(absolutePosition, lookingDirection)) return false;
+            if (!Movement.ForceMove(absolutePosition, lookingDirection)) return false;
             transform.position = absolutePosition;
             //Debug.Log("Teleported"); // move immediatelly
             Movement.Stop();
@@ -118,7 +118,7 @@ namespace NewBark.Movement
 
         public TeleportPortal CalculatePortal(TeleportPortal destination)
         {
-            if (destination.dropZoneLookAt == InputButton.None && Movement.PreviousDirection != null)
+            if (destination.dropZoneLookAt == GameButton.None && Movement.PreviousDirection != null)
             {
                 destination.calculatedDropZoneLookAt = Movement.PreviousDirection.Value;
             }
@@ -159,7 +159,7 @@ namespace NewBark.Movement
             }
 
             // turn around if necessary, to avoid turn around timeout
-            if (destination.dropZoneLookAt != InputButton.None)
+            if (destination.dropZoneLookAt != GameButton.None)
             {
                 Movement.LookAt(destination.calculatedDropZoneLookAt,
                     destination.dropZoneSteps > 0 ? 0 : _stairsWaitTime);
@@ -172,9 +172,9 @@ namespace NewBark.Movement
             }
 
             // move the necessary steps in that direction
-            
+
             // TODO: refactor into a separate function to be able to delay it too (door enter animation cannot be seen on fade in)
-            if (!Movement.Move(destination.calculatedDropZoneLookAt, destination.dropZoneSteps))
+            if (!Movement.ForceMove(destination.calculatedDropZoneLookAt, destination.dropZoneSteps))
             {
                 Debug.LogWarning("Moving dropzone steps FAILED...");
             }

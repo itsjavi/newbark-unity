@@ -10,7 +10,7 @@ namespace NewBark.Movement
         public Transform dropZone;
         public Vector2 dropZoneOffset;
         [FormerlySerializedAs("moveSteps")] public int dropZoneSteps;
-        public InputButton dropZoneLookAt = InputButton.None;
+        public GameButton dropZoneLookAt = GameButton.None;
         [HideInInspector] public Vector2 calculatedDropZone;
         [HideInInspector] public Vector2 calculatedDropZoneLookAt;
     }

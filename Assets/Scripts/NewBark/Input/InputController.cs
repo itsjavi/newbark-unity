@@ -12,6 +12,8 @@ namespace NewBark.Input
         [Tooltip("GameObject that has the focus of the input and will receive the messages.")]
         public GameObject target;
 
+        private GameObject prevTarget;
+
         private float _holdButtonThrottleCounter;
 
         private InputActionsMaster _controls;
@@ -25,6 +27,17 @@ namespace NewBark.Input
         private void OnDisable()
         {
             _controls.Disable();
+        }
+
+        public void SwitchTarget(GameObject newTarget)
+        {
+            prevTarget = target;
+            target = newTarget;
+        }
+
+        public void RestoreTarget()
+        {
+            target = prevTarget;
         }
 
         private void Awake()
@@ -94,9 +107,9 @@ namespace NewBark.Input
             }
         }
 
-        public Dictionary<InputButton, InputAction> GetHoldButtons()
+        public Dictionary<GameButton, InputAction> GetHoldButtons()
         {
-            Dictionary<InputButton, InputAction> holdButtons = new Dictionary<InputButton, InputAction>();
+            Dictionary<GameButton, InputAction> holdButtons = new Dictionary<GameButton, InputAction>();
 
             foreach (var action in GetActions())
             {
@@ -109,17 +122,17 @@ namespace NewBark.Input
             return holdButtons;
         }
 
-        public bool IsDirectional(InputButton btn)
+        public bool IsDirectional(GameButton btn)
         {
-            return btn == InputButton.Up || btn == InputButton.Right || btn == InputButton.Down ||
-                   btn == InputButton.Left;
+            return btn == GameButton.Up || btn == GameButton.Right || btn == GameButton.Down ||
+                   btn == GameButton.Left;
         }
 
-        public InputButton ActionToButton(InputAction action)
+        public GameButton ActionToButton(InputAction action)
         {
             if (action == null)
             {
-                return InputButton.None;
+                return GameButton.None;
             }
 
             if (action == Actions.ButtonDirectional)
@@ -127,83 +140,83 @@ namespace NewBark.Input
                 var dir = Actions.ButtonDirectional.ReadValue<Vector2>();
                 if (dir == Vector2.up)
                 {
-                    return InputButton.Up;
+                    return GameButton.Up;
                 }
 
                 if (dir == Vector2.down)
                 {
-                    return InputButton.Down;
+                    return GameButton.Down;
                 }
 
                 if (dir == Vector2.left)
                 {
-                    return InputButton.Left;
+                    return GameButton.Left;
                 }
 
                 if (dir == Vector2.right)
                 {
-                    return InputButton.Right;
+                    return GameButton.Right;
                 }
 
-                return InputButton.None;
+                return GameButton.None;
             }
 
             if (action == Actions.ButtonA)
             {
-                return InputButton.A;
+                return GameButton.A;
             }
 
             if (action == Actions.ButtonB)
             {
-                return InputButton.B;
+                return GameButton.B;
             }
 
             if (action == Actions.ButtonStart)
             {
-                return InputButton.Start;
+                return GameButton.Start;
             }
 
             if (action == Actions.ButtonSelect)
             {
-                return InputButton.Select;
+                return GameButton.Select;
             }
 
-            return InputButton.None;
+            return GameButton.None;
         }
 
-        public InputAction ButtonToAction(InputButton button)
+        public InputAction ButtonToAction(GameButton button)
         {
             switch (button)
             {
-                case InputButton.Up:
-                case InputButton.Down:
-                case InputButton.Left:
-                case InputButton.Right:
+                case GameButton.Up:
+                case GameButton.Down:
+                case GameButton.Left:
+                case GameButton.Right:
                     return Actions.ButtonDirectional;
-                case InputButton.A:
+                case GameButton.A:
                     return Actions.ButtonA;
-                case InputButton.B:
+                case GameButton.B:
                     return Actions.ButtonB;
-                case InputButton.Start:
+                case GameButton.Start:
                     return Actions.ButtonStart;
-                case InputButton.Select:
+                case GameButton.Select:
                     return Actions.ButtonSelect;
                 default:
                     return null;
             }
         }
 
-        public Vector2 ButtonToVector2(InputButton button)
+        public Vector2 ButtonToVector2(GameButton button)
         {
             switch (button)
             {
-                case InputButton.Up:
+                case GameButton.Up:
                     return Vector2.up;
-                case InputButton.Down:
+                case GameButton.Down:
                     return Vector2.down;
-                case InputButton.Left:
+                case GameButton.Left:
                     return Vector2.left;
-                case InputButton.Right:
+                case GameButton.Right:
                     return Vector2.right;
                 default:
                     return Vector2.zero;

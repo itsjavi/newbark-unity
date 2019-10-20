@@ -5,83 +5,75 @@ using UnityEngine.UI;
 
 namespace NewBark.Dialog
 {
-    public class DialogManager : MonoBehaviour
+    public class DialogController : MonoBehaviour
     {
-        public RectTransform dialogBox;
-        public RectTransform dialogArrow;
-        public Text dialogText;
-        public int dialogTextRows = 2;
-        public int dialogTextCols = 18;
-        public AudioClip nextSentenceEffect;
+        public RectTransform boxPanel;
+        public RectTransform arrowImage;
+        public Text textPanel;
+        public int rowsPerPage = 2;
+        public int columnsPerPage = 18;
+        public AudioClip nextPageSound;
 
-        private AudioSource audioSource;
-        private bool inDialog;
 
-        private DialogScroller dialogScroller;
+        private bool _inDialog;
+        private Dialog _currentDialog;
+        private DialogScroller _scroller;
 
         // Start is called before the first frame update
         void Start()
         {
-            dialogScroller = new DialogScroller(dialogTextRows, dialogTextCols);
-            audioSource = gameObject.AddComponent<AudioSource>();
+            _scroller = new DialogScroller(rowsPerPage, columnsPerPage);
         }
 
         public void ShowDialog()
         {
-            inDialog = true;
-            dialogBox.transform.position = new Vector3(dialogBox.transform.position.x, 0, 0);
+            //boxPanel.gameObject.SetActive(true);
+            boxPanel.transform.position = new Vector3(boxPanel.transform.position.x, 0, 0);
         }
 
         public void HideDialog()
         {
-            dialogArrow.gameObject.SetActive(false);
-            inDialog = false;
-            dialogBox.transform.position = new Vector3(dialogBox.transform.position.x, (dialogBox.rect.height * -10), 0);
+            arrowImage.gameObject.SetActive(false);
+            //boxPanel.gameObject.SetActive(false);
+            boxPanel.transform.position = new Vector3(boxPanel.transform.position.x, (boxPanel.rect.height * -10), 0);
         }
 
 
         public void Clear()
         {
             StopAllCoroutines();
-            dialogText.text = "";
-            dialogScroller.Clear();
+            textPanel.text = "";
+            _scroller.Clear();
         }
 
         private void PlaySound()
         {
-            if (!audioSource.clip)
-            {
-                audioSource.clip = nextSentenceEffect;
-            }
-
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
-
-            audioSource.Play();
+            GameManager.Audio.PlaySfx(nextPageSound);
         }
 
-        public void StartDialog(global::NewBark.Dialog.Dialog dialog)
+        public void StartDialog(Dialog dialog)
         {
+            _currentDialog = dialog;
+            _currentDialog.SendMessage("OnDialogStart", SendMessageOptions.DontRequireReceiver);
             Clear();
             ShowDialog();
 
-            dialogScroller.Start(dialog.text);
+            _scroller.Start(dialog.text);
+            _inDialog = true;
 
             PrintNext();
         }
 
         public bool InDialog()
         {
-            return inDialog;
+            return _inDialog;
         }
 
         public bool PrintNext()
         {
-            var showArrow = dialogScroller.IsPaged() && !dialogScroller.IsLastPage();
+            var showArrow = _scroller.IsPaged() && !_scroller.IsLastPage();
 
-            var lines = dialogScroller.Next();
+            var lines = _scroller.Next();
 
             if (lines == null || lines.Length == 0)
             {
@@ -89,17 +81,18 @@ namespace NewBark.Dialog
                 return false;
             }
 
-            dialogArrow.gameObject.SetActive(showArrow);
+            arrowImage.gameObject.SetActive(showArrow);
             StopAllCoroutines();
             PlaySound();
 
-            StartCoroutine(Print(lines, dialogScroller.IsFirstBuffer() || dialogScroller.IsFirstBufferLine()));
+            StartCoroutine(Print(lines, _scroller.IsFirstBuffer() || _scroller.IsFirstBufferLine()));
+            _currentDialog.SendMessage("OnDialogNext", SendMessageOptions.DontRequireReceiver);
             return true;
         }
 
         public bool HasNext()
         {
-            return dialogScroller != null && !dialogScroller.IsFinished();
+            return _scroller != null && !_scroller.IsFinished();
         }
 
         public void EndDialog()
@@ -107,11 +100,8 @@ namespace NewBark.Dialog
             StopAllCoroutines();
             Clear();
             HideDialog();
-
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
+            _inDialog = false;
+            _currentDialog.SendMessage("OnDialogEnd", SendMessageOptions.DontRequireReceiver);
         }
 
         private IEnumerator Print(string[] lines, bool delayAll = false)
@@ -135,7 +125,7 @@ namespace NewBark.Dialog
             }
 
             lineNum = 0;
-            dialogText.text = "";
+            textPanel.text = "";
 
             foreach (string line in lines)
             {
@@ -145,9 +135,9 @@ namespace NewBark.Dialog
                     continue;
                 }
 
-                if (dialogText.text.Length > 0)
+                if (textPanel.text.Length > 0)
                 {
-                    dialogText.text += Environment.NewLine;
+                    textPanel.text += Environment.NewLine;
                 }
 
                 if (delayAll || isLastLine)
@@ -155,7 +145,7 @@ namespace NewBark.Dialog
                     // Print last line
                     foreach (char ch in line)
                     {
-                        dialogText.text += ch;
+                        textPanel.text += ch;
                         yield return null; // render frame
                     }
 
@@ -166,7 +156,7 @@ namespace NewBark.Dialog
                 }
                 else
                 {
-                    dialogText.text += line;
+                    textPanel.text += line;
                     yield return null; // render frame
                 }
 

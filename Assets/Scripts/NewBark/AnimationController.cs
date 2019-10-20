@@ -12,15 +12,15 @@ namespace NewBark
         private static readonly int MoveY = Animator.StringToHash("MoveY");
         private static readonly int LastMoveX = Animator.StringToHash("LastMoveX");
         private static readonly int LastMoveY = Animator.StringToHash("LastMoveY");
-        private static readonly int Moving = Animator.StringToHash("Moving");
+        private static readonly int Speed = Animator.StringToHash("Speed");
 
-        public void UpdateAnimation(Vector2 position, Vector2 lastPosition, bool isMoving)
+        public void UpdateAnimation(Vector2 position, Vector2 lastPosition, float speed)
         {
             Animator.SetFloat(MoveX, position.x);
             Animator.SetFloat(MoveY, position.y);
             Animator.SetFloat(LastMoveX, lastPosition.x);
             Animator.SetFloat(LastMoveY, lastPosition.y);
-            Animator.SetBool(Moving, isMoving);
+            UpdateAnimation(speed);
         }
 
         public void UpdateAnimation(Vector2 position)
@@ -37,65 +37,76 @@ namespace NewBark
             Animator.SetFloat(LastMoveY, lastPosition.y);
         }
 
-        public void UpdateAnimation(bool isMoving)
+        public void UpdateAnimation(float speed)
         {
-            Animator.SetBool(Moving, isMoving);
+            Animator.speed = speed;
+            Animator.SetFloat(Speed, speed);
         }
 
-        public void UpdateAnimation(DirectionButton dir)
+        public void StopAnimation()
         {
-            var pos = LegacyInputManager.GetDirectionButtonVector(dir);
+            Animator.SetFloat(Speed, 0);
+        }
+
+        public bool IsPlayingAnimation()
+        {
+            return Animator.GetFloat(Speed) > 0;
+        }
+
+        public void UpdateAnimation(GameButton btn)
+        {
+            var pos = GameManager.Input.ButtonToVector2(btn);
             UpdateAnimation(pos, pos);
         }
 
-        public DirectionButton GetAnimationDirection()
+        public Vector2 GetAnimationDirection()
         {
             if (Animator.GetFloat(MoveX) > 0)
             {
-                return DirectionButton.RIGHT;
+                return Vector2.right;
             }
 
             if (Animator.GetFloat(MoveX) < 0)
             {
-                return DirectionButton.LEFT;
+                return Vector2.left;
             }
 
             if (Animator.GetFloat(MoveY) > 0)
             {
-                return DirectionButton.UP;
+                return Vector2.up;
             }
 
             if (Animator.GetFloat(MoveY) < 0)
             {
-                return DirectionButton.DOWN;
+                return Vector2.down;
             }
 
-            return DirectionButton.DOWN;
+            return Vector2.down;
         }
 
-        public DirectionButton GetLastAnimationDirection()
+        public Vector2 GetLastAnimationDirection()
         {
             if (Animator.GetFloat(LastMoveX) > 0)
             {
-                return DirectionButton.RIGHT;
+                return Vector2.right;
             }
 
             if (Animator.GetFloat(LastMoveX) < 0)
             {
-                return DirectionButton.LEFT;
+                return Vector2.left;
             }
 
             if (Animator.GetFloat(LastMoveY) > 0)
             {
-                return DirectionButton.UP;
+                return Vector2.up;
             }
 
             if (Animator.GetFloat(LastMoveY) < 0)
             {
-                return DirectionButton.DOWN;
+                return Vector2.down;
             }
 
-            return DirectionButton.DOWN;
+            return Vector2.down;
         }
     }
 }

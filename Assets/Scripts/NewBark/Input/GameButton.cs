@@ -1,6 +1,6 @@
 namespace NewBark.Input
 {
-    public enum InputButton
+    public enum GameButton
     {
         None,
         A,

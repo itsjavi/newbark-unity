@@ -5,15 +5,20 @@ using UnityEngine;
 
 namespace NewBark
 {
-    [RequireComponent(typeof(AnimationController2))]
+    [RequireComponent(typeof(AnimationController))]
     public class PlayerController : MonoBehaviour
     {
-        [HideInInspector] public AnimationController2 playerAnimationController;
-        public AnimationController2 grassAnimationController;
+        [HideInInspector] public AnimationController playerAnimationController;
+        public AnimationController grassAnimationController;
 
         private void Awake()
         {
-            playerAnimationController = GetComponent<AnimationController2>();
+            playerAnimationController = GetComponent<AnimationController>();
+        }
+
+        public Vector2 GetFaceDirection()
+        {
+            return playerAnimationController.GetLastAnimationDirection();
         }
 
         public bool WillCollide(Vector2 direction)
@@ -26,7 +31,7 @@ namespace NewBark
             return CheckHit(direction).collider;
         }
 
-        public RaycastHit2D CheckHit(Vector2 direction, int layerIndex = GameManager.CollisionsLayer, int distance = 1)
+        public RaycastHit2D CheckHit(Vector2 direction, int layerIndex = GameManager.CollisionsLayer, float distance = 1f)
         {
             return Physics2D.Raycast(
                 transform.position, direction, distance, 1 << layerIndex

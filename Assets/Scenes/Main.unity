@@ -302,8 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: It's the TOWN MAP.
+  text: It's the TOWN MAP.
 --- !u!1 &249934854
 GameObject:
   m_ObjectHideFlags: 0
@@ -43143,14 +43142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: 'It''s a PC.
-
-
-      ...
-
-
-      Seems that it doesn''t work right now.'
+  text: "GOLD turned \non the PC.\n\nIt's not working..."
 --- !u!1001 &966086462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43334,8 +43326,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1817178225}
-  - {fileID: 1973439301}
-  - {fileID: 1212527980}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43935,61 +43925,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1161426512}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1212527979
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1212527980}
-  - component: {fileID: 1212527981}
-  - component: {fileID: 1212527982}
-  m_Layer: 1
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &1212527980
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212527979}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 969265082}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &1212527981
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212527979}
-  m_Enabled: 1
---- !u!114 &1212527982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212527979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 642f0a34f362442f909cffbb84eb2fdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bgmVolume: 0.1
-  sfxVolume: 0.2
-  bgmTransitionTime: 1.2
 --- !u!1 &1261866284
 GameObject:
   m_ObjectHideFlags: 0
@@ -44033,6 +43968,7 @@ GameObject:
   - component: {fileID: 1277699178}
   - component: {fileID: 1277699179}
   - component: {fileID: 1277699180}
+  - component: {fileID: 1277699181}
   m_Layer: 8
   m_Name: Item_Potion
   m_TagString: Untagged
@@ -44129,6 +44065,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1277699181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277699177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: 'GOLD found
+
+    a fucking
+
+    POTION!'
 --- !u!1 &1304285299
 GameObject:
   m_ObjectHideFlags: 0
@@ -44235,9 +44188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: "POK\xE9RADIO is ON:\n\n...\n\nThanks for trying out this project!\n\nUpdates
-      and suggestions:\n@route1rodent (Twitter)"
+  text: It's a RADIO.
 --- !u!1 &1307903370
 GameObject:
   m_ObjectHideFlags: 0
@@ -44647,13 +44598,35 @@ MonoBehaviour:
       m_Calls: []
   onFadeOutStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1817178226}
+        m_MethodName: SwitchTarget
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1817178224}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onFadeFinish:
     m_PersistentCalls:
       m_Calls: []
   onFadeInFinish:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1817178226}
+        m_MethodName: RestoreTarget
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onFadeOutFinish:
     m_PersistentCalls:
       m_Calls:
@@ -88408,8 +88381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: It's a TV with a Nintendo Switch connected to it.
+  text: It's a TV.
 --- !u!4 &1735790529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1820661078736008589, guid: 03e4f12a8054c48a6b400f9829bd7af4,
@@ -88683,8 +88655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: "A whole collection\nof POK\xE9MON picture\nbooks!"
+  text: "A whole collection\nof POK\xE9MON picture\nbooks!"
 --- !u!1 &1817178224
 GameObject:
   m_ObjectHideFlags: 0
@@ -88694,8 +88665,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1817178225}
+  - component: {fileID: 1817178230}
   - component: {fileID: 1817178227}
   - component: {fileID: 1817178226}
+  - component: {fileID: 1817178228}
+  - component: {fileID: 1817178229}
   m_Layer: 1
   m_Name: GameController
   m_TagString: GameController
@@ -88757,6 +88731,47 @@ MonoBehaviour:
   onSaveState:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1817178228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817178224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8faa86638bd3f4012b146c6c8e5caecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxPanel: {fileID: 25007926}
+  arrowImage: {fileID: 535955979}
+  textPanel: {fileID: 1307903372}
+  rowsPerPage: 2
+  columnsPerPage: 18
+  nextPageSound: {fileID: 8300000, guid: ff3b0517750ac4472880a1fb447f6ee0, type: 3}
+--- !u!114 &1817178229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817178224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 642f0a34f362442f909cffbb84eb2fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmVolume: 0.1
+  sfxVolume: 0.2
+  bgmTransitionTime: 1.2
+--- !u!81 &1817178230
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817178224}
+  m_Enabled: 1
 --- !u!1001 &1859274510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89140,8 +89155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: It's a BED.
+  text: It's a BED.
 --- !u!1 &1938265131 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8678164167779174701, guid: 81da04f0b0dc34148bcd24007f3b42e2,
@@ -89194,55 +89208,6 @@ Transform:
   m_Father: {fileID: 549839365}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1973439300
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1973439301}
-  - component: {fileID: 1973439302}
-  m_Layer: 1
-  m_Name: DialogManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &1973439301
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973439300}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 969265082}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1973439302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973439300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8faa86638bd3f4012b146c6c8e5caecd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogBox: {fileID: 25007926}
-  dialogArrow: {fileID: 535955979}
-  dialogText: {fileID: 1307903372}
-  dialogTextRows: 2
-  dialogTextCols: 18
-  nextSentenceEffect: {fileID: 8300000, guid: ff3b0517750ac4472880a1fb447f6ee0, type: 3}
 --- !u!4 &2022546124
 Transform:
   m_ObjectHideFlags: 0
@@ -89584,13 +89549,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: 'ROUTE 29
+  text: 'ROUTE 29
 
 
-      CHERRYGROVE CITY -
+    CHERRYGROVE CITY -
 
-      NEW BARK TOWN'
+    NEW BARK TOWN'
 --- !u!114 &354004614237108169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89603,13 +89567,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: 'NEW BARK TOWN
+  text: 'NEW BARK TOWN
 
 
-      The Town Where the Winds
+    The Town Where the Winds
 
-      of a New Beginning Blow'
+    of a New Beginning Blow'
 --- !u!114 &354004614432053191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89622,8 +89585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: ELM'S HOUSE
+  text: ELM'S HOUSE
 --- !u!114 &354004614794561497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89636,8 +89598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: GOLD's House
+  text: GOLD's House
 --- !u!114 &354004614936390791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89650,8 +89611,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: (Under construction)
+  text: 'ROUTE 29
+
+
+    CHERRYGROVE CITY -
+
+    NEW BARK TOWN'
 --- !u!114 &354004615047488896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89664,8 +89629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: "ELM POK\xE9MON LAB"
+  text: "ELM POK\xE9MON LAB"
 --- !u!20 &1084413055905915290
 Camera:
   m_ObjectHideFlags: 0
@@ -89831,7 +89795,8 @@ SpriteRenderer:
   m_SortingLayerID: -439551843
   m_SortingLayer: 1
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300104, guid: 235ac397970f84a0985b517461957e3e, type: 3}
+  m_Sprite: {fileID: 2151519551408182793, guid: 9b3ee642c9e4f4cf193fde641b581bc5,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -89880,7 +89845,8 @@ SpriteRenderer:
   m_SortingLayerID: -439551843
   m_SortingLayer: 1
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300104, guid: 235ac397970f84a0985b517461957e3e, type: 3}
+  m_Sprite: {fileID: 2151519551408182793, guid: 9b3ee642c9e4f4cf193fde641b581bc5,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -89929,7 +89895,8 @@ SpriteRenderer:
   m_SortingLayerID: -439551843
   m_SortingLayer: 1
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300104, guid: 235ac397970f84a0985b517461957e3e, type: 3}
+  m_Sprite: {fileID: 2151519551408182793, guid: 9b3ee642c9e4f4cf193fde641b581bc5,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -89978,7 +89945,8 @@ SpriteRenderer:
   m_SortingLayerID: -439551843
   m_SortingLayer: 1
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300104, guid: 235ac397970f84a0985b517461957e3e, type: 3}
+  m_Sprite: {fileID: 2151519551408182793, guid: 9b3ee642c9e4f4cf193fde641b581bc5,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -90027,7 +89995,8 @@ SpriteRenderer:
   m_SortingLayerID: -439551843
   m_SortingLayer: 1
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300104, guid: 235ac397970f84a0985b517461957e3e, type: 3}
+  m_Sprite: {fileID: 2151519551408182793, guid: 9b3ee642c9e4f4cf193fde641b581bc5,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -90076,7 +90045,8 @@ SpriteRenderer:
   m_SortingLayerID: -439551843
   m_SortingLayer: 1
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300104, guid: 235ac397970f84a0985b517461957e3e, type: 3}
+  m_Sprite: {fileID: 2151519551408182793, guid: 9b3ee642c9e4f4cf193fde641b581bc5,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -90695,6 +90665,7 @@ GameObject:
   - component: {fileID: 7192301008348172424}
   - component: {fileID: 7192301008348172423}
   - component: {fileID: 7192301008348172419}
+  - component: {fileID: 7192301008348172420}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -90765,6 +90736,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7192301008348172420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192301008348172418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9592d73773f5848f5bff2aab2bae24a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableLayer: 8
+  raycastDistance: 1
 --- !u!114 &7192301008348172422
 MonoBehaviour:
   m_ObjectHideFlags: 0

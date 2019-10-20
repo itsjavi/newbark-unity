@@ -1,302 +1,348 @@
-﻿using NewBark.Dialog;
+using System;
+using System.Collections.Generic;
 using NewBark.Input;
-using NewBark.Support.Physics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace NewBark.Movement
 {
+    [RequireComponent(typeof(PlayerController))]
     public class MovementController : MonoBehaviour
     {
-        public AnimationController m_animationController;
-        public DialogManager m_DialogManager;
+        public AudioClip collisionSound;
+        public float speed = 5;
+        private float _initialSpeed = 5;
+        private float AnimationSpeed => (speed * 10) / 60;
 
-        public int m_Speed = 6;
-        public int m_InputDelay = 8;
-        public int m_TilesPerStep = 1;
-        public float m_ClampOffset = 0.5f;
-        public CollisionEvent2D onCollision;
+        private int tilesPerStep = 1; // TODO: make raycast detect collisions properly if > 1
 
-        private bool _inputEnabled = true;
-        private int _inputDelayCoolDown;
-        private bool _isMoving;
-        private int _currentTilesToMove = 1;
-        private Collision2D _lastCollidedObject;
-        private Vector3 _destinationPosition;
-        private Vector3 _positionDiff;
-        private Vector3 _lastPositionDiff;
-        private DirectionButton _lastDirection = DirectionButton.NONE;
-        private DirectionButton _lastCollisionDir = DirectionButton.NONE;
+        [Tooltip("Time to turn around to a different position, in milliseconds.")]
+        public float turnAroundWaitTime = 125;
+
+        public float clampOffset = 0.5f;
+
+        private float _turnAroundWaitTimeCounter;
+        private bool _stopCurrentMovementOnTurnAround = true;
+        private bool _inputCaptureEnabled = true;
+
+        // TODO refactor using MovementInstruction
+        private Vector2? _previousDestination;
+        private Vector2? _previousDirection;
+        private Vector2? _currentDestination;
+        private Vector2? _currentDirection;
+
+
+        public Vector2? PreviousDestination => _previousDestination;
+        public Vector2? PreviousDirection => _previousDirection;
+        public Vector2? CurrentDestination => _currentDestination;
+        public Vector2? CurrentDirection => _currentDirection;
+
+        public PlayerController PlayerController => GetComponent<PlayerController>();
+
+        private void Start()
+        {
+            _initialSpeed = speed;
+        }
+
+        public bool IsInputCaptureEnabled()
+        {
+            return _inputCaptureEnabled;
+        }
+
+        public void DisableInputCapture()
+        {
+            _inputCaptureEnabled = false;
+        }
+
+        public void EnableInputCapture()
+        {
+            _inputCaptureEnabled = true;
+        }
+
+        public bool IsTurningAround()
+        {
+            if (_turnAroundWaitTimeCounter > 0)
+            {
+                _turnAroundWaitTimeCounter -= Time.deltaTime * 1000;
+                return true;
+            }
+
+            if (_turnAroundWaitTimeCounter < 0)
+            {
+                _turnAroundWaitTimeCounter = 0;
+                if (_stopCurrentMovementOnTurnAround)
+                {
+                    Stop();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
 
         private void FixedUpdate()
         {
-            if (!CanMove() && IsMoving())
-            {
-                StopMoving();
-            }
-
-            DirectionButton dir = LegacyInputManager.GetPressedDirectionButton();
-
-            if (!IsMoving() && dir == DirectionButton.NONE)
+            if (IsTurningAround())
             {
                 return;
             }
 
-            TriggerDirectionButton(dir);
-        }
-
-        private bool CanMove()
-        {
-            return !m_DialogManager || !m_DialogManager.InDialog();
-        }
-
-        private void MovementUpdate(DirectionButton dir)
-        {
-            if (!_isMoving)
+            if (_currentDestination == null)
             {
-                _currentTilesToMove = m_TilesPerStep;
-            }
-
-            Move(dir, _currentTilesToMove);
-        }
-
-        private void MoveTo(DirectionButton dir, Vector3 destPosition)
-        {
-            m_animationController.UpdateAnimation(_positionDiff, _lastPositionDiff, _isMoving);
-
-            if (!_isMoving || (destPosition == transform.position))
-            {
-                ClampCurrentPosition();
                 return;
-            }
-
-            if (_isMoving && (dir != DirectionButton.NONE) && (dir == _lastCollisionDir))
-            {
-                ClampCurrentPosition();
-                if (!(_lastCollidedObject is null))
-                {
-                    onCollision.Invoke(_lastCollidedObject);
-                }
-
-                return;
-            }
-
-            if (_isMoving)
-            {
-                _lastCollidedObject = null;
-                _lastCollisionDir = DirectionButton.NONE;
             }
 
             var tr = transform;
+            var dest = _currentDestination.Value;
 
-            tr.position = Vector3.MoveTowards(tr.position, destPosition, Time.deltaTime * m_Speed);
-            tr.rotation = new Quaternion(0, 0, 0, 0);
-        }
-
-        public void Move(DirectionButton dir, int tiles)
-        {
-            _currentTilesToMove = tiles;
-
-            Vector3 destPosition = CalculateDestinationPosition(
-                transform.position, dir, tiles
-            );
-
-            MoveTo(dir, destPosition);
-        }
-
-        public void TriggerDirectionButton(DirectionButton dir)
-        {
-            if (!CanMove() && IsMoving())
+            if (HasArrived(tr.position, dest))
             {
-                StopMoving();
+                // fix possible wrong decimals
+                tr.position = GetClampedPosition(tr.position);
+                //Debug.Log("Arrived to destination.");
+                Stop();
+                return;
             }
 
-            if (CanMove())
+            tr.position = Vector3.MoveTowards(tr.position, dest, Time.fixedDeltaTime * speed);
+            //Debug.Log("Updated position = " + tr.position);
+
+            // Lock rotation, just in case
+            // tr.rotation = new Quaternion(0, 0, 0, 0);
+        }
+
+        public bool HasArrived(Vector2 current, Vector2 destination)
+        {
+            return destination == current;
+        }
+
+        public void OnButtonDirectionalHold(KeyValuePair<GameButton, InputAction> btn)
+        {
+            if (!_inputCaptureEnabled)
             {
-                MovementUpdate(dir);
+                return;
+            }
+
+            Move(btn.Value.ReadValue<Vector2>(), tilesPerStep);
+        }
+
+        public void OnMultipleButtonsHold(Dictionary<GameButton, InputAction> buttons)
+        {
+            if (!_inputCaptureEnabled)
+            {
+                return;
+            }
+
+            if (IsRunMode(buttons))
+            {
+                StartRunMode();
             }
         }
 
-        void OnCollisionEnter2D(Collision2D col)
+        public void OnButtonBPerformed(InputAction.CallbackContext ctx)
         {
-            _lastCollidedObject = col;
-            _lastCollisionDir = _lastDirection;
-
-            ClampCurrentPosition();
-
-            onCollision.Invoke(col);
-        }
-
-        void OnCollisionStay2D(Collision2D col)
-        {
-            _lastCollidedObject = col;
-            _lastCollisionDir = _lastDirection;
-
-            if (_isMoving)
+            if (!_inputCaptureEnabled)
             {
-                onCollision.Invoke(col);
+                return;
             }
 
-            StopMoving();
+            if (IsRunMode())
+            {
+                StopRunMode();
+            }
         }
 
-        private void ClampCurrentPosition()
+        public void OnButtonDirectionalCanceled(InputAction.CallbackContext ctx)
         {
-            ClampPositionTo(transform.position);
+            if (!_inputCaptureEnabled)
+            {
+                return;
+            }
+
+            // Without this check, turn-around movement wouldn't have animation or a very short one:
+            if (IsTurningAround())
+            {
+                return;
+            }
+
+            PlayerController.playerAnimationController.StopAnimation();
         }
 
-        private void StopMoving()
+        private Vector2 LockDiagonal(Vector2 direction)
         {
-            Stop();
-            m_animationController.UpdateAnimation(Vector2.zero, _lastPositionDiff, false);
-            ClampCurrentPosition();
+            if (Math.Abs(direction.x) > 0 && Math.Abs(direction.y) > 0)
+            {
+                // LOCK DIAGONAL MOVEMENT
+                direction.y = 0;
+            }
+
+            return direction;
+        }
+
+        public void SetCurrent(Vector2 destination, Vector2 direction)
+        {
+            _currentDirection = direction;
+            _currentDestination = destination;
+            //Debug.Log("Move destination=" + destination);
+        }
+
+        public bool Move(Vector2 destination, Vector2 direction)
+        {
+            if (!CanMove())
+            {
+                //Debug.Log("Cannot move");
+                return false;
+            }
+
+            return ForceMove(destination, direction);
+        }
+
+        public bool ForceMove(Vector2 destination, Vector2 direction)
+        {
+            PlayerController.playerAnimationController.UpdateAnimation(direction, direction, AnimationSpeed);
+            PlayerController.grassAnimationController.Animator.speed = AnimationSpeed;
+
+            if (direction != _previousDirection)
+            {
+                // Should have turn around without moving
+                _previousDirection = direction;
+                _turnAroundWaitTimeCounter = turnAroundWaitTime;
+                //Debug.Log("Turning around ");
+                return true;
+            }
+
+            var col = PlayerController.CheckCollision(direction);
+
+            if (col)
+            {
+                //Debug.Log("Detected collision with " + col.gameObject.name);
+                GameManager.Audio.PlaySfxWhenIdle(collisionSound);
+                return false;
+            }
+
+            SetCurrent(destination, direction);
+
+            return true;
+        }
+
+        public bool Move(Vector2 direction, int tiles = 1)
+        {
+            var dir = direction;
+            var dest = LockDiagonal(direction) * tiles;
+
+            return Move(transform.position + (Vector3) dest, dir);
+        }
+
+        public bool ForceMove(Vector2 direction, int tiles = 1)
+        {
+            var dir = direction;
+            var dest = LockDiagonal(direction) * tiles;
+
+            return ForceMove(transform.position + (Vector3) dest, dir);
+        }
+
+        public bool LookAt(Vector2 direction, float thenWait = 0)
+        {
+            _previousDestination = null;
+            _previousDirection = null;
+
+            if (!Move(direction)) return false;
+            _turnAroundWaitTimeCounter = thenWait;
+            return true;
         }
 
         public bool IsMoving()
         {
-            return _isMoving;
+            return (_currentDestination != null);
         }
 
-        // ---------------------------------------------------
-
-        public void ClampPositionTo(Vector3 position)
+        public void StartRunMode()
         {
-            var tr = transform;
-
-            tr.position = ClampPosition(position);
-
-            // override in case collision physics caused object rotation
-            tr.rotation = new Quaternion(0, 0, 0, 0);
+            speed = _initialSpeed * 2;
         }
 
-        private Vector3 CalculateDestinationPosition(Vector3 origin, DirectionButton dir, int tiles = 1)
+        public void StopRunMode()
         {
-            if (_inputDelayCoolDown > 0)
-            {
-                _inputDelayCoolDown--;
-            }
+            speed = _initialSpeed;
+        }
 
-            if (_inputEnabled)
-            {
-                _destinationPosition = origin;
-                CalculateMovement(dir, tiles);
-            }
+        public bool IsRunMode()
+        {
+            return speed > _initialSpeed;
+        }
 
-            if (_isMoving)
+        public bool IsRunMode(Dictionary<GameButton, InputAction> buttons)
+        {
+            var btnB = false;
+            var btnDir = false;
+
+            foreach (var keyValue in buttons)
             {
-                if (origin == _destinationPosition)
+                if (keyValue.Key == GameButton.B)
                 {
-                    // done moving in a tile
-                    _isMoving = false;
-                    _inputEnabled = true;
-                    CalculateMovement(dir, tiles);
+                    btnB = true;
+                    continue;
                 }
 
-                if (origin == _destinationPosition)
+                if (GameManager.Input.IsDirectional(keyValue.Key))
                 {
-                    return origin;
+                    btnDir = true;
                 }
 
-                return _destinationPosition;
+                if (btnDir && btnB)
+                {
+                    return true;
+                }
             }
 
-            _positionDiff.x = 0;
-            _positionDiff.y = 0;
-            _positionDiff.z = 0;
-
-            return ClampPosition(origin);
+            return false;
         }
 
-        private Vector3 ClampPosition(Vector3 position)
+        public void Stop()
         {
-            Vector3 fixedPos = new Vector3(ClampPositionAxis(position.x), ClampPositionAxis(position.y), 0);
-            return fixedPos;
+            //Debug.Log("Stopped.");
+            _previousDestination = _currentDestination;
+            _previousDirection = _currentDirection;
+            _currentDestination = null;
+            _currentDirection = null;
+            PlayerController.playerAnimationController.StopAnimation();
         }
 
-        private float ClampPositionAxis(float val)
+        public bool CanMove()
+        {
+            return !IsMoving() && (GameManager.Input.target == gameObject);
+        }
+
+        public bool CanMove(Vector2 towards)
+        {
+            return CanMove() && !PlayerController.WillCollide(towards);
+        }
+
+        private Vector3 GetClampedPosition(Vector3 position)
+        {
+            return new Vector3(
+                GetClampedPositionAxis(position.x, clampOffset),
+                GetClampedPositionAxis(position.y, clampOffset),
+                0
+            );
+        }
+
+        private float GetClampedPositionAxis(float val, float offset)
         {
             float mod = val % 1f;
 
-            if (System.Math.Abs(mod - m_ClampOffset) < double.Epsilon) // more precise than: if (mod == fraction)
+            if (System.Math.Abs(mod - clampOffset) < double.Epsilon) // more precise than: if (mod == fraction)
             {
                 return val;
             }
 
             if (val < 0f)
             {
-                return (val - mod) - m_ClampOffset;
+                return (val - mod) - clampOffset;
             }
 
-            return (val - mod) + m_ClampOffset;
-        }
-
-        private void Stop()
-        {
-            _positionDiff = Vector2.zero;
-            _inputDelayCoolDown = 0;
-            _isMoving = false;
-            _inputEnabled = true;
-        }
-
-        // Returns the calculated final destination vector
-        private void CalculateMovement(DirectionButton dir, int tiles = 1)
-        {
-            if (_inputDelayCoolDown > 0)
-            {
-                return;
-            }
-
-            if (dir == DirectionButton.NONE)
-            {
-                return;
-            }
-
-            float x = 0, y = 0, z = 0;
-
-            switch (dir)
-            {
-                case DirectionButton.UP:
-                {
-                    y = tiles;
-                }
-                    break;
-                case DirectionButton.RIGHT:
-                {
-                    x = tiles;
-                }
-                    break;
-                case DirectionButton.DOWN:
-                {
-                    y = tiles * -1;
-                }
-                    break;
-                case DirectionButton.LEFT:
-                {
-                    x = tiles * -1;
-                }
-                    break;
-            }
-
-            _lastPositionDiff.x = x;
-            _lastPositionDiff.y = y;
-            _lastPositionDiff.z = z;
-
-            if (_lastDirection != dir)
-            {
-                _inputDelayCoolDown = m_InputDelay;
-                _lastDirection = dir;
-
-                return;
-            }
-
-            _inputEnabled = false;
-            _isMoving = true;
-
-            _positionDiff.x = x;
-            _positionDiff.y = y;
-            _positionDiff.z = z;
-
-            _destinationPosition += _positionDiff;
-            _destinationPosition = ClampPosition(_destinationPosition);
+            return (val - mod) + clampOffset;
         }
     }
 }

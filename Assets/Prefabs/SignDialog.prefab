@@ -45,15 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0211835444dc4be5b81f1a9f92bede5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    text: 'NEW BARK TOWN
-
-
-      The Town Where the
-
-      Winds of a New
-
-      Beginning Blow.'
+  text: Lorem Ipsum.
 --- !u!212 &3251957178355454438
 SpriteRenderer:
   m_ObjectHideFlags: 0

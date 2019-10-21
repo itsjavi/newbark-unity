@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NewBark.Tilemap
 {
@@ -7,8 +6,9 @@ namespace NewBark.Tilemap
     {
         public TileSwapSchedule[] schedules;
         private UnityEngine.Tilemaps.Tilemap[] _tileMaps;
+        private TileSwapSchedule _currentSchedule;
 
-        void Awake()
+        void Start()
         {
             _tileMaps = GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>();
         }
@@ -17,24 +17,18 @@ namespace NewBark.Tilemap
         {
             foreach (var schedule in schedules)
             {
-                if (schedule.CanSwap())
+                if (schedule.InSchedule() && (_currentSchedule != schedule))
                 {
                     SwapTiles(schedule);
-                    schedule.swapped = true;
+                    _currentSchedule = schedule;
                     return;
                 }
-
-                schedule.swapped = false;
             }
         }
 
         private void OnValidate()
         {
-            // reset on editor changes
-            foreach (var schedule in schedules)
-            {
-                schedule.swapped = false;
-            }
+            _currentSchedule = null;
         }
 
         void SwapTiles(TileSwapSchedule schedule)

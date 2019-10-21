@@ -19,6 +19,11 @@ namespace NewBark.UI
             Animator.speed = animationSpeed;
         }
 
+        private void OnValidate()
+        {
+            Animator.speed = animationSpeed;
+        }
+
         public bool IsTransitionedIn()
         {
             return Animator.GetCurrentAnimatorStateInfo(0).IsName(transitionNamePast + "In");

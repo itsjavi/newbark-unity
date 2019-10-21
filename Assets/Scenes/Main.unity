@@ -89571,23 +89571,23 @@ MonoBehaviour:
   - m_Title: Morning
     m_FromHour: 5
     m_ToHour: 12
-    m_TileSwaps:
-    - changeTile: {fileID: 0}
-      newTile: {fileID: 0}
+    m_TileSwaps: []
     color: {r: 0.99814034, g: 1, b: 0.8349056, a: 1}
-    swapped: 0
   - m_Title: Day
     m_FromHour: 12
     m_ToHour: 18
     m_TileSwaps: []
     color: {r: 1, g: 1, b: 1, a: 1}
-    swapped: 0
   - m_Title: Night
-    m_FromHour: 19
+    m_FromHour: 18
+    m_ToHour: 23
+    m_TileSwaps: []
+    color: {r: 0.5772517, g: 0.605687, b: 0.8679245, a: 1}
+  - m_Title: Night2
+    m_FromHour: 0
     m_ToHour: 5
     m_TileSwaps: []
-    color: {r: 0.41233534, g: 0.44899547, b: 0.7735849, a: 1}
-    swapped: 0
+    color: {r: 0.5803922, g: 0.60784316, b: 0.87058824, a: 1}
 --- !u!4 &1648564539
 Transform:
   m_ObjectHideFlags: 0

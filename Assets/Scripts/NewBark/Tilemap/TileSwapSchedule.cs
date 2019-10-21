@@ -11,15 +11,7 @@ namespace NewBark.Tilemap
         public int m_ToHour;
         public TileSwap[] m_TileSwaps;
         public Color color = Color.white;
-        
-        [HideInInspector]
-        public bool swapped;
 
-        public bool CanSwap()
-        {
-            return !swapped && InSchedule();
-        }
-        
         public bool InSchedule()
         {
             return DateTime.Now.Hour >= m_FromHour && DateTime.Now.Hour < m_ToHour;

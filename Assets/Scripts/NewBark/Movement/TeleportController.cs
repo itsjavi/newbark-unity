@@ -1,8 +1,7 @@
-using System.Collections;
 using NewBark.Input;
 using NewBark.Support.Extensions;
+using NewBark.UI;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace NewBark.Movement
 {
@@ -10,48 +9,13 @@ namespace NewBark.Movement
     [RequireComponent(typeof(MovementController))]
     public class TeleportController : MonoBehaviour
     {
-        public bool externalUnlock;
-
-        private bool _teleporting;
         private int _stairsWaitTime = 500;
 
         private bool _paused;
         private TeleportPortal _pendingTeleport;
 
-        public UnityEvent onTeleportStart;
-        public UnityEvent onTeleportFinish;
-
-        public BoxCollider2D Collider => GetComponent<BoxCollider2D>();
+        public TransitionController transitionController;
         public MovementController Movement => GetComponent<MovementController>();
-
-        private void FixedUpdate()
-        {
-            // TODO: refactor with internal events
-
-            if (_pendingTeleport && !IsPaused())
-            {
-                Resume();
-                return;
-            }
-
-            if (!_pendingTeleport && IsPaused())
-            {
-                Unpause();
-                return;
-            }
-
-            // this is necessary to detect if the teleport has finished
-            if (IsTeleporting() && !Movement.IsMoving() && !Movement.IsTurningAround())
-            {
-                if (!externalUnlock)
-                {
-                    Unlock();
-                }
-
-                onTeleportFinish.Invoke();
-                Debug.Log("onTeleportFinish.Invoke");
-            }
-        }
 
         public bool IsPaused()
         {
@@ -72,11 +36,13 @@ namespace NewBark.Movement
         {
             Unpause();
 
-            if (!_pendingTeleport) return;
+            if (_pendingTeleport is null)
+            {
+                Debug.LogWarning("pending teleport is null");
+                return;
+            }
 
             Teleport(_pendingTeleport, true);
-
-            _pendingTeleport = null;
         }
 
         private bool IsPortal(Collider2D other)
@@ -89,29 +55,13 @@ namespace NewBark.Movement
             return other.gameObject.GetComponent<TeleportPortal>();
         }
 
-        public void Lock()
-        {
-            //Debug.Log("Locked");
-            _teleporting = true;
-            Movement.DisableInputCapture();
-        }
-
-        public void Unlock()
-        {
-            //Debug.Log("Unlocked");
-            Unpause();
-            _teleporting = false;
-            Movement.EnableInputCapture();
-        }
-
         public bool Teleport(Vector2 absolutePosition, Vector2 lookingDirection)
         {
             Movement.Stop();
-            Lock();
 
             if (!Movement.ForceMove(absolutePosition, lookingDirection)) return false;
             transform.position = absolutePosition;
-            //Debug.Log("Teleported"); // move immediatelly
+            // Debug.Log("Moved to abs position.");
             Movement.Stop();
             return true;
         }
@@ -132,12 +82,6 @@ namespace NewBark.Movement
             return destination;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="destination">Calculated destination</param>
-        /// <param name="isCalculated">If true, the destination won't be recalculated</param>
-        /// <returns></returns>
         public bool Teleport(TeleportPortal destination, bool isCalculated = false)
         {
             if (!isCalculated)
@@ -148,13 +92,13 @@ namespace NewBark.Movement
             // first, move to the drop zone immediately, without animation
             if (!Teleport(destination.calculatedDropZone, destination.calculatedDropZoneLookAt))
             {
-                Debug.LogError("Teleport not possible...");
+                // Debug.LogError("Teleport not possible...");
                 return false;
             }
 
             if (destination.calculatedDropZoneLookAt == Vector2.zero)
             {
-                //Debug.Log("dir = Vector2.zero");
+                // Debug.Log("dir = Vector2.zero");
                 return true;
             }
 
@@ -167,53 +111,43 @@ namespace NewBark.Movement
 
             if (destination.dropZoneSteps == 0)
             {
-                //Debug.Log("destination.moveSteps = 0");
+                // Debug.Log("Teleport steps = 0 ...");
                 return true;
             }
 
             // move the necessary steps in that direction
-
             // TODO: refactor into a separate function to be able to delay it too (door enter animation cannot be seen on fade in)
             if (!Movement.ForceMove(destination.calculatedDropZoneLookAt, destination.dropZoneSteps))
             {
                 Debug.LogWarning("Moving dropzone steps FAILED...");
             }
+            else
+            {
+                //  Debug.Log("Moving dropzone steps: ");
+                Debug.Log(destination.calculatedDropZoneLookAt);
+                Debug.Log(destination.dropZoneSteps);
+            }
 
+            // Debug.Log("Teleport called.");
             return true;
-        }
-
-        public void DelayedResume(float seconds)
-        {
-            StartCoroutine(DelayedResumeCoroutine(seconds));
-        }
-
-        IEnumerator DelayedResumeCoroutine(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-            Resume();
         }
 
         private bool IsTeleporting()
         {
-            if (!_teleporting)
+            if (!(_pendingTeleport is null))
             {
-                return false;
+                return true;
             }
 
-            if (Movement.CurrentDestination == transform.position)
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
+        // For the OnTriggerStay2D event to be fired while the object is in contact, the Rigid2D body Sleep Mode
+        // has to be on "Never Sleep", otherwise this is only triggered once
         void OnTriggerEnter2D(Collider2D other)
         {
 //            Debug.Log("OnTriggerEnter2D");
-            // For the OnTriggerStay2D event to be fired while the object is in contact, the Rigid2D body Sleep Mode
-            // has to be on "Never Sleep", otherwise this is only triggered once
-
+//
 //            if (IsPaused())
 //            {
 //                Debug.Log("Is paused...");
@@ -227,24 +161,57 @@ namespace NewBark.Movement
 //            if (!IsPortal(other))
 //            {
 //                Debug.Log("Is not portal...");
+//            }
+//
+//            if (!IsPortal(other) || IsTeleporting() || IsPaused())
+//            {
 //                return;
 //            }
 //
 //            Debug.Log("Is OK, scheduling teleport...");
 
-            if (!IsPortal(other) || IsTeleporting() || IsPaused())
-            {
-                return;
-            }
-
             var calculatedPortal = CalculatePortal(GetPortal(other));
 
-            onTeleportStart.Invoke();
             _pendingTeleport = calculatedPortal;
             if (_pendingTeleport.soundEffect)
             {
                 GameManager.Audio.PlaySfx(_pendingTeleport.soundEffect);
             }
+
+            if (!(transitionController is null))
+            {
+                transitionController.TransitionOutIn();
+            }
+            else
+            {
+                Resume();
+                _pendingTeleport = null;
+            }
+        }
+
+        void OnTransitionOutStart()
+        {
+            // Debug.Log("OnTransitionOutStart");
+            Pause();
+            GameManager.Input.DeselectTarget();
+        }
+
+        void OnTransitionOutEnd()
+        {
+            // Debug.Log("OnTransitionOutEnd");
+        }
+
+        void OnTransitionInStart()
+        {
+            // Debug.Log("OnTransitionInStart");
+            Resume();
+        }
+
+        void OnTransitionInEnd()
+        {
+            // Debug.Log("OnTransitionInEnd");
+            _pendingTeleport = null;
+            GameManager.Input.RestoreTarget();
         }
     }
 }

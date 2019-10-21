@@ -23,7 +23,6 @@ namespace NewBark.Movement
 
         private float _turnAroundWaitTimeCounter;
         private bool _stopCurrentMovementOnTurnAround = true;
-        private bool _inputCaptureEnabled = true;
 
         // TODO refactor using MovementInstruction
         private Vector2? _previousDestination;
@@ -42,21 +41,6 @@ namespace NewBark.Movement
         private void Start()
         {
             _initialSpeed = speed;
-        }
-
-        public bool IsInputCaptureEnabled()
-        {
-            return _inputCaptureEnabled;
-        }
-
-        public void DisableInputCapture()
-        {
-            _inputCaptureEnabled = false;
-        }
-
-        public void EnableInputCapture()
-        {
-            _inputCaptureEnabled = true;
         }
 
         public bool IsTurningAround()
@@ -119,21 +103,11 @@ namespace NewBark.Movement
 
         public void OnButtonDirectionalHold(KeyValuePair<GameButton, InputAction> btn)
         {
-            if (!_inputCaptureEnabled)
-            {
-                return;
-            }
-
             Move(btn.Value.ReadValue<Vector2>(), tilesPerStep);
         }
 
         public void OnMultipleButtonsHold(Dictionary<GameButton, InputAction> buttons)
         {
-            if (!_inputCaptureEnabled)
-            {
-                return;
-            }
-
             if (IsRunMode(buttons))
             {
                 StartRunMode();
@@ -142,11 +116,6 @@ namespace NewBark.Movement
 
         public void OnButtonBPerformed(InputAction.CallbackContext ctx)
         {
-            if (!_inputCaptureEnabled)
-            {
-                return;
-            }
-
             if (IsRunMode())
             {
                 StopRunMode();
@@ -155,11 +124,6 @@ namespace NewBark.Movement
 
         public void OnButtonDirectionalCanceled(InputAction.CallbackContext ctx)
         {
-            if (!_inputCaptureEnabled)
-            {
-                return;
-            }
-
             // Without this check, turn-around movement wouldn't have animation or a very short one:
             if (IsTurningAround())
             {
@@ -247,7 +211,7 @@ namespace NewBark.Movement
             _previousDestination = null;
             _previousDirection = null;
 
-            if (!Move(direction)) return false;
+            if (!ForceMove(direction)) return false;
             _turnAroundWaitTimeCounter = thenWait;
             return true;
         }
@@ -311,7 +275,7 @@ namespace NewBark.Movement
 
         public bool CanMove()
         {
-            return !IsMoving() && (GameManager.Input.target == gameObject);
+            return !IsMoving();
         }
 
         public bool CanMove(Vector2 towards)

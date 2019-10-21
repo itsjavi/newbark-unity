@@ -29,6 +29,12 @@ namespace NewBark.Input
             _controls.Disable();
         }
 
+        public void DeselectTarget()
+        {
+            prevTarget = target;
+            target = gameObject;
+        }
+
         public void SwitchTarget(GameObject newTarget)
         {
             prevTarget = target;
@@ -37,6 +43,11 @@ namespace NewBark.Input
 
         public void RestoreTarget()
         {
+            if (prevTarget is null)
+            {
+                return;
+            }
+
             target = prevTarget;
         }
 

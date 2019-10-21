@@ -89699,7 +89699,7 @@ PrefabInstance:
         type: 3}
       propertyPath: dropZone
       value: 
-      objectReference: {fileID: 1820650354}
+      objectReference: {fileID: 1346443059}
     - target: {fileID: 8442121494777395711, guid: 81da04f0b0dc34148bcd24007f3b42e2,
         type: 3}
       propertyPath: dropZoneOffset.x

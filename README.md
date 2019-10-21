@@ -1,5 +1,5 @@
 # NewBark
-🌳 Retro-style 2D RPG game engine for Unity, inspired on Pokémon Gold and Silver.
+🌳 Retro-style 2D RPG game engine for Unity, inspired by Pokémon Gold, Silver and Crystal.
 
 ![screenshot](Assets/Images/screenshot.png)
 

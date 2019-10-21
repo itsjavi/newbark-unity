@@ -59,7 +59,7 @@ namespace NewBark.Movement
         {
             Movement.Stop();
 
-            if (!Movement.ForceMove(absolutePosition, lookingDirection)) return false;
+            if (!Movement.Move(absolutePosition, lookingDirection)) return false;
             transform.position = absolutePosition;
             // Debug.Log("Moved to abs position.");
             Movement.Stop();
@@ -117,15 +117,9 @@ namespace NewBark.Movement
 
             // move the necessary steps in that direction
             // TODO: refactor into a separate function to be able to delay it too (door enter animation cannot be seen on fade in)
-            if (!Movement.ForceMove(destination.calculatedDropZoneLookAt, destination.dropZoneSteps))
+            if (!Movement.Move(destination.calculatedDropZoneLookAt, destination.dropZoneSteps))
             {
                 Debug.LogWarning("Moving dropzone steps FAILED...");
-            }
-            else
-            {
-                //  Debug.Log("Moving dropzone steps: ");
-                Debug.Log(destination.calculatedDropZoneLookAt);
-                Debug.Log(destination.dropZoneSteps);
             }
 
             // Debug.Log("Teleport called.");
@@ -163,10 +157,10 @@ namespace NewBark.Movement
 //                Debug.Log("Is not portal...");
 //            }
 //
-//            if (!IsPortal(other) || IsTeleporting() || IsPaused())
-//            {
-//                return;
-//            }
+            if (!IsPortal(other) || IsTeleporting() || IsPaused())
+            {
+                return;
+            }
 //
 //            Debug.Log("Is OK, scheduling teleport...");
 

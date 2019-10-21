@@ -159,11 +159,6 @@ namespace NewBark.Movement
                 return false;
             }
 
-            return ForceMove(destination, direction);
-        }
-
-        public bool ForceMove(Vector2 destination, Vector2 direction)
-        {
             PlayerController.playerAnimationController.UpdateAnimation(direction, direction, AnimationSpeed);
             PlayerController.grassAnimationController.Animator.speed = AnimationSpeed;
 
@@ -198,20 +193,12 @@ namespace NewBark.Movement
             return Move(transform.position + (Vector3) dest, dir);
         }
 
-        public bool ForceMove(Vector2 direction, int tiles = 1)
-        {
-            var dir = direction;
-            var dest = LockDiagonal(direction) * tiles;
-
-            return ForceMove(transform.position + (Vector3) dest, dir);
-        }
-
         public bool LookAt(Vector2 direction, float thenWait = 0)
         {
             _previousDestination = null;
             _previousDirection = null;
 
-            if (!ForceMove(direction)) return false;
+            if (!Move(direction)) return false;
             _turnAroundWaitTimeCounter = thenWait;
             return true;
         }

@@ -9,11 +9,13 @@ namespace NewBark.Movement
         private Vector2 _offset;
         private float _turnAroundDelay;
         private float _currentDelay;
-        private Move _currentMove;
+        private MovePath _currentPath;
+
+        public bool Moving => _currentPath.IsMoving();
 
         public MovementDirector(GameObject target, Vector2 offset, float turnAroundDelay = 125)
         {
-            _currentMove = new Move();
+            _currentPath = new MovePath();
             _target = target;
             _offset = offset;
             _turnAroundDelay = turnAroundDelay;
@@ -27,7 +29,7 @@ namespace NewBark.Movement
                 return true;
             }
 
-            if (!IsMoving())
+            if (!Moving)
             {
                 return false;
             }
@@ -38,17 +40,12 @@ namespace NewBark.Movement
 
         private void UpdatePosition()
         {
-            var pos = _target.transform.position;
+            _target.transform.position = _currentPath.UpdatePosition();
 
-            if (_currentMove.HasArrived(pos))
-            {
-                _target.transform.position = _currentMove.Clamp(pos, _offset);
-                _target.SendMessage("OnMoveEnd", _currentMove, SendMessageOptions.DontRequireReceiver);
-                Stop();
-                return;
-            }
+            if (!_currentPath.HasArrived()) return;
 
-            _target.transform.position = _currentMove.CalculateFixedUpdate(pos);
+            _target.SendMessage("OnMoveEnd", _currentPath, SendMessageOptions.DontRequireReceiver);
+            Stop();
         }
 
         private void UpdateDelay()
@@ -89,7 +86,7 @@ namespace NewBark.Movement
 
         public bool Move(Move move)
         {
-            if (IsMoving())
+            if (Moving)
             {
                 _target.SendMessage("OnMoveCancel", move, SendMessageOptions.DontRequireReceiver);
                 return false;
@@ -97,33 +94,32 @@ namespace NewBark.Movement
 
             _target.SendMessage("OnMoveBeforeStart", move, SendMessageOptions.DontRequireReceiver);
 
-            if (move.direction != _currentMove.direction)
+            if (move.direction != _currentPath.Direction)
             {
                 // Should turn around without moving
                 return LookAt(move.direction, _turnAroundDelay);
             }
 
-            var moveHit = move.CalculateCollisionFreeMove(_target.transform.position, GameManager.CollisionsLayer);
-            move = moveHit.move;
+            var newPath = new MovePath(_target.transform.position, move, _offset, GameManager.CollisionsLayer);
 
-            if (moveHit.hit.collider && moveHit.hit.distance <= 1) // min hit distance = 1 tile
+            if (newPath.HasCollision(1)) // min hit distance = 1 tile
             {
                 _target.SendMessage(
                     "OnMoveCollide",
-                    moveHit,
+                    newPath.Hit,
                     SendMessageOptions.DontRequireReceiver
                 );
                 return false;
             }
 
-            if (!IsMoving(move))
+            if (!Moving)
             {
                 // Nothing to move (steps = 0 or speed = 0)
                 _target.SendMessage("OnMoveCancel", move, SendMessageOptions.DontRequireReceiver);
                 return false;
             }
 
-            _currentMove = move;
+            _currentPath = newPath;
             _target.SendMessage("OnMoveStart", move, SendMessageOptions.DontRequireReceiver);
 
             return true;
@@ -131,33 +127,29 @@ namespace NewBark.Movement
 
         public bool LookAt(MoveDirection direction, float waitTime)
         {
-            if (IsMoving() || (direction == _currentMove.direction))
+            if (Moving || (direction == _currentPath.Direction))
             {
                 return false;
             }
 
             _currentDelay = waitTime;
-            _currentMove.direction = direction;
-            _target.SendMessage("OnMoveDirectionChange", _currentMove, SendMessageOptions.DontRequireReceiver);
+            _currentPath = DirectionToPath(direction);
+
+            _target.SendMessage("OnMoveDirectionChange", _currentPath, SendMessageOptions.DontRequireReceiver);
 
             return true;
         }
 
-        public bool IsMoving(Move move)
+        public MovePath DirectionToPath(MoveDirection direction)
         {
-            return (move != null) && !move.IsStatic();
-        }
-
-        public bool IsMoving()
-        {
-            return IsMoving(_currentMove);
+            var pos = _target.transform.position;
+            return new MovePath(pos, new Move(direction), _offset, pos);
         }
 
         public void Stop()
         {
-            _target.SendMessage("OnMoveStop", _currentMove, SendMessageOptions.DontRequireReceiver);
-            _currentMove.speed = 0;
-            _currentMove.steps = 0;
+            _target.SendMessage("OnMoveStop", _currentPath, SendMessageOptions.DontRequireReceiver);
+            _currentPath.Stop();
         }
     }
 }

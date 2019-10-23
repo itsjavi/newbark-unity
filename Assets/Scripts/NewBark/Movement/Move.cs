@@ -27,121 +27,14 @@ namespace NewBark.Movement
             this.speed = speed;
         }
 
-        public bool IsEmpty()
+        public bool IsInitial()
         {
-            return IsStatic() && direction == MoveDirection.None && steps == 0;
-        }
-
-        public bool IsStatic()
-        {
-            return !(Math.Abs(speed) > 0);
+            return !(Math.Abs(speed) > 0) && direction == MoveDirection.None && steps == 0;
         }
 
         public Vector2 GetDirectionVector()
         {
             return DirectionToVector(direction);
-        }
-
-        public RaycastHit2D CheckRaycastHit(Vector2 origin, int layerIndex = GameManager.CollisionsLayer)
-        {
-            RaycastHit2D hit = new RaycastHit2D();
-
-            // Checks the Raycast Hit in any of the next steps
-            for (int distance = 1; distance <= steps; distance++)
-            {
-                hit = Physics2D.Raycast(
-                    origin, GetDirectionVector(), distance, 1 << layerIndex
-                );
-                if (hit.collider)
-                {
-                    return hit;
-                }
-            }
-
-            return hit;
-        }
-
-        public MoveCollisionHit CalculateCollisionFreeMove(Vector2 origin, int layerIndex = GameManager.CollisionsLayer)
-        {
-            var hit = CheckRaycastHit(origin, layerIndex);
-            if (!hit.collider)
-            {
-                return new MoveCollisionHit(this, hit);
-            }
-
-            // Cap steps until next collision
-            var newSteps = (int) Math.Round(hit.distance, 0);
-
-            return new MoveCollisionHit(new Move(direction, newSteps, speed), hit);
-        }
-
-        public Vector2 CalculateDestination(Vector2 origin)
-        {
-            return origin + DirectionToVector(direction) * steps;
-        }
-
-        public float CalculateAnimationSpeed(int fps = 60)
-        {
-            return (speed * 10) / fps;
-        }
-
-        public Vector2 CalculateFixedUpdate(Vector2 origin)
-        {
-            return Vector2.MoveTowards(
-                origin,
-                CalculateDestination(origin),
-                Time.fixedDeltaTime * speed
-            );
-        }
-
-        public bool HasArrived(Vector2 origin)
-        {
-            return origin == CalculateDestination(origin);
-        }
-
-        public Vector2 LockDiagonal(Vector2 position)
-        {
-            if (Math.Abs(position.x) > 0 && Math.Abs(position.y) > 0)
-            {
-                position.y = 0;
-            }
-
-            return position;
-        }
-
-        public Vector2 Clamp(Vector2 position, Vector2 offset)
-        {
-            if (offset == Vector2.zero)
-            {
-                return position;
-            }
-
-            return new Vector2(
-                ClampAxis(position.x, offset.x),
-                ClampAxis(position.y, offset.y)
-            );
-        }
-
-        public float ClampAxis(float val, float offset)
-        {
-            if (Math.Abs(offset) > 0)
-            {
-                return val;
-            }
-
-            var mod = val % 1f;
-
-            if (Math.Abs(mod - offset) < double.Epsilon) // more precise than: if (mod == fraction)
-            {
-                return val;
-            }
-
-            if (val < 0f)
-            {
-                return (val - mod) - offset;
-            }
-
-            return (val - mod) + offset;
         }
 
         public static Vector2 DirectionToVector(MoveDirection direction)

@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace NewBark.Movement
 {
-    public class TeleportPortal: MonoBehaviour
+    public class TeleportPortal : MonoBehaviour
     {
         public AudioClip soundEffect;
         public Transform dropZone;

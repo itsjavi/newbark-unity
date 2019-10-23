@@ -1,6 +1,6 @@
 namespace NewBark.Movement
 {
-    public enum MovementDirection
+    public enum MoveDirection
     {
         None,
         Up,

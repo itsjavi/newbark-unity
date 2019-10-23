@@ -139,6 +139,33 @@ namespace NewBark.Input
                    btn == GameButton.Left;
         }
 
+        public bool IsRunningMode(Dictionary<GameButton, InputAction> buttons)
+        {
+            var btnB = false;
+            var btnDir = false;
+
+            foreach (var keyValue in buttons)
+            {
+                if (keyValue.Key == GameButton.B)
+                {
+                    btnB = true;
+                    continue;
+                }
+
+                if (GameManager.Input.IsDirectional(keyValue.Key))
+                {
+                    btnDir = true;
+                }
+
+                if (btnDir && btnB)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public GameButton ActionToButton(InputAction action)
         {
             if (action == null)

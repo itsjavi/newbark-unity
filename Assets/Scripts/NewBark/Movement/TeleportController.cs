@@ -6,7 +6,7 @@ using UnityEngine;
 namespace NewBark.Movement
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    [RequireComponent(typeof(MovementController))]
+    [RequireComponent(typeof(PlayerMoveController))]
     public class TeleportController : MonoBehaviour
     {
         private int _stairsWaitTime = 500;
@@ -15,7 +15,7 @@ namespace NewBark.Movement
         private TeleportPortal _pendingTeleport;
 
         public TransitionController transitionController;
-        public MovementController Movement => GetComponent<MovementController>();
+        public PlayerMoveController PlayerMove => GetComponent<PlayerMoveController>();
 
         public bool IsPaused()
         {
@@ -55,22 +55,21 @@ namespace NewBark.Movement
             return other.gameObject.GetComponent<TeleportPortal>();
         }
 
-        public bool Teleport(Vector2 absolutePosition, Vector2 lookingDirection)
+        public bool Teleport(Vector2 lookingDirection, Vector2 absolutePosition)
         {
-            Movement.Stop();
+            PlayerMove.Director.Stop();
 
-            if (!Movement.Move(absolutePosition, lookingDirection)) return false;
+            if (!PlayerMove.Director.Move(lookingDirection, absolutePosition)) return false;
             transform.position = absolutePosition;
-            // Debug.Log("Moved to abs position.");
-            Movement.Stop();
+            PlayerMove.Director.Stop();
             return true;
         }
 
         public TeleportPortal CalculatePortal(TeleportPortal destination)
         {
-            if (destination.dropZoneLookAt == GameButton.None && Movement.PreviousDirection != null)
+            if (destination.dropZoneLookAt == GameButton.None)
             {
-                destination.calculatedDropZoneLookAt = Movement.PreviousDirection.Value;
+                destination.calculatedDropZoneLookAt = PlayerMove.Director.Path.Move.GetDirectionVector();
             }
             else
             {
@@ -90,39 +89,36 @@ namespace NewBark.Movement
             }
 
             // first, move to the drop zone immediately, without animation
-            if (!Teleport(destination.calculatedDropZone, destination.calculatedDropZoneLookAt))
+            if (!Teleport(destination.calculatedDropZoneLookAt, destination.calculatedDropZone))
             {
-                // Debug.LogError("Teleport not possible...");
                 return false;
             }
 
             if (destination.calculatedDropZoneLookAt == Vector2.zero)
             {
-                // Debug.Log("dir = Vector2.zero");
                 return true;
             }
 
             // turn around if necessary, to avoid turn around timeout
             if (destination.dropZoneLookAt != GameButton.None)
             {
-                Movement.LookAt(destination.calculatedDropZoneLookAt,
+                PlayerMove.Director.LookAt(destination.calculatedDropZoneLookAt,
                     destination.dropZoneSteps > 0 ? 0 : _stairsWaitTime);
             }
 
             if (destination.dropZoneSteps == 0)
             {
-                // Debug.Log("Teleport steps = 0 ...");
                 return true;
             }
 
             // move the necessary steps in that direction
             // TODO: refactor into a separate function to be able to delay it too (door enter animation cannot be seen on fade in)
-            if (!Movement.Move(destination.calculatedDropZoneLookAt, destination.dropZoneSteps))
+            if (!PlayerMove.Director.Move(destination.calculatedDropZoneLookAt, destination.dropZoneSteps,
+                PlayerMove.speed))
             {
                 Debug.LogWarning("Moving dropzone steps FAILED...");
             }
 
-            // Debug.Log("Teleport called.");
             return true;
         }
 
@@ -140,29 +136,10 @@ namespace NewBark.Movement
         // has to be on "Never Sleep", otherwise this is only triggered once
         void OnTriggerEnter2D(Collider2D other)
         {
-//            Debug.Log("OnTriggerEnter2D");
-//
-//            if (IsPaused())
-//            {
-//                Debug.Log("Is paused...");
-//            }
-//
-//            if (IsTeleporting())
-//            {
-//                Debug.Log("Is teleporting...");
-//            }
-//
-//            if (!IsPortal(other))
-//            {
-//                Debug.Log("Is not portal...");
-//            }
-//
             if (!IsPortal(other) || IsTeleporting() || IsPaused())
             {
                 return;
             }
-//
-//            Debug.Log("Is OK, scheduling teleport...");
 
             var calculatedPortal = CalculatePortal(GetPortal(other));
 
@@ -185,25 +162,17 @@ namespace NewBark.Movement
 
         void OnTransitionOutStart()
         {
-            // Debug.Log("OnTransitionOutStart");
             Pause();
             GameManager.Input.DeselectTarget();
         }
 
-        void OnTransitionOutEnd()
-        {
-            // Debug.Log("OnTransitionOutEnd");
-        }
-
         void OnTransitionInStart()
         {
-            // Debug.Log("OnTransitionInStart");
             Resume();
         }
 
         void OnTransitionInEnd()
         {
-            // Debug.Log("OnTransitionInEnd");
             _pendingTeleport = null;
             GameManager.Input.RestoreTarget();
         }

@@ -16,7 +16,7 @@ namespace NewBark.Movement
         public Vector2 Position => _position;
         public Vector2 Destination => _destination;
         public Move Move => _move;
-        public MoveDirection Direction => _move.direction;
+        public Direction Direction => _move.direction;
         public RaycastHit2D Hit => _hit;
 
         public MovePath()
@@ -30,7 +30,7 @@ namespace NewBark.Movement
         {
             _origin = _position = origin;
             _offset = offset;
-            
+
             // fix path
             var correction = CalculatePath(origin, move, 1 << collisionLayer);
             _move = correction.move;
@@ -76,7 +76,12 @@ namespace NewBark.Movement
         {
             if (HasArrived())
             {
-                _position = Clamp(_position, _offset);
+                return ClampPosition();
+            }
+
+            if (!(Math.Abs(_move.speed) > 0))
+            {
+                _position = _destination;
                 return _position;
             }
 
@@ -88,14 +93,15 @@ namespace NewBark.Movement
             return _position;
         }
 
-        public float CalculateAnimationSpeed(int fps = 60)
+        public Vector2 ClampPosition()
         {
-            return (_move.speed * 10) / fps;
+            _position = Clamp(_position, _offset);
+            return _position;
         }
 
         public bool IsMoving()
         {
-            return (_move.speed > 0) && (_move.steps > 0) && !HasArrived();
+            return ((_move.speed > 0) && (_move.steps > 0)) || !HasArrived();
         }
 
         public void Stop()
@@ -103,7 +109,6 @@ namespace NewBark.Movement
             _destination = _position;
             _move.speed = 0;
             _move.steps = 0;
-            Debug.Log("MovePath: Stopped");
         }
 
         public bool HasArrived()
@@ -170,8 +175,7 @@ namespace NewBark.Movement
             if (hit.collider)
             {
                 // Cap steps until next collision
-                move.steps = (int) Math.Round(hit.distance, 0);
-                Debug.Log("new steps:" + move.steps);
+                move.steps = Math.Min(move.steps, (int) Math.Round(hit.distance, 0));
             }
 
             var destination = CalculateDestination(origin, move);

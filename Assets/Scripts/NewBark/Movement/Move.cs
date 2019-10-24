@@ -9,12 +9,12 @@ namespace NewBark.Movement
         public const float DefaultSpeed = 5f;
         public const int DefaultSteps = 1;
 
-        public MoveDirection direction;
+        public Direction direction;
         public float speed;
         private readonly float _initialSpeed;
         public int steps;
 
-        public Move(MoveDirection direction = MoveDirection.None, int steps = 0, float speed = 0)
+        public Move(Direction direction = Direction.None, int steps = 0, float speed = 0)
         {
             this.direction = direction;
             this.steps = steps;
@@ -26,6 +26,11 @@ namespace NewBark.Movement
             this.direction = VectorToDirection(direction);
             this.steps = steps;
             this.speed = _initialSpeed = speed;
+        }
+
+        public float CalculateAnimationSpeed()
+        {
+            return (speed * 10) / 60;
         }
 
         public bool IsSpeedUp()
@@ -45,7 +50,7 @@ namespace NewBark.Movement
 
         public bool IsInitial()
         {
-            return !(Math.Abs(speed) > 0) && direction == MoveDirection.None && steps == 0;
+            return !(Math.Abs(speed) > 0) && direction == Direction.None && steps == 0;
         }
 
         public Vector2 GetDirectionVector()
@@ -53,48 +58,56 @@ namespace NewBark.Movement
             return DirectionToVector(direction);
         }
 
-        public static Vector2 DirectionToVector(MoveDirection direction)
+        public static Vector2 DirectionToVector(Direction direction)
         {
             switch (direction)
             {
-                case MoveDirection.Up:
+                case Direction.Up:
                     return Vector2.up;
-                case MoveDirection.Right:
+                case Direction.Right:
                     return Vector2.right;
-                case MoveDirection.Down:
+                case Direction.Down:
                     return Vector2.down;
-                case MoveDirection.Left:
+                case Direction.Left:
                     return Vector2.left;
                 default:
                     return Vector2.zero;
             }
         }
 
-        public static MoveDirection VectorToDirection(Vector2 vector)
+        public static Direction VectorToDirection(Vector2 vector)
         {
-            if (vector == Vector2.zero) return MoveDirection.None;
-            if (vector == Vector2.up) return MoveDirection.Up;
-            if (vector == Vector2.right) return MoveDirection.Right;
-            if (vector == Vector2.down) return MoveDirection.Down;
-            if (vector == Vector2.left) return MoveDirection.Left;
+            // sanitize
+            if (vector.x > 0) vector.x = 1;
+            if (vector.x < 0) vector.x = -1;
+            if (vector.y > 0) vector.y = 1;
+            if (vector.y < 0) vector.y = -1;
+            if (Math.Abs(vector.x) > 0 && Math.Abs(vector.y) > 0) vector.x = 0;
 
-            return MoveDirection.None;
+            // map
+            if (vector == Vector2.zero) return Direction.None;
+            if (vector == Vector2.up) return Direction.Up;
+            if (vector == Vector2.right) return Direction.Right;
+            if (vector == Vector2.down) return Direction.Down;
+            if (vector == Vector2.left) return Direction.Left;
+
+            return Direction.None;
         }
 
-        public static MoveDirection ButtonToDirection(GameButton button)
+        public static Direction ButtonToDirection(GameButton button)
         {
             switch (button)
             {
                 case GameButton.Up:
-                    return MoveDirection.Up;
+                    return Direction.Up;
                 case GameButton.Right:
-                    return MoveDirection.Right;
+                    return Direction.Right;
                 case GameButton.Down:
-                    return MoveDirection.Down;
+                    return Direction.Down;
                 case GameButton.Left:
-                    return MoveDirection.Left;
+                    return Direction.Left;
                 default:
-                    return MoveDirection.None;
+                    return Direction.None;
             }
         }
     }

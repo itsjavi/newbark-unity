@@ -11,20 +11,36 @@ namespace NewBark.Movement
 
         public MoveDirection direction;
         public float speed;
+        private readonly float _initialSpeed;
         public int steps;
 
         public Move(MoveDirection direction = MoveDirection.None, int steps = 0, float speed = 0)
         {
             this.direction = direction;
             this.steps = steps;
-            this.speed = speed;
+            this.speed = _initialSpeed = speed;
         }
 
         public Move(Vector2 direction, int steps = 0, float speed = 0)
         {
             this.direction = VectorToDirection(direction);
             this.steps = steps;
-            this.speed = speed;
+            this.speed = _initialSpeed = speed;
+        }
+
+        public bool IsSpeedUp()
+        {
+            return speed > _initialSpeed;
+        }
+
+        public void RestoreSpeed()
+        {
+            speed = _initialSpeed;
+        }
+
+        public void DoubleSpeed()
+        {
+            speed *= 2;
         }
 
         public bool IsInitial()

@@ -10,11 +10,13 @@ namespace NewBark.Movement
         private float _turnAroundDelay;
         private float _currentDelay;
         private MovePath _currentPath;
+        public MovePath Path => _currentPath;
 
         public bool Moving => _currentPath.IsMoving();
 
-        public MovementDirector(GameObject target, Vector2 offset, float turnAroundDelay = 125)
+        public MovementDirector(GameObject target, Vector2 offset, float turnAroundDelay)
         {
+            Debug.Log("Director: target is " + target.name + " at " + target.transform.position);
             _currentPath = new MovePath();
             _target = target;
             _offset = offset;
@@ -26,6 +28,7 @@ namespace NewBark.Movement
             if (IsDelayed())
             {
                 UpdateDelay();
+                Debug.Log("Director: delayed");
                 return true;
             }
 
@@ -41,9 +44,11 @@ namespace NewBark.Movement
         private void UpdatePosition()
         {
             _target.transform.position = _currentPath.UpdatePosition();
+            Debug.Log("Director: pos updated");
 
             if (!_currentPath.HasArrived()) return;
 
+            Debug.Log("Director: move arrived");
             _target.SendMessage("OnMoveEnd", _currentPath, SendMessageOptions.DontRequireReceiver);
             Stop();
         }
@@ -59,7 +64,7 @@ namespace NewBark.Movement
             if (_currentDelay < 0)
             {
                 _currentDelay = 0;
-                Stop();
+                // Stop();
             }
         }
 
@@ -78,8 +83,18 @@ namespace NewBark.Movement
             _currentDelay += ms;
         }
 
-        public bool Move(MoveDirection direction, int steps = Movement.Move.DefaultSteps,
-            float speed = Movement.Move.DefaultSpeed)
+        public bool Move(Vector2 direction, int steps, float speed)
+        {
+            if (Math.Abs(direction.x) > 0 && Math.Abs(direction.y) > 0)
+            {
+                // LOCK DIAGONAL MOVEMENT
+                direction.y = 0;
+            }
+
+            return Move(new Move(direction, steps, speed));
+        }
+
+        public bool Move(MoveDirection direction, int steps, float speed)
         {
             return Move(new Move(direction, steps, speed));
         }
@@ -88,6 +103,7 @@ namespace NewBark.Movement
         {
             if (Moving)
             {
+                Debug.Log("Director: move cancel 1");
                 _target.SendMessage("OnMoveCancel", move, SendMessageOptions.DontRequireReceiver);
                 return false;
             }
@@ -96,14 +112,16 @@ namespace NewBark.Movement
 
             if (move.direction != _currentPath.Direction)
             {
+                Debug.Log("Director: looking around");
                 // Should turn around without moving
                 return LookAt(move.direction, _turnAroundDelay);
             }
-
+            
             var newPath = new MovePath(_target.transform.position, move, _offset, GameManager.CollisionsLayer);
 
             if (newPath.HasCollision(1)) // min hit distance = 1 tile
             {
+                Debug.Log("Director: has collision");
                 _target.SendMessage(
                     "OnMoveCollide",
                     newPath.Hit,
@@ -112,14 +130,18 @@ namespace NewBark.Movement
                 return false;
             }
 
-            if (!Moving)
+            if (!newPath.IsMoving())
             {
+                Debug.Log(move.direction + ", " + move.speed + ", " + move.steps);
                 // Nothing to move (steps = 0 or speed = 0)
+                Debug.Log("Director: move cancel 2 " + newPath.Origin + ", " + newPath.Position + ", " +
+                          newPath.Destination);
                 _target.SendMessage("OnMoveCancel", move, SendMessageOptions.DontRequireReceiver);
                 return false;
             }
 
             _currentPath = newPath;
+            Debug.Log("Director: MOVING");
             _target.SendMessage("OnMoveStart", move, SendMessageOptions.DontRequireReceiver);
 
             return true;
@@ -148,6 +170,7 @@ namespace NewBark.Movement
 
         public void Stop()
         {
+            Debug.Log("Director: Stopped");
             _target.SendMessage("OnMoveStop", _currentPath, SendMessageOptions.DontRequireReceiver);
             _currentPath.Stop();
         }

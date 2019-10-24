@@ -30,7 +30,12 @@ namespace NewBark.Movement
         {
             _origin = _position = origin;
             _offset = offset;
-            CorrectPath(collisionLayer);
+            
+            // fix path
+            var correction = CalculatePath(origin, move, 1 << collisionLayer);
+            _move = correction.move;
+            _destination = correction.destination;
+            _hit = correction.hit;
         }
 
         public MovePath(Vector2 origin, Move move, Vector2 offset)
@@ -38,8 +43,8 @@ namespace NewBark.Movement
             _origin = _position = origin;
             _offset = offset;
             _move = move;
-            _destination = CalculateDestination(origin, move);
             _hit = new RaycastHit2D();
+            _destination = CalculateDestination(origin, move);
         }
 
         public MovePath(Vector2 origin, Move move, Vector2 offset, Vector2 destination)
@@ -65,14 +70,6 @@ namespace NewBark.Movement
         public bool HasCollision(int maxDistance)
         {
             return HasCollision() && _hit.distance <= maxDistance;
-        }
-
-        public void CorrectPath(int collisionLayer = GameManager.CollisionsLayer)
-        {
-            var path = CalculatePath(_origin, _move, 1 << collisionLayer);
-            _move = path.move;
-            _destination = path.destination;
-            _hit = path.hit;
         }
 
         public Vector2 UpdatePosition()
@@ -106,6 +103,7 @@ namespace NewBark.Movement
             _destination = _position;
             _move.speed = 0;
             _move.steps = 0;
+            Debug.Log("MovePath: Stopped");
         }
 
         public bool HasArrived()
@@ -169,10 +167,11 @@ namespace NewBark.Movement
             Move move, int layerMask)
         {
             var hit = GetFirstHit(origin, move, layerMask);
-            if (!hit.collider)
+            if (hit.collider)
             {
                 // Cap steps until next collision
                 move.steps = (int) Math.Round(hit.distance, 0);
+                Debug.Log("new steps:" + move.steps);
             }
 
             var destination = CalculateDestination(origin, move);
@@ -182,7 +181,7 @@ namespace NewBark.Movement
 
         private static Vector2 CalculateDestination(Vector2 origin, Move move)
         {
-            return origin + Move.DirectionToVector(move.direction) * move.steps;
+            return origin + (Move.DirectionToVector(move.direction) * move.steps);
         }
     }
 }

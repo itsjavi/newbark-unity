@@ -90399,7 +90399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoLoad: 1
-  autoSave: 0
+  autoSave: 1
   onLoadState:
     m_PersistentCalls:
       m_Calls: []

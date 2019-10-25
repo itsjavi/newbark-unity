@@ -6,7 +6,7 @@
 
 ## Requirements
 
-- Unity 2019.2.8f1+
+- Unity 2019.2.10f1+
 
 
 ## License

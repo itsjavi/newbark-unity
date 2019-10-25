@@ -9,7 +9,7 @@ namespace NewBark.Dialog
 
         public void Interact(GameButton button)
         {
-            var isAb =button == GameButton.A ||button == GameButton.B;
+            var isAb = button == GameButton.A || button == GameButton.B;
 
             if (button == GameButton.None || !isAb)
             {

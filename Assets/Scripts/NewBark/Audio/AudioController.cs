@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NewBark.Support.Extensions;
@@ -61,7 +62,7 @@ namespace NewBark.Audio
             _loaded = true;
         }
 
-        public void PlayBgmTransition(AudioClip newClip)
+        public void PlayBgmTransition(AudioClip newClip, float delay = 0)
         {
             if (newClip == BgmChannel.clip && BgmChannel.isPlaying)
             {
@@ -70,34 +71,34 @@ namespace NewBark.Audio
 
             if (!BgmChannel.isPlaying || bgmTransitionTime == 0)
             {
-                Play(BgmChannel, newClip);
+                Play(BgmChannel, newClip, delay);
                 return;
             }
 
-            StartCoroutine(PlayBgmTransitionCoroutine(BgmChannel, newClip, bgmTransitionTime));
+            StartCoroutine(PlayBgmTransitionCoroutine(BgmChannel, newClip, bgmTransitionTime, delay));
         }
 
-        public void PlayBgmWhenIdle(AudioClip newClip)
+        public void PlayBgmWhenIdle(AudioClip newClip, float delay = 0)
         {
-            PlayWhenIdle(BgmChannel, newClip);
+            PlayWhenIdle(BgmChannel, newClip, delay);
         }
 
-        public void PlaySfxWhenIdle(AudioClip newClip)
+        public void PlaySfxWhenIdle(AudioClip newClip, float delay = 0)
         {
-            PlayWhenIdle(SfxChannel, newClip);
+            PlayWhenIdle(SfxChannel, newClip, delay);
         }
 
-        public void PlayBgm(AudioClip newClip)
+        public void PlayBgm(AudioClip newClip, float delay = 0)
         {
-            Play(BgmChannel, newClip);
+            Play(BgmChannel, newClip, delay);
         }
 
-        public void PlaySfx(AudioClip newClip)
+        public void PlaySfx(AudioClip newClip, float delay = 0)
         {
-            Play(SfxChannel, newClip);
+            Play(SfxChannel, newClip, delay);
         }
 
-        public void PlayWhenIdle(AudioSource source, AudioClip newClip)
+        public void PlayWhenIdle(AudioSource source, AudioClip newClip, float delay = 0)
         {
             if (source.isPlaying)
             {
@@ -110,30 +111,27 @@ namespace NewBark.Audio
                 return;
             }
 
-            Play(source, newClip);
+            Play(source, newClip, delay);
         }
 
-        public void Play(AudioSource source, AudioClip newClip)
+        public void Play(AudioSource source, AudioClip newClip, float delay = 0)
         {
             if (source.clip != newClip)
             {
                 source.clip = newClip;
             }
 
+            if (delay > 0)
+            {
+                source.PlayDelayed(delay);
+                return;
+            }
+
             source.Play();
         }
 
-        public void PlayWhenIdle(AudioChannel channel, AudioClip newClip)
-        {
-            PlayWhenIdle(_channels[channel], newClip);
-        }
-
-        public void Play(AudioChannel channel, AudioClip newClip)
-        {
-            Play(_channels[channel], newClip);
-        }
-
-        private IEnumerator PlayBgmTransitionCoroutine(AudioSource source, AudioClip newClip, float fadeOutTime)
+        private IEnumerator PlayBgmTransitionCoroutine(AudioSource source, AudioClip newClip, float fadeOutTime,
+            float delay = 0)
         {
             float startVolume = source.volume;
 
@@ -146,7 +144,7 @@ namespace NewBark.Audio
 
             source.Stop();
             source.volume = startVolume;
-            Play(source, newClip);
+            Play(source, newClip, delay);
         }
     }
 }

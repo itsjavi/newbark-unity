@@ -92673,9 +92673,9 @@ GameObject:
   - component: {fileID: 7162885171325729384}
   - component: {fileID: 7192301008348172422}
   - component: {fileID: 7192301008348172424}
-  - component: {fileID: 7192301008348172423}
-  - component: {fileID: 7192301008348172419}
   - component: {fileID: 7192301008348172420}
+  - component: {fileID: 7192301008348172419}
+  - component: {fileID: 7192301008348172421}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -92692,10 +92692,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7192301008348172418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e722a9508ffa4f44a834c3a1f8f92d39, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d0f62f0a3c94b12b8cc3d939dbdc7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionController: {fileID: 1394979448}
+  speed: 5
+  collisionSpeed: 2.5
+  tilesPerStep: 1
+  turnAroundDelay: 125
+  collisionSound: {fileID: 8300000, guid: e7aa1061682754e5f919394e893de652, type: 3}
+  collisionSoundDelay: 0.25
+  clampOffset: {x: 0.5, y: 0.5}
 --- !u!114 &7192301008348172420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92710,6 +92716,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableLayer: 8
   raycastDistance: 1
+--- !u!114 &7192301008348172421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192301008348172418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e722a9508ffa4f44a834c3a1f8f92d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionController: {fileID: 1394979448}
 --- !u!114 &7192301008348172422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92724,22 +92743,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimationController: {fileID: 0}
   grassAnimationController: {fileID: 1428164224}
---- !u!114 &7192301008348172423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192301008348172418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5372358d629d4803a7a2379f95fe64e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionSound: {fileID: 8300000, guid: e7aa1061682754e5f919394e893de652, type: 3}
-  speed: 5
-  turnAroundWaitTime: 125
-  clampOffset: 0.5
 --- !u!114 &7192301008348172424
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NewBark.Input;
 using UnityEngine;
@@ -9,18 +10,26 @@ namespace NewBark.Movement
     public class PlayerMoveController : MonoBehaviour
     {
         public float speed = Move.DefaultSpeed;
+        public float collisionSpeed = Move.DefaultSpeed / 2;
         public int tilesPerStep = Move.DefaultSteps;
 
         [Tooltip("Time to turn around to a different direction, in milliseconds.")]
         public float turnAroundDelay = 125;
 
-        public Vector2 clampOffset = new Vector2(0.5f, 0.5f);
         public AudioClip collisionSound;
+        public float collisionSoundDelay = 0.25f;
+        public Vector2 clampOffset = new Vector2(0.5f, 0.5f);
+
         private MoveDirector _director;
         public MoveDirector Director => _director;
         private AnimationController Animation => GetComponent<AnimationController>();
 
         private void Start()
+        {
+            _director = new MoveDirector(gameObject, clampOffset, turnAroundDelay);
+        }
+
+        private void OnValidate()
         {
             _director = new MoveDirector(gameObject, clampOffset, turnAroundDelay);
         }
@@ -36,14 +45,22 @@ namespace NewBark.Movement
             Animation.UpdateAnimation(direction, direction, path.Move.CalculateAnimationSpeed());
         }
 
-        public void OnMoveStop()
+        public void OnMoveDirectionChangeEnd()
+        {
+            _director.Path.Move.speed = 0;
+            Animation.UpdateAnimation(0f);
+        }
+
+        public void OnMoveEnd()
         {
             Animation.StopAnimation();
         }
 
         public void OnMoveCollide()
         {
-            GameManager.Audio.PlaySfxWhenIdle(collisionSound);
+            GameManager.Audio.PlaySfxWhenIdle(collisionSound, collisionSoundDelay);
+
+            Animation.UpdateAnimation(_director.Path.Move.CalculateAnimationSpeed(collisionSpeed));
         }
 
         public void OnMultipleButtonsHold(Dictionary<GameButton, InputAction> buttons)
@@ -51,7 +68,15 @@ namespace NewBark.Movement
             if (!_director.Path.Move.IsSpeedUp() && GameManager.Input.IsRunningMode(buttons))
             {
                 _director.Path.Move.DoubleSpeed();
-                Animation.UpdateAnimation(_director.Path.Move.CalculateAnimationSpeed());
+                var animationSpeed = _director.Path.Move.CalculateAnimationSpeed();
+
+                if (animationSpeed <= 0)
+                {
+                    // it is colliding, reduce animation speed
+                    animationSpeed = _director.Path.Move.CalculateAnimationSpeed(collisionSpeed);
+                }
+
+                Animation.UpdateAnimation(animationSpeed);
             }
         }
 

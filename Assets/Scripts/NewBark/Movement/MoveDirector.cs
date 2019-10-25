@@ -65,6 +65,8 @@ namespace NewBark.Movement
             if (_currentDelay < 0)
             {
                 _currentDelay = 0;
+
+                _target.SendMessage("OnMoveDirectionChangeEnd", _currentPath, SendMessageOptions.DontRequireReceiver);
                 Stop();
             }
         }
@@ -171,7 +173,7 @@ namespace NewBark.Movement
             _currentDelay = waitTime;
             _currentPath = DirectionToPath(direction);
 
-            _target.SendMessage("OnMoveDirectionChange", _currentPath, SendMessageOptions.DontRequireReceiver);
+            _target.SendMessage("OnMoveDirectionChangeStart", _currentPath, SendMessageOptions.DontRequireReceiver);
 
             return true;
         }

@@ -30,7 +30,12 @@ namespace NewBark.Movement
 
         public float CalculateAnimationSpeed()
         {
-            return (speed * 10) / 60;
+            return CalculateAnimationSpeed(speed);
+        }
+
+        public float CalculateAnimationSpeed(float moveSpeed)
+        {
+            return (moveSpeed * 10) / 60;
         }
 
         public bool IsSpeedUp()
@@ -82,7 +87,7 @@ namespace NewBark.Movement
             if (vector.x < 0) vector.x = -1;
             if (vector.y > 0) vector.y = 1;
             if (vector.y < 0) vector.y = -1;
-            if (Math.Abs(vector.x) > 0 && Math.Abs(vector.y) > 0) vector.x = 0;
+            if (Math.Abs(vector.x) > 0 && Math.Abs(vector.y) > 0) vector.x = 0; // lock diagonal movement
 
             // map
             if (vector == Vector2.zero) return Direction.None;

@@ -1,5 +1,6 @@
 // GENERATED AUTOMATICALLY FROM 'Assets/Scripts/NewBark/Input/InputActionsMaster.inputactions'
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
@@ -7,9 +8,10 @@ using UnityEngine.InputSystem.Utilities;
 
 namespace NewBark.Input
 {
-    public class InputActionsMaster : IInputActionCollection
+    public class InputActionsMaster : IInputActionCollection, IDisposable
     {
         private InputActionAsset asset;
+
         public InputActionsMaster()
         {
             asset = InputActionAsset.FromJson(@"{
@@ -296,7 +298,7 @@ namespace NewBark.Input
             m_Player_ButtonStart = m_Player.FindAction("ButtonStart", throwIfNotFound: true);
         }
 
-        ~InputActionsMaster()
+        public void Dispose()
         {
             UnityEngine.Object.Destroy(asset);
         }
@@ -348,20 +350,44 @@ namespace NewBark.Input
         private readonly InputAction m_Player_ButtonDirectional;
         private readonly InputAction m_Player_ButtonSelect;
         private readonly InputAction m_Player_ButtonStart;
+
         public struct PlayerActions
         {
             private InputActionsMaster m_Wrapper;
-            public PlayerActions(InputActionsMaster wrapper) { m_Wrapper = wrapper; }
+
+            public PlayerActions(InputActionsMaster wrapper)
+            {
+                m_Wrapper = wrapper;
+            }
+
             public InputAction @ButtonA => m_Wrapper.m_Player_ButtonA;
             public InputAction @ButtonB => m_Wrapper.m_Player_ButtonB;
             public InputAction @ButtonDirectional => m_Wrapper.m_Player_ButtonDirectional;
             public InputAction @ButtonSelect => m_Wrapper.m_Player_ButtonSelect;
             public InputAction @ButtonStart => m_Wrapper.m_Player_ButtonStart;
-            public InputActionMap Get() { return m_Wrapper.m_Player; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
+
+            public InputActionMap Get()
+            {
+                return m_Wrapper.m_Player;
+            }
+
+            public void Enable()
+            {
+                Get().Enable();
+            }
+
+            public void Disable()
+            {
+                Get().Disable();
+            }
+
             public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+
+            public static implicit operator InputActionMap(PlayerActions set)
+            {
+                return set.Get();
+            }
+
             public void SetCallbacks(IPlayerActions instance)
             {
                 if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
@@ -382,6 +408,7 @@ namespace NewBark.Input
                     ButtonStart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
                     ButtonStart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
                 }
+
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
                 {
@@ -403,17 +430,22 @@ namespace NewBark.Input
                 }
             }
         }
+
         public PlayerActions @Player => new PlayerActions(this);
         private int m_KeyboardCSSchemeIndex = -1;
+
         public InputControlScheme KeyboardCSScheme
         {
             get
             {
-                if (m_KeyboardCSSchemeIndex == -1) m_KeyboardCSSchemeIndex = asset.FindControlSchemeIndex("Keyboard CS");
+                if (m_KeyboardCSSchemeIndex == -1)
+                    m_KeyboardCSSchemeIndex = asset.FindControlSchemeIndex("Keyboard CS");
                 return asset.controlSchemes[m_KeyboardCSSchemeIndex];
             }
         }
+
         private int m_GamepadCSSchemeIndex = -1;
+
         public InputControlScheme GamepadCSScheme
         {
             get
@@ -422,6 +454,7 @@ namespace NewBark.Input
                 return asset.controlSchemes[m_GamepadCSSchemeIndex];
             }
         }
+
         public interface IPlayerActions
         {
             void OnButtonA(InputAction.CallbackContext context);

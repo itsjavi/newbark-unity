@@ -29,11 +29,6 @@ namespace NewBark
         public UnityEvent onBeforeSaveState;
         public UnityEvent onSaveState;
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(gameObject.transform.parent.gameObject);
-        }
-
         private void Start()
         {
             LoadState();

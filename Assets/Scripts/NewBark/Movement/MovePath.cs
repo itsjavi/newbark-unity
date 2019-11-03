@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace NewBark.Movement
 {
+    /// <summary>
+    /// Represents a move from one point to another and encapsulates all calculations needed for movement.
+    /// </summary>
+    [Serializable]
     public class MovePath
     {
         private readonly Vector2 _origin;
@@ -32,10 +36,12 @@ namespace NewBark.Movement
             _offset = offset;
 
             // fix path
+            Debug.Log("Before fix:  origin=" + origin + ", move=" + move);
             var correction = CalculatePath(origin, move, 1 << collisionLayer);
             _move = correction.move;
             _destination = correction.destination;
             _hit = correction.hit;
+            Debug.Log("After fix: move=" + _move);
         }
 
         public MovePath(Vector2 origin, Move move, Vector2 offset)
@@ -161,11 +167,27 @@ namespace NewBark.Movement
                 hit = Physics2D.Raycast(origin, move.GetDirectionVector(), distance, layerMask);
                 if (hit.collider)
                 {
+                    DrawHit(hit, origin, move.GetDirectionVector());
                     return hit;
                 }
             }
 
             return hit;
+        }
+
+        public static void DrawHit(RaycastHit2D hit, Vector2 from, Vector2 to)
+        {
+#if UNITY_EDITOR
+            if (!hit || !hit.collider)
+            {
+                Debug.DrawRay(from, to, Color.green);
+                Debug.DrawRay(from, hit.point, Color.blue);
+                return;
+            }
+
+            Debug.DrawRay(from, to, Color.red);
+            Debug.DrawRay(from, hit.point, Color.blue);
+#endif
         }
 
         private static (Vector2 destination, Move move, RaycastHit2D hit) CalculatePath(Vector2 origin,
@@ -186,6 +208,12 @@ namespace NewBark.Movement
         private static Vector2 CalculateDestination(Vector2 origin, Move move)
         {
             return origin + (Move.DirectionToVector(move.direction) * move.steps);
+        }
+
+        public override string ToString()
+        {
+            var hitName = _hit ? _hit.collider.gameObject.name : "N/A";
+            return "Origin: " + _origin + ", Destination: " + _destination + ", Move: " + _move + ", Hit: " + hitName;
         }
     }
 }

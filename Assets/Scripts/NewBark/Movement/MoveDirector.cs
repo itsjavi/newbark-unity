@@ -26,6 +26,7 @@ namespace NewBark.Movement
         {
             if (IsDelayed())
             {
+                if (_target.name != "Player") Debug.Log("UpdateMovement: Update delayed");
                 UpdateDelay();
                 return true;
             }
@@ -36,6 +37,7 @@ namespace NewBark.Movement
             }
 
             UpdatePosition();
+            if (_target.name != "Player") Debug.Log("UpdateMovement: Updated position");
             return true;
         }
 
@@ -51,6 +53,7 @@ namespace NewBark.Movement
             if (!_currentPath.HasArrived()) return;
 
             _target.SendMessage("OnMoveEnd", _currentPath, SendMessageOptions.DontRequireReceiver);
+            if (_target.name != "Player") Debug.Log("NPC: OnMoveEnd");
             Stop();
         }
 
@@ -67,6 +70,7 @@ namespace NewBark.Movement
                 _currentDelay = 0;
 
                 _target.SendMessage("OnMoveDirectionChangeEnd", _currentPath, SendMessageOptions.DontRequireReceiver);
+                if (_target.name != "Player") Debug.Log("NPC: OnMoveDirectionChangeEnd");
                 Stop();
             }
         }
@@ -120,22 +124,27 @@ namespace NewBark.Movement
 
         public bool Move(MovePath newPath)
         {
+            if (_target.name != "Player") Debug.Log("Move(path) called: " + newPath);
             if (Moving)
             {
                 _target.SendMessage("OnMoveCancel", newPath, SendMessageOptions.DontRequireReceiver);
+                if (_target.name != "Player") Debug.Log("NPC: OnMoveCancel");
                 return false;
             }
 
             _target.SendMessage("OnMoveBeforeStart", newPath, SendMessageOptions.DontRequireReceiver);
+            if (_target.name != "Player") Debug.Log("NPC: OnMoveBeforeStart");
 
             if (newPath.Direction != _currentPath.Direction)
             {
                 // Should turn around without moving
+                if (_target.name != "Player") Debug.Log("NPC: LookAt");
                 return LookAt(newPath.Direction, _turnAroundDelay);
             }
 
             if (newPath.HasCollision(1)) // min hit distance = 1 tile
             {
+                if (_target.name != "Player") Debug.Log("NPC: OnMoveCollide");
                 _target.SendMessage(
                     "OnMoveCollide",
                     newPath.Hit,
@@ -149,11 +158,13 @@ namespace NewBark.Movement
             {
                 // Nothing to move (steps = 0 or speed = 0)
                 _target.SendMessage("OnMoveCancel", newPath, SendMessageOptions.DontRequireReceiver);
+                if (_target.name != "Player") Debug.Log("NPC: OnMoveCancel-2");
                 return false;
             }
 
             _currentPath = newPath;
             _target.SendMessage("OnMoveStart", newPath, SendMessageOptions.DontRequireReceiver);
+            if (_target.name != "Player") Debug.Log("NPC: OnMoveStart");
 
             return true;
         }
@@ -174,6 +185,7 @@ namespace NewBark.Movement
             _currentPath = DirectionToPath(direction);
 
             _target.SendMessage("OnMoveDirectionChangeStart", _currentPath, SendMessageOptions.DontRequireReceiver);
+            if (_target.name != "Player") Debug.Log("NPC: OnMoveDirectionChangeStart");
 
             return true;
         }
@@ -187,6 +199,7 @@ namespace NewBark.Movement
         public void Stop()
         {
             _target.SendMessage("OnMoveStop", _currentPath, SendMessageOptions.DontRequireReceiver);
+            if (_target.name != "Player") Debug.Log("NPC: OnMoveStop");
             _currentPath.Stop();
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using NewBark.Movement;
 using NewBark.Tilemap;
 using UnityEditor;
 using UnityEngine;
@@ -31,7 +32,8 @@ namespace NewBark
             return CheckHit(direction).collider;
         }
 
-        public RaycastHit2D CheckHit(Vector2 direction, int layerIndex = GameManager.CollisionsLayer, float distance = 1f)
+        public RaycastHit2D CheckHit(Vector2 direction, int layerIndex = GameManager.CollisionsLayer,
+            float distance = 1f)
         {
             return Physics2D.Raycast(
                 transform.position, direction, distance, 1 << layerIndex
@@ -55,7 +57,9 @@ namespace NewBark
 #if UNITY_EDITOR
         void Update()
         {
-            DrawHit(playerAnimationController.GetLastAnimationDirection());
+            var dir = playerAnimationController.GetLastAnimationDirection();
+            var hit = CheckHit(playerAnimationController.GetLastAnimationDirection());
+            MovePath.DrawHit(hit, transform.position, dir);
         }
 
         void OnDrawGizmos()

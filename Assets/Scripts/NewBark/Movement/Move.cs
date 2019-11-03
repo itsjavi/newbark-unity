@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace NewBark.Movement
 {
+    [Serializable]
     public class Move
     {
         public const float DefaultSpeed = 5f;
@@ -114,6 +115,11 @@ namespace NewBark.Movement
                 default:
                     return Direction.None;
             }
+        }
+
+        public override string ToString()
+        {
+            return "Direction: " + direction + ", Speed: " + speed + ", Steps: " + steps;
         }
     }
 }

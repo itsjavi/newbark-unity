@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NewBark.Tilemap
+namespace NewBark.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "Untitled_AreaTitle", menuName = "NewBark/Area Title")]
     public class AreaTitle : ScriptableObject

@@ -1,5 +1,6 @@
 using System;
 using NewBark.Attributes;
+using NewBark.ScriptableObjects;
 using NewBark.Support.Extensions;
 using UnityEngine;
 using UnityEngine.Events;

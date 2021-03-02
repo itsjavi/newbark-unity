@@ -15,7 +15,7 @@ Looking for a GameMaker version? Check [newbark-gamemaker](https://github.com/it
 ## License
 
 This software is copyrighted and licensed under the 
-[MIT license](https://github.com/route1rodent/newbark-unity/LICENSE).
+[MIT license](https://github.com/itsjavi/newbark-unity/LICENSE).
 
 ### Disclaimer
 
@@ -38,7 +38,7 @@ This software is not affiliated in any way with Nintendo,
 Pokémon or any other game company.
 
 A complete revision history of this software is available from
-https://github.com/route1rodent/newbark-unity
+https://github.com/itsjavi/newbark-unity
 
 ---
 

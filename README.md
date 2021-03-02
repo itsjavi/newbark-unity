@@ -5,6 +5,7 @@
 
 > IMPORTANT: This project is in low-maintainance mode, meaning that the issues/bug reporting section is not open, but it's open to Pull Requests if you find anything that you want to fix or new features you want to add.
 
+Looking for a GameMaker version? Check [newbark-gamemaker](https://github.com/itsjavi/newbark-gamemaker)
 
 ## Requirements
 

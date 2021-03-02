@@ -14,7 +14,7 @@
 ## License
 
 This software is copyrighted and licensed under the 
-[MIT license](https://github.com/route1rodent/newbark/LICENSE).
+[MIT license](https://github.com/route1rodent/newbark-unity/LICENSE).
 
 ### Disclaimer
 
@@ -37,7 +37,7 @@ This software is not affiliated in any way with Nintendo,
 Pokémon or any other game company.
 
 A complete revision history of this software is available from
-https://github.com/route1rodent/newbark
+https://github.com/route1rodent/newbark-unity
 
 ---
 

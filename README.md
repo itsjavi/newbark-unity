@@ -9,7 +9,7 @@ Looking for a GameMaker version? Check [newbark-gamemaker](https://github.com/it
 
 ## Requirements
 
-- Unity 2019.2.10f1+
+- Unity 2021.1 or greater
 
 
 ## License

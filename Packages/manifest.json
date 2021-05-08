@@ -1,20 +1,20 @@
 {
   "dependencies": {
     "com.pixelplacement.itween": "https://github.com/route1rodent/iTween.git#1.0.0",
-    "com.unity.2d.pixel-perfect": "1.0.1-preview",
+    "com.unity.2d.pixel-perfect": "5.0.0",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.2d.tilemap.extras": "https://github.com/Unity-Technologies/2d-extras.git#master",
-    "com.unity.cinemachine": "2.3.4",
-    "com.unity.ext.nunit": "1.0.0",
-    "com.unity.ide.rider": "1.1.1",
-    "com.unity.ide.vscode": "1.1.2",
-    "com.unity.inputsystem": "1.0.0-preview.1",
-    "com.unity.package-manager-ui": "2.2.0",
-    "com.unity.render-pipelines.lightweight": "6.9.2",
-    "com.unity.test-framework": "1.1.3",
-    "com.unity.textmeshpro": "2.0.1",
-    "com.unity.timeline": "1.1.0",
+    "com.unity.cinemachine": "2.7.3",
+    "com.unity.ext.nunit": "1.0.6",
+    "com.unity.ide.rider": "3.0.6",
+    "com.unity.ide.visualstudio": "2.0.7",
+    "com.unity.ide.vscode": "1.2.3",
+    "com.unity.inputsystem": "1.0.2",
+    "com.unity.render-pipelines.universal": "11.0.0",
+    "com.unity.test-framework": "1.1.24",
+    "com.unity.textmeshpro": "3.0.6",
+    "com.unity.timeline": "1.5.5",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
@@ -47,15 +47,5 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  },
-  "lock": {
-    "com.pixelplacement.itween": {
-      "hash": "cf61e349beae88dbe4031fa161c560b8abf093a1",
-      "revision": "1.0.0"
-    },
-    "com.unity.2d.tilemap.extras": {
-      "hash": "cc25c1f146525e35f7f23f786193a8a05d5f33f6",
-      "revision": "master"
-    }
   }
 }

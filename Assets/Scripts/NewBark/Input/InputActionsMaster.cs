@@ -8,11 +8,10 @@ using UnityEngine.InputSystem.Utilities;
 
 namespace NewBark.Input
 {
-    public class InputActionsMaster : IInputActionCollection, IDisposable
+    public class @InputActionsMaster : IInputActionCollection, IDisposable
     {
-        private InputActionAsset asset;
-
-        public InputActionsMaster()
+        public InputActionAsset asset { get; }
+        public @InputActionsMaster()
         {
             asset = InputActionAsset.FromJson(@"{
     ""name"": ""InputActionsMaster"",
@@ -350,102 +349,72 @@ namespace NewBark.Input
         private readonly InputAction m_Player_ButtonDirectional;
         private readonly InputAction m_Player_ButtonSelect;
         private readonly InputAction m_Player_ButtonStart;
-
         public struct PlayerActions
         {
-            private InputActionsMaster m_Wrapper;
-
-            public PlayerActions(InputActionsMaster wrapper)
-            {
-                m_Wrapper = wrapper;
-            }
-
+            private @InputActionsMaster m_Wrapper;
+            public PlayerActions(@InputActionsMaster wrapper) { m_Wrapper = wrapper; }
             public InputAction @ButtonA => m_Wrapper.m_Player_ButtonA;
             public InputAction @ButtonB => m_Wrapper.m_Player_ButtonB;
             public InputAction @ButtonDirectional => m_Wrapper.m_Player_ButtonDirectional;
             public InputAction @ButtonSelect => m_Wrapper.m_Player_ButtonSelect;
             public InputAction @ButtonStart => m_Wrapper.m_Player_ButtonStart;
-
-            public InputActionMap Get()
-            {
-                return m_Wrapper.m_Player;
-            }
-
-            public void Enable()
-            {
-                Get().Enable();
-            }
-
-            public void Disable()
-            {
-                Get().Disable();
-            }
-
+            public InputActionMap Get() { return m_Wrapper.m_Player; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
-
-            public static implicit operator InputActionMap(PlayerActions set)
-            {
-                return set.Get();
-            }
-
+            public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
             public void SetCallbacks(IPlayerActions instance)
             {
                 if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
                 {
-                    ButtonA.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonA;
-                    ButtonA.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonA;
-                    ButtonA.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonA;
-                    ButtonB.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonB;
-                    ButtonB.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonB;
-                    ButtonB.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonB;
-                    ButtonDirectional.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonDirectional;
-                    ButtonDirectional.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonDirectional;
-                    ButtonDirectional.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonDirectional;
-                    ButtonSelect.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonSelect;
-                    ButtonSelect.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonSelect;
-                    ButtonSelect.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonSelect;
-                    ButtonStart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
-                    ButtonStart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
-                    ButtonStart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
+                    @ButtonA.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonA;
+                    @ButtonA.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonA;
+                    @ButtonA.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonA;
+                    @ButtonB.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonB;
+                    @ButtonB.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonB;
+                    @ButtonB.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonB;
+                    @ButtonDirectional.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonDirectional;
+                    @ButtonDirectional.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonDirectional;
+                    @ButtonDirectional.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonDirectional;
+                    @ButtonSelect.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonSelect;
+                    @ButtonSelect.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonSelect;
+                    @ButtonSelect.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonSelect;
+                    @ButtonStart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
+                    @ButtonStart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
+                    @ButtonStart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
                 }
-
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    ButtonA.started += instance.OnButtonA;
-                    ButtonA.performed += instance.OnButtonA;
-                    ButtonA.canceled += instance.OnButtonA;
-                    ButtonB.started += instance.OnButtonB;
-                    ButtonB.performed += instance.OnButtonB;
-                    ButtonB.canceled += instance.OnButtonB;
-                    ButtonDirectional.started += instance.OnButtonDirectional;
-                    ButtonDirectional.performed += instance.OnButtonDirectional;
-                    ButtonDirectional.canceled += instance.OnButtonDirectional;
-                    ButtonSelect.started += instance.OnButtonSelect;
-                    ButtonSelect.performed += instance.OnButtonSelect;
-                    ButtonSelect.canceled += instance.OnButtonSelect;
-                    ButtonStart.started += instance.OnButtonStart;
-                    ButtonStart.performed += instance.OnButtonStart;
-                    ButtonStart.canceled += instance.OnButtonStart;
+                    @ButtonA.started += instance.OnButtonA;
+                    @ButtonA.performed += instance.OnButtonA;
+                    @ButtonA.canceled += instance.OnButtonA;
+                    @ButtonB.started += instance.OnButtonB;
+                    @ButtonB.performed += instance.OnButtonB;
+                    @ButtonB.canceled += instance.OnButtonB;
+                    @ButtonDirectional.started += instance.OnButtonDirectional;
+                    @ButtonDirectional.performed += instance.OnButtonDirectional;
+                    @ButtonDirectional.canceled += instance.OnButtonDirectional;
+                    @ButtonSelect.started += instance.OnButtonSelect;
+                    @ButtonSelect.performed += instance.OnButtonSelect;
+                    @ButtonSelect.canceled += instance.OnButtonSelect;
+                    @ButtonStart.started += instance.OnButtonStart;
+                    @ButtonStart.performed += instance.OnButtonStart;
+                    @ButtonStart.canceled += instance.OnButtonStart;
                 }
             }
         }
-
         public PlayerActions @Player => new PlayerActions(this);
         private int m_KeyboardCSSchemeIndex = -1;
-
         public InputControlScheme KeyboardCSScheme
         {
             get
             {
-                if (m_KeyboardCSSchemeIndex == -1)
-                    m_KeyboardCSSchemeIndex = asset.FindControlSchemeIndex("Keyboard CS");
+                if (m_KeyboardCSSchemeIndex == -1) m_KeyboardCSSchemeIndex = asset.FindControlSchemeIndex("Keyboard CS");
                 return asset.controlSchemes[m_KeyboardCSSchemeIndex];
             }
         }
-
         private int m_GamepadCSSchemeIndex = -1;
-
         public InputControlScheme GamepadCSScheme
         {
             get
@@ -454,7 +423,6 @@ namespace NewBark.Input
                 return asset.controlSchemes[m_GamepadCSSchemeIndex];
             }
         }
-
         public interface IPlayerActions
         {
             void OnButtonA(InputAction.CallbackContext context);

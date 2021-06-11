@@ -3,7 +3,7 @@
 
 ![screenshot](Assets/Graphics/Images/screenshot.png)
 
-> IMPORTANT: This project is in low-maintainance mode, meaning that the issues/bug reporting section is not open, but it's open to Pull Requests if you find anything that you want to fix or new features you want to add.
+> IMPORTANT: This project is in low-maintainance mode, meaning that compatibility fixes with new Unity and package versions will be published but new additions or features are not going to happen any time soon and there are no plans for them yet. 
 
 Looking for a GameMaker version? Check [newbark-gamemaker](https://github.com/itsjavi/newbark-gamemaker)
 
